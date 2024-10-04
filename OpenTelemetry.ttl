@@ -48,7 +48,8 @@
 ###  https://github.com/andrej-kocijan/opentelemetry-ontology#droppedAttributesCount
 :droppedAttributesCount rdf:type owl:DatatypeProperty ;
                         rdfs:subPropertyOf owl:topDataProperty ;
-                        rdfs:domain :InstrumentationScope ;
+                        rdfs:domain :InstrumentationScope ,
+                                    :Resource ;
                         rdfs:range xsd:unsignedInt ;
                         rdfs:comment "droppedAttributesCount is the number of dropped attributes. If the value is 0, then no attributes were dropped."@en .
 
@@ -123,6 +124,11 @@
 ###  https://github.com/andrej-kocijan/opentelemetry-ontology#InstrumentationScope
 :InstrumentationScope rdf:type owl:Class ;
                       rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                        owl:onProperty :attributes ;
+                                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                        owl:onClass :KeyValueArray
+                                      ] ,
+                                      [ rdf:type owl:Restriction ;
                                         owl:onProperty :droppedAttributesCount ;
                                         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                                         owl:onDataRange xsd:unsignedInt
@@ -165,6 +171,11 @@
 ###  https://github.com/andrej-kocijan/opentelemetry-ontology#Resource
 :Resource rdf:type owl:Class ;
           rdfs:subClassOf [ rdf:type owl:Restriction ;
+                            owl:onProperty :attributes ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onClass :KeyValueArray
+                          ] ,
+                          [ rdf:type owl:Restriction ;
                             owl:onProperty :droppedAttributesCount ;
                             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                             owl:onDataRange xsd:unsignedInt
