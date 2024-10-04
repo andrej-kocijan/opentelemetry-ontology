@@ -12,14 +12,14 @@
 #    Object Properties
 #################################################################
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#anyValueListElement
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/anyValueListElement
 :anyValueListElement rdf:type owl:ObjectProperty ;
                      rdfs:subPropertyOf owl:topObjectProperty ;
                      rdfs:domain :AnyValueList ;
                      rdfs:range :AnyValue .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#attribute
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/attribute
 :attribute rdf:type owl:ObjectProperty ;
            rdfs:subPropertyOf owl:topObjectProperty ;
            rdfs:domain :InstrumentationScope ,
@@ -28,57 +28,57 @@
            rdfs:range :KeyValue .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#body
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/body
 :body rdf:type owl:ObjectProperty ;
       rdfs:domain :LogRecord ;
       rdfs:range :AnyValue .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#keyValueListElement
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/keyValueListElement
 :keyValueListElement rdf:type owl:ObjectProperty ;
                      rdfs:subPropertyOf owl:topObjectProperty ;
                      rdfs:domain :KeyValueList ;
                      rdfs:range :KeyValue .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#keyValueValue
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/keyValueValue
 :keyValueValue rdf:type owl:ObjectProperty ;
                rdfs:subPropertyOf owl:topObjectProperty ;
                rdfs:domain :KeyValue ;
                rdfs:range :AnyValue .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#logRecord
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/logRecord
 :logRecord rdf:type owl:ObjectProperty ;
            rdfs:domain :ScopeLogs ;
            rdfs:range :LogRecord .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#resource
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/resource
 :resource rdf:type owl:ObjectProperty ;
           rdfs:domain :ResourceLogs ;
           rdfs:range :Resource .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#resourceLogs
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/resourceLogs
 :resourceLogs rdf:type owl:ObjectProperty ;
               rdfs:domain :LogsData ;
               rdfs:range :ResourceLogs .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#scope
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/scope
 :scope rdf:type owl:ObjectProperty ;
        rdfs:domain :ScopeLogs ;
        rdfs:range :InstrumentationScope .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#scopeLogs
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/scopeLogs
 :scopeLogs rdf:type owl:ObjectProperty ;
            rdfs:domain :ResourceLogs ;
            rdfs:range :ScopeLogs .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#severitryNumber
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/severitryNumber
 :severitryNumber rdf:type owl:ObjectProperty ;
                  rdfs:domain :LogRecord ;
                  rdfs:range :SeverityNumber .
@@ -88,7 +88,7 @@
 #    Data properties
 #################################################################
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#droppedAttributesCount
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/droppedAttributesCount
 :droppedAttributesCount rdf:type owl:DatatypeProperty ;
                         rdfs:subPropertyOf owl:topDataProperty ;
                         rdfs:domain :InstrumentationScope ,
@@ -98,7 +98,7 @@
                         rdfs:comment "droppedAttributesCount is the number of dropped attributes. If the value is 0, then no attributes were dropped."@en .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#flags
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/flags
 :flags rdf:type owl:DatatypeProperty ;
        rdfs:subPropertyOf owl:topDataProperty ;
        rdfs:domain :LogRecord ;
@@ -106,14 +106,14 @@
        rdfs:comment "Flags, a bit field. 8 least significant bits are the trace flags as defined in W3C Trace Context specification. 24 most significant bits are reserved and must be set to 0. Readers must not assume that 24 most significant bits will be zero and must correctly mask the bits when reading 8-bit trace flag (use flags & LOG_RECORD_FLAGS_TRACE_FLAGS_MASK). [Optional]."@en .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#keyValueKey
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/keyValueKey
 :keyValueKey rdf:type owl:DatatypeProperty ;
              rdfs:subPropertyOf owl:topDataProperty ;
              rdfs:domain :KeyValue ;
              rdfs:range xsd:string .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#name
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/name
 :name rdf:type owl:DatatypeProperty ;
       rdfs:subPropertyOf owl:topDataProperty ;
       rdfs:domain :InstrumentationScope ;
@@ -121,7 +121,7 @@
       rdfs:comment "An empty instrumentation scope name means the name is unknown."@en .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#observedTimeUnixNano
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/observedTimeUnixNano
 :observedTimeUnixNano rdf:type owl:DatatypeProperty ;
                       rdfs:subPropertyOf owl:topDataProperty ;
                       rdfs:domain :LogRecord ;
@@ -137,7 +137,7 @@ Value is UNIX Epoch time in nanoseconds since 00:00:00 UTC on 1 January 1970.
 Value of 0 indicates unknown or missing timestamp.""" .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#primitiveValueValue
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/primitiveValueValue
 :primitiveValueValue rdf:type owl:DatatypeProperty ;
                      rdfs:domain :PrimitiveValue ;
                      rdfs:range xsd:boolean ,
@@ -147,7 +147,7 @@ Value of 0 indicates unknown or missing timestamp.""" .
                                 xsd:string .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#schemaUrl
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/schemaUrl
 :schemaUrl rdf:type owl:DatatypeProperty ;
            rdfs:domain :ResourceLogs ,
                        :ScopeLogs ;
@@ -156,14 +156,14 @@ Value of 0 indicates unknown or missing timestamp.""" .
 This schema_url applies to all logs in the \"logs\" field."""@en .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#severityText
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/severityText
 :severityText rdf:type owl:DatatypeProperty ;
               rdfs:domain :LogRecord ;
               rdfs:range xsd:string ;
               rdfs:comment "The severity text (also known as log level). The original string representation as it is known at the source. [Optional]." .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#spanId
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/spanId
 :spanId rdf:type owl:DatatypeProperty ;
         rdfs:subPropertyOf owl:topDataProperty ;
         rdfs:domain :LogRecord ;
@@ -182,7 +182,7 @@ span if any of the following is true:
   - the field contains an invalid value.""" .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#timeUnixNano
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/timeUnixNano
 :timeUnixNano rdf:type owl:DatatypeProperty ;
               rdfs:subPropertyOf owl:topDataProperty ;
               rdfs:domain :LogRecord ;
@@ -192,7 +192,7 @@ Value is UNIX Epoch time in nanoseconds since 00:00:00 UTC on 1 January 1970.
 Value of 0 indicates unknown or missing timestamp."""@en .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#traceId
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/traceId
 :traceId rdf:type owl:DatatypeProperty ;
          rdfs:subPropertyOf owl:topDataProperty ;
          rdfs:domain :LogRecord ;
@@ -210,11 +210,19 @@ trace if any of the following is true:
   - the field contains an invalid value."""@en .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#version
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/version
 :version rdf:type owl:DatatypeProperty ;
          rdfs:subPropertyOf owl:topDataProperty ;
          rdfs:domain :InstrumentationScope ;
          rdfs:range xsd:string .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#enumOptionValue
+:enumOptionValue rdf:type owl:DatatypeProperty ;
+                 rdfs:domain :Enum ;
+                 rdfs:range xsd:hexBinary ,
+                            xsd:int ,
+                            xsd:string .
 
 
 #################################################################
@@ -226,32 +234,26 @@ trace if any of the following is true:
           rdfs:comment "AnyValue is used to represent any type of attribute value. AnyValue may contain a primitive value such as a string or integer or it may contain an arbitrary nested object containing arrays, key-value lists and primitives."@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/KeyValue
-:KeyValue rdf:type owl:Class ;
-          rdfs:subClassOf :AnyValue ,
-                          [ rdf:type owl:Restriction ;
-                            owl:onProperty :keyValueValue ;
-                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                            owl:onClass :AnyValue
-                          ] ,
-                          [ rdf:type owl:Restriction ;
-                            owl:onProperty :keyValueKey ;
-                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                            owl:onDataRange xsd:string
-                          ] ;
-          rdfs:comment "KeyValue is a key-value pair that is used to store Span attributes, Link attributes, etc."@en .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#AnyValueList
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/AnyValueList
 :AnyValueList rdf:type owl:Class ;
               rdfs:subClassOf :AnyValue .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#Enum
-:Enum rdf:type owl:Class .
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/Enum
+:Enum rdf:type owl:Class ;
+      rdfs:subClassOf [ rdf:type owl:Restriction ;
+                        owl:onProperty :enumOptionValue ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onDataRange [ rdf:type rdfs:Datatype ;
+                                          owl:unionOf ( xsd:hexBinary
+                                                        xsd:int
+                                                        xsd:string
+                                                      )
+                                        ]
+                      ] .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#InstrumentationScope
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/InstrumentationScope
 :InstrumentationScope rdf:type owl:Class ;
                       rdfs:subClassOf [ rdf:type owl:Restriction ;
                                         owl:onProperty :droppedAttributesCount ;
@@ -271,12 +273,28 @@ trace if any of the following is true:
                       rdfs:comment "InstrumentationScope is a message representing the instrumentation scope information such as the fully qualified name and version." .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#KeyValueList
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/KeyValue
+:KeyValue rdf:type owl:Class ;
+          rdfs:subClassOf :AnyValue ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty :keyValueValue ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onClass :AnyValue
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty :keyValueKey ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onDataRange xsd:string
+                          ] ;
+          rdfs:comment "KeyValue is a key-value pair that is used to store Span attributes, Link attributes, etc."@en .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/KeyValueList
 :KeyValueList rdf:type owl:Class ;
               rdfs:subClassOf :AnyValue .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#LogRecord
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/LogRecord
 :LogRecord rdf:type owl:Class ;
            rdfs:subClassOf [ rdf:type owl:Restriction ;
                              owl:onProperty :severitryNumber ;
@@ -322,7 +340,7 @@ trace if any of the following is true:
 https://github.com/open-telemetry/oteps/blob/main/text/logs/0097-log-data-model.md"""@en .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#LogsData
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/LogsData
 :LogsData rdf:type owl:Class ;
           rdfs:subClassOf [ rdf:type owl:Restriction ;
                             owl:onProperty :resourceLogs ;
@@ -336,7 +354,7 @@ The main difference between this message and collector protocol is that in this 
 When new fields are added into this message, the OTLP request MUST be updated as well."""@en .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#PrimitiveValue
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/PrimitiveValue
 :PrimitiveValue rdf:type owl:Class ;
                 rdfs:subClassOf :AnyValue ,
                                 [ rdf:type owl:Restriction ;
@@ -353,7 +371,7 @@ When new fields are added into this message, the OTLP request MUST be updated as
                                 ] .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#Resource
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/Resource
 :Resource rdf:type owl:Class ;
           rdfs:subClassOf [ rdf:type owl:Restriction ;
                             owl:onProperty :droppedAttributesCount ;
@@ -363,7 +381,7 @@ When new fields are added into this message, the OTLP request MUST be updated as
           rdfs:comment "Resource information."@en .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#ResourceLogs
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/ResourceLogs
 :ResourceLogs rdf:type owl:Class ;
               rdfs:subClassOf [ rdf:type owl:Restriction ;
                                 owl:onProperty :scopeLogs ;
@@ -383,7 +401,7 @@ When new fields are added into this message, the OTLP request MUST be updated as
               rdfs:comment "A collection of ScopeLogs from a Resource." .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#ScopeLogs
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/ScopeLogs
 :ScopeLogs rdf:type owl:Class ;
            rdfs:subClassOf [ rdf:type owl:Restriction ;
                              owl:onProperty :logRecord ;
@@ -403,7 +421,7 @@ When new fields are added into this message, the OTLP request MUST be updated as
            rdfs:comment "A collection of Logs produced by a Scope." .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#SeverityNumber
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/SeverityNumber
 :SeverityNumber rdf:type owl:Class ;
                 owl:equivalentClass [ rdf:type owl:Class ;
                                       owl:oneOf ( :SEVERITY_NUMBER_DEBUG
@@ -437,133 +455,185 @@ When new fields are added into this message, the OTLP request MUST be updated as
                 rdfs:comment "Possible values for LogRecord.SeverityNumber."@en .
 
 
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#LogRecordFlags
+:LogRecordFlags rdf:type owl:Class ;
+                owl:equivalentClass [ rdf:type owl:Class ;
+                                      owl:oneOf ( :LOG_RECORD_FLAGS_DO_NOT_USE
+                                                  :LOG_RECORD_FLAGS_TRACE_FLAGS_MASK
+                                                )
+                                    ] ;
+                rdfs:subClassOf :Enum ;
+                rdfs:comment """The zero value for the enum. Should not be used for comparisons.
+Instead use bitwise \"and\" with the appropriate mask as shown above.
+
+Bits 0-7 are used for trace flags.
+
+Bits 8-31 are reserved for future use."""@en .
+
+
 #################################################################
 #    Individuals
 #################################################################
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#SEVERITY_NUMBER_DEBUG
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/SEVERITY_NUMBER_DEBUG
 :SEVERITY_NUMBER_DEBUG rdf:type owl:NamedIndividual ,
-                                :SeverityNumber .
+                                :SeverityNumber ;
+                       :enumOptionValue "5"^^xsd:int .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#SEVERITY_NUMBER_DEBUG2
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/SEVERITY_NUMBER_DEBUG2
 :SEVERITY_NUMBER_DEBUG2 rdf:type owl:NamedIndividual ,
-                                 :SeverityNumber .
+                                 :SeverityNumber ;
+                        :enumOptionValue "6"^^xsd:int .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#SEVERITY_NUMBER_DEBUG3
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/SEVERITY_NUMBER_DEBUG3
 :SEVERITY_NUMBER_DEBUG3 rdf:type owl:NamedIndividual ,
-                                 :SeverityNumber .
+                                 :SeverityNumber ;
+                        :enumOptionValue "7"^^xsd:int .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#SEVERITY_NUMBER_DEBUG4
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/SEVERITY_NUMBER_DEBUG4
 :SEVERITY_NUMBER_DEBUG4 rdf:type owl:NamedIndividual ,
-                                 :SeverityNumber .
+                                 :SeverityNumber ;
+                        :enumOptionValue "8"^^xsd:int .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#SEVERITY_NUMBER_ERROR
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/SEVERITY_NUMBER_ERROR
 :SEVERITY_NUMBER_ERROR rdf:type owl:NamedIndividual ,
-                                :SeverityNumber .
+                                :SeverityNumber ;
+                       :enumOptionValue "17"^^xsd:int .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#SEVERITY_NUMBER_ERROR2
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/SEVERITY_NUMBER_ERROR2
 :SEVERITY_NUMBER_ERROR2 rdf:type owl:NamedIndividual ,
-                                 :SeverityNumber .
+                                 :SeverityNumber ;
+                        :enumOptionValue "18"^^xsd:int .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#SEVERITY_NUMBER_ERROR3
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/SEVERITY_NUMBER_ERROR3
 :SEVERITY_NUMBER_ERROR3 rdf:type owl:NamedIndividual ,
-                                 :SeverityNumber .
+                                 :SeverityNumber ;
+                        :enumOptionValue "19"^^xsd:int .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#SEVERITY_NUMBER_ERROR4
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/SEVERITY_NUMBER_ERROR4
 :SEVERITY_NUMBER_ERROR4 rdf:type owl:NamedIndividual ,
-                                 :SeverityNumber .
+                                 :SeverityNumber ;
+                        :enumOptionValue "20"^^xsd:int .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#SEVERITY_NUMBER_FATAL
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/SEVERITY_NUMBER_FATAL
 :SEVERITY_NUMBER_FATAL rdf:type owl:NamedIndividual ,
-                                :SeverityNumber .
+                                :SeverityNumber ;
+                       :enumOptionValue "21"^^xsd:int .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#SEVERITY_NUMBER_FATAL2
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/SEVERITY_NUMBER_FATAL2
 :SEVERITY_NUMBER_FATAL2 rdf:type owl:NamedIndividual ,
-                                 :SeverityNumber .
+                                 :SeverityNumber ;
+                        :enumOptionValue "22"^^xsd:int .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#SEVERITY_NUMBER_FATAL3
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/SEVERITY_NUMBER_FATAL3
 :SEVERITY_NUMBER_FATAL3 rdf:type owl:NamedIndividual ,
-                                 :SeverityNumber .
+                                 :SeverityNumber ;
+                        :enumOptionValue "23"^^xsd:int .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#SEVERITY_NUMBER_FATAL4
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/SEVERITY_NUMBER_FATAL4
 :SEVERITY_NUMBER_FATAL4 rdf:type owl:NamedIndividual ,
-                                 :SeverityNumber .
+                                 :SeverityNumber ;
+                        :enumOptionValue "24"^^xsd:int .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#SEVERITY_NUMBER_INFO
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/SEVERITY_NUMBER_INFO
 :SEVERITY_NUMBER_INFO rdf:type owl:NamedIndividual ,
-                               :SeverityNumber .
+                               :SeverityNumber ;
+                      :enumOptionValue "9"^^xsd:int .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#SEVERITY_NUMBER_INFO2
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/SEVERITY_NUMBER_INFO2
 :SEVERITY_NUMBER_INFO2 rdf:type owl:NamedIndividual ,
-                                :SeverityNumber .
+                                :SeverityNumber ;
+                       :enumOptionValue "10"^^xsd:int .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#SEVERITY_NUMBER_INFO3
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/SEVERITY_NUMBER_INFO3
 :SEVERITY_NUMBER_INFO3 rdf:type owl:NamedIndividual ,
-                                :SeverityNumber .
+                                :SeverityNumber ;
+                       :enumOptionValue "11"^^xsd:int .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#SEVERITY_NUMBER_INFO4
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/SEVERITY_NUMBER_INFO4
 :SEVERITY_NUMBER_INFO4 rdf:type owl:NamedIndividual ,
-                                :SeverityNumber .
+                                :SeverityNumber ;
+                       :enumOptionValue "12"^^xsd:int .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#SEVERITY_NUMBER_TRACE
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/SEVERITY_NUMBER_TRACE
 :SEVERITY_NUMBER_TRACE rdf:type owl:NamedIndividual ,
-                                :SeverityNumber .
+                                :SeverityNumber ;
+                       :enumOptionValue "1"^^xsd:int .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#SEVERITY_NUMBER_TRACE2
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/SEVERITY_NUMBER_TRACE2
 :SEVERITY_NUMBER_TRACE2 rdf:type owl:NamedIndividual ,
-                                 :SeverityNumber .
+                                 :SeverityNumber ;
+                        :enumOptionValue "2"^^xsd:int .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#SEVERITY_NUMBER_TRACE3
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/SEVERITY_NUMBER_TRACE3
 :SEVERITY_NUMBER_TRACE3 rdf:type owl:NamedIndividual ,
-                                 :SeverityNumber .
+                                 :SeverityNumber ;
+                        :enumOptionValue "3"^^xsd:int .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#SEVERITY_NUMBER_TRACE4
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/SEVERITY_NUMBER_TRACE4
 :SEVERITY_NUMBER_TRACE4 rdf:type owl:NamedIndividual ,
-                                 :SeverityNumber .
+                                 :SeverityNumber ;
+                        :enumOptionValue "4"^^xsd:int .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#SEVERITY_NUMBER_UNSPECIFIED
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/SEVERITY_NUMBER_UNSPECIFIED
 :SEVERITY_NUMBER_UNSPECIFIED rdf:type owl:NamedIndividual ,
-                                      :SeverityNumber .
+                                      :SeverityNumber ;
+                             :enumOptionValue "0"^^xsd:int .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#SEVERITY_NUMBER_WARN
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/SEVERITY_NUMBER_WARN
 :SEVERITY_NUMBER_WARN rdf:type owl:NamedIndividual ,
-                               :SeverityNumber .
+                               :SeverityNumber ;
+                      :enumOptionValue "13"^^xsd:int .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#SEVERITY_NUMBER_WARN2
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/SEVERITY_NUMBER_WARN2
 :SEVERITY_NUMBER_WARN2 rdf:type owl:NamedIndividual ,
-                                :SeverityNumber .
+                                :SeverityNumber ;
+                       :enumOptionValue "14"^^xsd:int .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#SEVERITY_NUMBER_WARN3
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/SEVERITY_NUMBER_WARN3
 :SEVERITY_NUMBER_WARN3 rdf:type owl:NamedIndividual ,
-                                :SeverityNumber .
+                                :SeverityNumber ;
+                       :enumOptionValue "15"^^xsd:int .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#SEVERITY_NUMBER_WARN4
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/SEVERITY_NUMBER_WARN4
 :SEVERITY_NUMBER_WARN4 rdf:type owl:NamedIndividual ,
-                                :SeverityNumber .
+                                :SeverityNumber ;
+                       :enumOptionValue "16"^^xsd:int .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#LOG_RECORD_FLAGS_DO_NOT_USE
+:LOG_RECORD_FLAGS_DO_NOT_USE rdf:type owl:NamedIndividual ,
+                                      :LogRecordFlags ;
+                             :enumOptionValue "0"^^xsd:int .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#LOG_RECORD_FLAGS_TRACE_FLAGS_MASK
+:LOG_RECORD_FLAGS_TRACE_FLAGS_MASK rdf:type owl:NamedIndividual ,
+                                            :LogRecordFlags .
 
 
 ###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
