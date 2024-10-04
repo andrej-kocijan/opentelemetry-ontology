@@ -12,6 +12,13 @@
 #    Object Properties
 #################################################################
 
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#arrayValues
+:arrayValues rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf owl:topObjectProperty ;
+             rdfs:domain :ArrayValue ;
+             rdfs:range :AnyValue .
+
+
 ###  https://github.com/andrej-kocijan/opentelemetry-ontology#instrumentationScopeAttributes
 :instrumentationScopeAttributes rdf:type owl:ObjectProperty ;
                                 rdfs:subPropertyOf owl:topObjectProperty ;
@@ -41,7 +48,8 @@
 :instrumentationScopeName rdf:type owl:DatatypeProperty ;
                           rdfs:subPropertyOf owl:topDataProperty ;
                           rdfs:domain :InstrumentationScope ;
-                          rdfs:range xsd:string .
+                          rdfs:range xsd:string ;
+                          rdfs:comment "An empty instrumentation scope name means the name is unknown."@en .
 
 
 ###  https://github.com/andrej-kocijan/opentelemetry-ontology#instrumentationScopeVersion
@@ -60,7 +68,6 @@
 
 ###  https://github.com/andrej-kocijan/opentelemetry-ontology#primitiveValueValue
 :primitiveValueValue rdf:type owl:DatatypeProperty ;
-                     rdfs:subPropertyOf owl:topDataProperty ;
                      rdfs:domain :PrimitiveValue ;
                      rdfs:range xsd:boolean ,
                                 xsd:byte ,
@@ -74,21 +81,70 @@
 #################################################################
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/AnyValue
-:AnyValue rdf:type owl:Class .
+:AnyValue rdf:type owl:Class ;
+          rdfs:comment "AnyValue is used to represent any type of attribute value. AnyValue may contain a primitive value such as a string or integer or it may contain an arbitrary nested object containing arrays, key-value lists and primitives."@en .
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/KeyValue
 :KeyValue rdf:type owl:Class ;
-          rdfs:subClassOf :AnyValue .
+          rdfs:subClassOf :AnyValue ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty :keyValueValue ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onClass :AnyValue
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty :keyValueKey ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onDataRange xsd:string
+                          ] ;
+          rdfs:comment "KeyValue is a key-value pair that is used to store Span attributes, Link attributes, etc."@en .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#ArrayValue
+:ArrayValue rdf:type owl:Class ;
+            rdfs:subClassOf :AnyValue ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :arrayValues ;
+                              owl:someValuesFrom :AnyValue
+                            ] .
 
 
 ###  https://github.com/andrej-kocijan/opentelemetry-ontology#InstrumentationScope
-:InstrumentationScope rdf:type owl:Class .
+:InstrumentationScope rdf:type owl:Class ;
+                      rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                        owl:onProperty :instrumentationScopeDroppedAttributesCount ;
+                                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                        owl:onDataRange xsd:unsignedInt
+                                      ] ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty :instrumentationScopeVersion ;
+                                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                        owl:onDataRange xsd:string
+                                      ] ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty :instrumentationScopeName ;
+                                        owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                        owl:onDataRange xsd:string
+                                      ] ;
+                      rdfs:comment "InstrumentationScope is a message representing the instrumentation scope information such as the fully qualified name and version." .
 
 
 ###  https://github.com/andrej-kocijan/opentelemetry-ontology#PrimitiveValue
 :PrimitiveValue rdf:type owl:Class ;
-                rdfs:subClassOf :AnyValue .
+                rdfs:subClassOf :AnyValue ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty :primitiveValueValue ;
+                                  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                  owl:onDataRange [ rdf:type rdfs:Datatype ;
+                                                    owl:unionOf ( xsd:boolean
+                                                                  xsd:byte
+                                                                  xsd:double
+                                                                  xsd:int
+                                                                  xsd:string
+                                                                )
+                                                  ]
+                                ] .
 
 
 ###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
