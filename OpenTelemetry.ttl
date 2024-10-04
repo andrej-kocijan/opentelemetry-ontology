@@ -106,26 +106,19 @@
        rdfs:comment "Flags, a bit field. 8 least significant bits are the trace flags as defined in W3C Trace Context specification. 24 most significant bits are reserved and must be set to 0. Readers must not assume that 24 most significant bits will be zero and must correctly mask the bits when reading 8-bit trace flag (use flags & LOG_RECORD_FLAGS_TRACE_FLAGS_MASK). [Optional]."@en .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#instrumentationScopeName
-:instrumentationScopeName rdf:type owl:DatatypeProperty ;
-                          rdfs:subPropertyOf owl:topDataProperty ;
-                          rdfs:domain :InstrumentationScope ;
-                          rdfs:range xsd:string ;
-                          rdfs:comment "An empty instrumentation scope name means the name is unknown."@en .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#instrumentationScopeVersion
-:instrumentationScopeVersion rdf:type owl:DatatypeProperty ;
-                             rdfs:subPropertyOf owl:topDataProperty ;
-                             rdfs:domain :InstrumentationScope ;
-                             rdfs:range xsd:string .
-
-
 ###  https://github.com/andrej-kocijan/opentelemetry-ontology#keyValueKey
 :keyValueKey rdf:type owl:DatatypeProperty ;
              rdfs:subPropertyOf owl:topDataProperty ;
              rdfs:domain :KeyValue ;
              rdfs:range xsd:string .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#name
+:name rdf:type owl:DatatypeProperty ;
+      rdfs:subPropertyOf owl:topDataProperty ;
+      rdfs:domain :InstrumentationScope ;
+      rdfs:range xsd:string ;
+      rdfs:comment "An empty instrumentation scope name means the name is unknown."@en .
 
 
 ###  https://github.com/andrej-kocijan/opentelemetry-ontology#observedTimeUnixNano
@@ -217,6 +210,13 @@ trace if any of the following is true:
   - the field contains an invalid value."""@en .
 
 
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#version
+:version rdf:type owl:DatatypeProperty ;
+         rdfs:subPropertyOf owl:topDataProperty ;
+         rdfs:domain :InstrumentationScope ;
+         rdfs:range xsd:string .
+
+
 #################################################################
 #    Classes
 #################################################################
@@ -259,12 +259,12 @@ trace if any of the following is true:
                                         owl:onDataRange xsd:unsignedInt
                                       ] ,
                                       [ rdf:type owl:Restriction ;
-                                        owl:onProperty :instrumentationScopeVersion ;
+                                        owl:onProperty :version ;
                                         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                                         owl:onDataRange xsd:string
                                       ] ,
                                       [ rdf:type owl:Restriction ;
-                                        owl:onProperty :instrumentationScopeName ;
+                                        owl:onProperty :name ;
                                         owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                                         owl:onDataRange xsd:string
                                       ] ;
