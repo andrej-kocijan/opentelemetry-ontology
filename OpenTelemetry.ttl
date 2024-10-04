@@ -106,7 +106,8 @@
             rdfs:subClassOf :AnyValue ,
                             [ rdf:type owl:Restriction ;
                               owl:onProperty :arrayValues ;
-                              owl:someValuesFrom :AnyValue
+                              owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                              owl:onClass :AnyValue
                             ] .
 
 
