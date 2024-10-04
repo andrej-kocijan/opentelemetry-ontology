@@ -60,10 +60,22 @@
           rdfs:range :Resource .
 
 
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#resourceLogs
+:resourceLogs rdf:type owl:ObjectProperty ;
+              rdfs:domain :LogsData ;
+              rdfs:range :ResourceLogs .
+
+
 ###  https://github.com/andrej-kocijan/opentelemetry-ontology#scope
 :scope rdf:type owl:ObjectProperty ;
        rdfs:domain :ScopeLogs ;
        rdfs:range :InstrumentationScope .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#scopeLogs
+:scopeLogs rdf:type owl:ObjectProperty ;
+           rdfs:domain :ResourceLogs ;
+           rdfs:range :ScopeLogs .
 
 
 ###  https://github.com/andrej-kocijan/opentelemetry-ontology#severitryNumber
@@ -144,7 +156,8 @@ Value of 0 indicates unknown or missing timestamp.""" .
 
 ###  https://github.com/andrej-kocijan/opentelemetry-ontology#schemaUrl
 :schemaUrl rdf:type owl:DatatypeProperty ;
-           rdfs:domain :ScopeLogs ;
+           rdfs:domain :ResourceLogs ,
+                       :ScopeLogs ;
            rdfs:range xsd:string ;
            rdfs:comment """The Schema URL, if known. This is the identifier of the Schema that the log data is recorded in. To learn more about Schema URL see https://opentelemetry.io/docs/specs/otel/schemas/#schema-url
 This schema_url applies to all logs in the \"logs\" field."""@en .
@@ -309,6 +322,20 @@ trace if any of the following is true:
 https://github.com/open-telemetry/oteps/blob/main/text/logs/0097-log-data-model.md"""@en .
 
 
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#LogsData
+:LogsData rdf:type owl:Class ;
+          rdfs:subClassOf [ rdf:type owl:Restriction ;
+                            owl:onProperty :resourceLogs ;
+                            owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                            owl:onClass :ResourceLogs
+                          ] ;
+          rdfs:comment """LogsData represents the logs data that can be stored in a persistent storage, OR can be embedded by other protocols that transfer OTLP logs data but do not implement the OTLP protocol.
+
+The main difference between this message and collector protocol is that in this message there will not be any \"control\" or \"metadata\" specific to OTLP protocol.
+
+When new fields are added into this message, the OTLP request MUST be updated as well."""@en .
+
+
 ###  https://github.com/andrej-kocijan/opentelemetry-ontology#PrimitiveValue
 :PrimitiveValue rdf:type owl:Class ;
                 rdfs:subClassOf :AnyValue ,
@@ -337,7 +364,23 @@ https://github.com/open-telemetry/oteps/blob/main/text/logs/0097-log-data-model.
 
 
 ###  https://github.com/andrej-kocijan/opentelemetry-ontology#ResourceLogs
-:ResourceLogs rdf:type owl:Class .
+:ResourceLogs rdf:type owl:Class ;
+              rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                owl:onProperty :scopeLogs ;
+                                owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                owl:onClass :ScopeLogs
+                              ] ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty :resource ;
+                                owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                owl:onClass :Resource
+                              ] ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty :schemaUrl ;
+                                owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                owl:onDataRange xsd:string
+                              ] ;
+              rdfs:comment "A collection of ScopeLogs from a Resource." .
 
 
 ###  https://github.com/andrej-kocijan/opentelemetry-ontology#ScopeLogs
