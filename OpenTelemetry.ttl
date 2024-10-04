@@ -98,6 +98,11 @@
                         rdfs:comment "droppedAttributesCount is the number of dropped attributes. If the value is 0, then no attributes were dropped."@en .
 
 
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/enumOptionValue
+:enumOptionValue rdf:type owl:DatatypeProperty ;
+                 rdfs:domain :Enum .
+
+
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/flags
 :flags rdf:type owl:DatatypeProperty ;
        rdfs:subPropertyOf owl:topDataProperty ;
@@ -217,14 +222,6 @@ trace if any of the following is true:
          rdfs:range xsd:string .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#enumOptionValue
-:enumOptionValue rdf:type owl:DatatypeProperty ;
-                 rdfs:domain :Enum ;
-                 rdfs:range xsd:hexBinary ,
-                            xsd:int ,
-                            xsd:string .
-
-
 #################################################################
 #    Classes
 #################################################################
@@ -244,12 +241,7 @@ trace if any of the following is true:
       rdfs:subClassOf [ rdf:type owl:Restriction ;
                         owl:onProperty :enumOptionValue ;
                         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                        owl:onDataRange [ rdf:type rdfs:Datatype ;
-                                          owl:unionOf ( xsd:hexBinary
-                                                        xsd:int
-                                                        xsd:string
-                                                      )
-                                        ]
+                        owl:onDataRange xsd:int
                       ] .
 
 
@@ -338,6 +330,22 @@ trace if any of the following is true:
                            ] ;
            rdfs:comment """A log record according to OpenTelemetry Log Data Model:
 https://github.com/open-telemetry/oteps/blob/main/text/logs/0097-log-data-model.md"""@en .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/LogRecordFlags
+:LogRecordFlags rdf:type owl:Class ;
+                owl:equivalentClass [ rdf:type owl:Class ;
+                                      owl:oneOf ( :LOG_RECORD_FLAGS_DO_NOT_USE
+                                                  :LOG_RECORD_FLAGS_TRACE_FLAGS_MASK
+                                                )
+                                    ] ;
+                rdfs:subClassOf :Enum ;
+                rdfs:comment """The zero value for the enum. Should not be used for comparisons.
+Instead use bitwise \"and\" with the appropriate mask as shown above.
+
+Bits 0-7 are used for trace flags.
+
+Bits 8-31 are reserved for future use."""@en .
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/LogsData
@@ -455,25 +463,69 @@ When new fields are added into this message, the OTLP request MUST be updated as
                 rdfs:comment "Possible values for LogRecord.SeverityNumber."@en .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#LogRecordFlags
-:LogRecordFlags rdf:type owl:Class ;
-                owl:equivalentClass [ rdf:type owl:Class ;
-                                      owl:oneOf ( :LOG_RECORD_FLAGS_DO_NOT_USE
-                                                  :LOG_RECORD_FLAGS_TRACE_FLAGS_MASK
-                                                )
-                                    ] ;
-                rdfs:subClassOf :Enum ;
-                rdfs:comment """The zero value for the enum. Should not be used for comparisons.
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#SpanFlags
+:SpanFlags rdf:type owl:Class ;
+           owl:equivalentClass [ rdf:type owl:Class ;
+                                 owl:oneOf ( :SPAN_FLAGS_CONTEXT_HAS_IS_REMOTE_MASK
+                                             :SPAN_FLAGS_CONTEXT_IS_REMOTE_MASK
+                                             :SPAN_FLAGS_DO_NOT_USE
+                                             :SPAN_FLAGS_TRACE_FLAGS_MASK
+                                           )
+                               ] ;
+           rdfs:subClassOf :Enum ;
+           rdfs:comment """The zero value for the enum. Should not be used for comparisons.
 Instead use bitwise \"and\" with the appropriate mask as shown above.
 
 Bits 0-7 are used for trace flags.
 
-Bits 8-31 are reserved for future use."""@en .
+Bits 8 and 9 are used to indicate that the parent span or link span is remote.
+Bit 8 (`HAS_IS_REMOTE`) indicates whether the value is known.
+Bit 9 (`IS_REMOTE`) indicates whether the span or link is remote.
+
+Bits 10-31 are reserved for future use.""" .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#SpanKind
+:SpanKind rdf:type owl:Class ;
+          owl:equivalentClass [ rdf:type owl:Class ;
+                                owl:oneOf ( :SPAN_KIND_CLIENT
+                                            :SPAN_KIND_CONSUMER
+                                            :SPAN_KIND_INTERNAL
+                                            :SPAN_KIND_PRODUCER
+                                            :SPAN_KIND_SERVER
+                                            :SPAN_KIND_UNSPECIFIED
+                                          )
+                              ] ;
+          rdfs:subClassOf :Enum ;
+          rdfs:comment "SpanKind is the type of span. Can be used to specify additional relationships between spans in addition to a parent/child relationship."@en .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#StatusCode
+:StatusCode rdf:type owl:Class ;
+            owl:equivalentClass [ rdf:type owl:Class ;
+                                  owl:oneOf ( :STATUS_CODE_ERROR
+                                              :STATUS_CODE_OK
+                                              :STATUS_CODE_UNSET
+                                            )
+                                ] ;
+            rdfs:subClassOf :Enum ;
+            rdfs:comment "For the semantics of status codes see https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/api.md#set-status"@en .
 
 
 #################################################################
 #    Individuals
 #################################################################
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/LOG_RECORD_FLAGS_DO_NOT_USE
+:LOG_RECORD_FLAGS_DO_NOT_USE rdf:type owl:NamedIndividual ,
+                                      :LogRecordFlags ;
+                             :enumOptionValue "0"^^xsd:int .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/LOG_RECORD_FLAGS_TRACE_FLAGS_MASK
+:LOG_RECORD_FLAGS_TRACE_FLAGS_MASK rdf:type owl:NamedIndividual ,
+                                            :LogRecordFlags .
+
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/SEVERITY_NUMBER_DEBUG
 :SEVERITY_NUMBER_DEBUG rdf:type owl:NamedIndividual ,
@@ -625,15 +677,94 @@ Bits 8-31 are reserved for future use."""@en .
                        :enumOptionValue "16"^^xsd:int .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#LOG_RECORD_FLAGS_DO_NOT_USE
-:LOG_RECORD_FLAGS_DO_NOT_USE rdf:type owl:NamedIndividual ,
-                                      :LogRecordFlags ;
-                             :enumOptionValue "0"^^xsd:int .
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#SPAN_FLAGS_CONTEXT_HAS_IS_REMOTE_MASK
+:SPAN_FLAGS_CONTEXT_HAS_IS_REMOTE_MASK rdf:type owl:NamedIndividual ,
+                                                :SpanFlags ;
+                                       :enumOptionValue "256"^^xsd:int .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#LOG_RECORD_FLAGS_TRACE_FLAGS_MASK
-:LOG_RECORD_FLAGS_TRACE_FLAGS_MASK rdf:type owl:NamedIndividual ,
-                                            :LogRecordFlags .
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#SPAN_FLAGS_CONTEXT_IS_REMOTE_MASK
+:SPAN_FLAGS_CONTEXT_IS_REMOTE_MASK rdf:type owl:NamedIndividual ,
+                                            :SpanFlags ;
+                                   :enumOptionValue "512"^^xsd:int .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#SPAN_FLAGS_DO_NOT_USE
+:SPAN_FLAGS_DO_NOT_USE rdf:type owl:NamedIndividual ,
+                                :SpanFlags ;
+                       :enumOptionValue "0"^^xsd:int .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#SPAN_FLAGS_TRACE_FLAGS_MASK
+:SPAN_FLAGS_TRACE_FLAGS_MASK rdf:type owl:NamedIndividual ,
+                                      :SpanFlags ;
+                             :enumOptionValue "255"^^xsd:int .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#SPAN_KIND_CLIENT
+:SPAN_KIND_CLIENT rdf:type owl:NamedIndividual ,
+                           :SpanKind ;
+                  :enumOptionValue "3"^^xsd:int ;
+                  rdfs:comment "Indicates that the span describes a request to some remote service."@en .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#SPAN_KIND_CONSUMER
+:SPAN_KIND_CONSUMER rdf:type owl:NamedIndividual ,
+                             :SpanKind ;
+                    :enumOptionValue "5"^^xsd:int ;
+                    rdfs:comment """Indicates that the span describes consumer receiving a message from a broker.
+Like the PRODUCER kind, there is often no direct critical path latency relationship between producer and consumer spans."""@en .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#SPAN_KIND_INTERNAL
+:SPAN_KIND_INTERNAL rdf:type owl:NamedIndividual ,
+                             :SpanKind ;
+                    :enumOptionValue "1"^^xsd:int ;
+                    rdfs:comment "Indicates that the span represents an internal operation within an application, as opposed to an operation happening at the boundaries. Default value."@en .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#SPAN_KIND_PRODUCER
+:SPAN_KIND_PRODUCER rdf:type owl:NamedIndividual ,
+                             :SpanKind ;
+                    :enumOptionValue "4"^^xsd:int ;
+                    rdfs:comment """Indicates that the span describes a producer sending a message to a broker.
+Unlike CLIENT and SERVER, there is often no direct critical path latency relationship between producer and consumer spans. A PRODUCER span ends when the message was accepted by the broker while the logical processing of the message might span a much longer time."""@en .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#SPAN_KIND_SERVER
+:SPAN_KIND_SERVER rdf:type owl:NamedIndividual ,
+                           :SpanKind ;
+                  :enumOptionValue "2"^^xsd:int ;
+                  rdfs:comment "Indicates that the span covers server-side handling of an RPC or other remote network request."@en .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#SPAN_KIND_UNSPECIFIED
+:SPAN_KIND_UNSPECIFIED rdf:type owl:NamedIndividual ,
+                                :SpanKind ;
+                       :enumOptionValue "0"^^xsd:int ;
+                       rdfs:comment """Unspecified. Do NOT use as default.
+Implementations MAY assume SpanKind to be INTERNAL when receiving UNSPECIFIED."""@en .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#STATUS_CODE_ERROR
+:STATUS_CODE_ERROR rdf:type owl:NamedIndividual ,
+                            :StatusCode ;
+                   :enumOptionValue "0"^^xsd:int ;
+                   rdfs:comment "The Span contains an error."@en .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#STATUS_CODE_OK
+:STATUS_CODE_OK rdf:type owl:NamedIndividual ,
+                         :StatusCode ;
+                :enumOptionValue "1"^^xsd:int ;
+                rdfs:comment "The Span has been validated by an Application developer or Operator to have completed successfully."@en .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#STATUS_CODE_UNSET
+:STATUS_CODE_UNSET rdf:type owl:NamedIndividual ,
+                            :StatusCode ;
+                   :enumOptionValue "2"^^xsd:int ;
+                   rdfs:comment "The default status."@en .
 
 
 ###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
