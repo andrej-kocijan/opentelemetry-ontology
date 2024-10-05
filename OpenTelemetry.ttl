@@ -22,12 +22,15 @@
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/attribute
 :attribute rdf:type owl:ObjectProperty ;
            rdfs:subPropertyOf owl:topObjectProperty ;
-           rdfs:domain :InstrumentationScope ,
-                       :LogRecord ,
-                       :Resource ,
-                       :Event ,
-                       :Link ,
-                       :Span ;
+           rdfs:domain [ rdf:type owl:Class ;
+                         owl:unionOf ( :InstrumentationScope
+                                       :LogRecord
+                                       :Resource
+                                       :Event
+                                       :Link
+                                       :Span
+                                     )
+                       ] ;
            rdfs:range :KeyValue .
 
 
@@ -65,8 +68,11 @@
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/resource
 :resource rdf:type owl:ObjectProperty ;
-          rdfs:domain :ResourceLogs ,
-                      :ResourceSpans ;
+          rdfs:domain [ rdf:type owl:Class ;
+                        owl:unionOf ( :ResourceLogs
+                                      :ResourceSpans
+                                    )
+                      ] ;
           rdfs:range :Resource .
 
 
@@ -78,8 +84,11 @@
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/scope
 :scope rdf:type owl:ObjectProperty ;
-       rdfs:domain :ScopeLogs ,
-                   :ScopeSpans ;
+       rdfs:domain [ rdf:type owl:Class ;
+                     owl:unionOf ( :ScopeLogs
+                                   :ScopeSpans
+                                 )
+                   ] ;
        rdfs:range :InstrumentationScope .
 
 
@@ -144,12 +153,15 @@
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/droppedAttributesCount
 :droppedAttributesCount rdf:type owl:DatatypeProperty ;
                         rdfs:subPropertyOf owl:topDataProperty ;
-                        rdfs:domain :InstrumentationScope ,
-                                    :LogRecord ,
-                                    :Resource ,
-                                    :Event ,
-                                    :Link ,
-                                    :Span ;
+                        rdfs:domain [ rdf:type owl:Class ;
+                                      owl:unionOf ( :InstrumentationScope
+                                                    :LogRecord
+                                                    :Resource
+                                                    :Event
+                                                    :Link
+                                                    :Span
+                                                  )
+                                    ] ;
                         rdfs:range xsd:unsignedInt ;
                         rdfs:comment "droppedAttributesCount is the number of dropped attributes. If the value is 0, then no attributes were dropped."@en .
 
@@ -162,9 +174,12 @@
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/flags
 :flags rdf:type owl:DatatypeProperty ;
        rdfs:subPropertyOf owl:topDataProperty ;
-       rdfs:domain :LogRecord ,
-                   :Link ,
-                   :Span ;
+       rdfs:domain [ rdf:type owl:Class ;
+                     owl:unionOf ( :LogRecord
+                                   :Link
+                                   :Span
+                                 )
+                   ] ;
        rdfs:range xsd:unsignedInt ;
        rdfs:comment """Flags, a bit field.
 
@@ -201,9 +216,12 @@ When creating new spans, bits 10-31 (most-significant 22-bits) MUST be zero.
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/name
 :name rdf:type owl:DatatypeProperty ;
       rdfs:subPropertyOf owl:topDataProperty ;
-      rdfs:domain :InstrumentationScope ,
-                  :Event ,
-                  :Span ;
+      rdfs:domain [ rdf:type owl:Class ;
+                    owl:unionOf ( :InstrumentationScope
+                                  :Event
+                                  :Span
+                                )
+                  ] ;
       rdfs:range xsd:string ;
       rdfs:comment "An empty instrumentation scope name means the name is unknown."@en .
 
@@ -227,19 +245,25 @@ Value of 0 indicates unknown or missing timestamp.""" .
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/primitiveValueValue
 :primitiveValueValue rdf:type owl:DatatypeProperty ;
                      rdfs:domain :PrimitiveValue ;
-                     rdfs:range xsd:boolean ,
-                                xsd:byte ,
-                                xsd:double ,
-                                xsd:int ,
-                                xsd:string .
+                     rdfs:range [ rdf:type rdfs:Datatype ;
+                                  owl:unionOf ( xsd:boolean
+                                                xsd:byte
+                                                xsd:double
+                                                xsd:int
+                                                xsd:string
+                                              )
+                                ] .
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/schemaUrl
 :schemaUrl rdf:type owl:DatatypeProperty ;
-           rdfs:domain :ResourceLogs ,
-                       :ScopeLogs ,
-                       :ResourceSpans ,
-                       :ScopeSpans ;
+           rdfs:domain [ rdf:type owl:Class ;
+                         owl:unionOf ( :ResourceLogs
+                                       :ScopeLogs
+                                       :ResourceSpans
+                                       :ScopeSpans
+                                     )
+                       ] ;
            rdfs:range xsd:string .
 
 
@@ -253,9 +277,12 @@ Value of 0 indicates unknown or missing timestamp.""" .
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/spanId
 :spanId rdf:type owl:DatatypeProperty ;
         rdfs:subPropertyOf owl:topDataProperty ;
-        rdfs:domain :LogRecord ,
-                    :Link ,
-                    :Span ;
+        rdfs:domain [ rdf:type owl:Class ;
+                      owl:unionOf ( :LogRecord
+                                    :Link
+                                    :Span
+                                  )
+                    ] ;
         rdfs:range xsd:byte ;
         rdfs:comment """A unique identifier for a span within a trace, assigned when the span
 is created. The ID is an 8-byte array. An ID with all zeroes OR of length
@@ -274,8 +301,11 @@ span if any of the following is true:
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/timeUnixNano
 :timeUnixNano rdf:type owl:DatatypeProperty ;
               rdfs:subPropertyOf owl:topDataProperty ;
-              rdfs:domain :LogRecord ,
-                          :Event ;
+              rdfs:domain [ rdf:type owl:Class ;
+                            owl:unionOf ( :LogRecord
+                                          :Event
+                                        )
+                          ] ;
               rdfs:range xsd:unsignedLong ;
               rdfs:comment """timeUnixNano is the time when the event occurred.
 Value is UNIX Epoch time in nanoseconds since 00:00:00 UTC on 1 January 1970.
@@ -285,9 +315,12 @@ Value of 0 indicates unknown or missing timestamp."""@en .
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/traceId
 :traceId rdf:type owl:DatatypeProperty ;
          rdfs:subPropertyOf owl:topDataProperty ;
-         rdfs:domain :LogRecord ,
-                     :Link ,
-                     :Span ;
+         rdfs:domain [ rdf:type owl:Class ;
+                       owl:unionOf ( :LogRecord
+                                     :Link
+                                     :Span
+                                   )
+                     ] ;
          rdfs:range xsd:byte ;
          rdfs:comment """A unique identifier for a trace. All logs from the same trace share
 the same `trace_id`. The ID is a 16-byte array. An ID with all zeroes OR
@@ -343,8 +376,11 @@ trace if any of the following is true:
 
 ###  https://github.com/andrej-kocijan/opentelemetry-ontology#traceState
 :traceState rdf:type owl:DatatypeProperty ;
-            rdfs:domain :Link ,
-                        :Span ;
+            rdfs:domain [ rdf:type owl:Class ;
+                          owl:unionOf ( :Link
+                                        :Span
+                                      )
+                        ] ;
             rdfs:range xsd:string .
 
 
