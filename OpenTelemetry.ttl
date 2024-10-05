@@ -24,7 +24,10 @@
            rdfs:subPropertyOf owl:topObjectProperty ;
            rdfs:domain :InstrumentationScope ,
                        :LogRecord ,
-                       :Resource ;
+                       :Resource ,
+                       :Event ,
+                       :Link ,
+                       :Span ;
            rdfs:range :KeyValue .
 
 
@@ -32,6 +35,12 @@
 :body rdf:type owl:ObjectProperty ;
       rdfs:domain :LogRecord ;
       rdfs:range :AnyValue .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/code
+:code rdf:type owl:ObjectProperty ;
+      rdfs:domain :Status ;
+      rdfs:range :StatusCode .
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/keyValueListElement
@@ -56,7 +65,8 @@
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/resource
 :resource rdf:type owl:ObjectProperty ;
-          rdfs:domain :ResourceLogs ;
+          rdfs:domain :ResourceLogs ,
+                      :ResourceSpans ;
           rdfs:range :Resource .
 
 
@@ -68,7 +78,8 @@
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/scope
 :scope rdf:type owl:ObjectProperty ;
-       rdfs:domain :ScopeLogs ;
+       rdfs:domain :ScopeLogs ,
+                   :ScopeSpans ;
        rdfs:range :InstrumentationScope .
 
 
@@ -84,6 +95,48 @@
                  rdfs:range :SeverityNumber .
 
 
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#event
+:event rdf:type owl:ObjectProperty ;
+       rdfs:domain :Span ;
+       rdfs:range :Event .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#kind
+:kind rdf:type owl:ObjectProperty ;
+      rdfs:domain :Span ;
+      rdfs:range :SpanKind .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#link
+:link rdf:type owl:ObjectProperty ;
+      rdfs:domain :Span ;
+      rdfs:range :Link .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#resourceSpan
+:resourceSpan rdf:type owl:ObjectProperty ;
+              rdfs:domain :TracesData ;
+              rdfs:range :ResourceSpans .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#scopeSpan
+:scopeSpan rdf:type owl:ObjectProperty ;
+           rdfs:domain :ResourceSpans ;
+           rdfs:range :ScopeSpans .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#span
+:span rdf:type owl:ObjectProperty ;
+      rdfs:domain :ScopeSpans ;
+      rdfs:range :Span .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#status
+:status rdf:type owl:ObjectProperty ;
+        rdfs:domain :Span ;
+        rdfs:range :Status .
+
+
 #################################################################
 #    Data properties
 #################################################################
@@ -93,7 +146,10 @@
                         rdfs:subPropertyOf owl:topDataProperty ;
                         rdfs:domain :InstrumentationScope ,
                                     :LogRecord ,
-                                    :Resource ;
+                                    :Resource ,
+                                    :Event ,
+                                    :Link ,
+                                    :Span ;
                         rdfs:range xsd:unsignedInt ;
                         rdfs:comment "droppedAttributesCount is the number of dropped attributes. If the value is 0, then no attributes were dropped."@en .
 
@@ -106,9 +162,26 @@
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/flags
 :flags rdf:type owl:DatatypeProperty ;
        rdfs:subPropertyOf owl:topDataProperty ;
-       rdfs:domain :LogRecord ;
+       rdfs:domain :LogRecord ,
+                   :Link ,
+                   :Span ;
        rdfs:range xsd:unsignedInt ;
-       rdfs:comment "Flags, a bit field. 8 least significant bits are the trace flags as defined in W3C Trace Context specification. 24 most significant bits are reserved and must be set to 0. Readers must not assume that 24 most significant bits will be zero and must correctly mask the bits when reading 8-bit trace flag (use flags & LOG_RECORD_FLAGS_TRACE_FLAGS_MASK). [Optional]."@en .
+       rdfs:comment """Flags, a bit field.
+
+Bits 0-7 (8 least significant bits) are the trace flags as defined in W3C Trace Context specification. To read the 8-bit W3C trace flag, use `flags & SPAN_FLAGS_TRACE_FLAGS_MASK`.
+
+See https://www.w3.org/TR/trace-context-2/#trace-flags for the flag definitions.
+
+Bits 8 and 9 represent the 3 states of whether the link is remote.
+The states are (unknown, is not remote, is remote).
+To read whether the value is known, use `(flags & SPAN_FLAGS_CONTEXT_HAS_IS_REMOTE_MASK) != 0`.
+To read whether the link is remote, use `(flags & SPAN_FLAGS_CONTEXT_IS_REMOTE_MASK) != 0`.
+
+Readers MUST NOT assume that bits 10-31 (22 most significant bits) will be zero.
+When creating new spans, bits 10-31 (most-significant 22-bits) MUST be zero.
+
+[Optional]."""@en ,
+                    "Flags, a bit field. 8 least significant bits are the trace flags as defined in W3C Trace Context specification. 24 most significant bits are reserved and must be set to 0. Readers must not assume that 24 most significant bits will be zero and must correctly mask the bits when reading 8-bit trace flag (use flags & LOG_RECORD_FLAGS_TRACE_FLAGS_MASK). [Optional]."@en .
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/keyValueKey
@@ -118,10 +191,19 @@
              rdfs:range xsd:string .
 
 
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/message
+:message rdf:type owl:DatatypeProperty ;
+         rdfs:domain :Status ;
+         rdfs:range xsd:string ;
+         rdfs:comment "A developer-facing human readable error message." .
+
+
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/name
 :name rdf:type owl:DatatypeProperty ;
       rdfs:subPropertyOf owl:topDataProperty ;
-      rdfs:domain :InstrumentationScope ;
+      rdfs:domain :InstrumentationScope ,
+                  :Event ,
+                  :Span ;
       rdfs:range xsd:string ;
       rdfs:comment "An empty instrumentation scope name means the name is unknown."@en .
 
@@ -155,10 +237,10 @@ Value of 0 indicates unknown or missing timestamp.""" .
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/schemaUrl
 :schemaUrl rdf:type owl:DatatypeProperty ;
            rdfs:domain :ResourceLogs ,
-                       :ScopeLogs ;
-           rdfs:range xsd:string ;
-           rdfs:comment """The Schema URL, if known. This is the identifier of the Schema that the log data is recorded in. To learn more about Schema URL see https://opentelemetry.io/docs/specs/otel/schemas/#schema-url
-This schema_url applies to all logs in the \"logs\" field."""@en .
+                       :ScopeLogs ,
+                       :ResourceSpans ,
+                       :ScopeSpans ;
+           rdfs:range xsd:string .
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/severityText
@@ -171,7 +253,9 @@ This schema_url applies to all logs in the \"logs\" field."""@en .
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/spanId
 :spanId rdf:type owl:DatatypeProperty ;
         rdfs:subPropertyOf owl:topDataProperty ;
-        rdfs:domain :LogRecord ;
+        rdfs:domain :LogRecord ,
+                    :Link ,
+                    :Span ;
         rdfs:range xsd:byte ;
         rdfs:comment """A unique identifier for a span within a trace, assigned when the span
 is created. The ID is an 8-byte array. An ID with all zeroes OR of length
@@ -190,7 +274,8 @@ span if any of the following is true:
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/timeUnixNano
 :timeUnixNano rdf:type owl:DatatypeProperty ;
               rdfs:subPropertyOf owl:topDataProperty ;
-              rdfs:domain :LogRecord ;
+              rdfs:domain :LogRecord ,
+                          :Event ;
               rdfs:range xsd:unsignedLong ;
               rdfs:comment """timeUnixNano is the time when the event occurred.
 Value is UNIX Epoch time in nanoseconds since 00:00:00 UTC on 1 January 1970.
@@ -200,7 +285,9 @@ Value of 0 indicates unknown or missing timestamp."""@en .
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/traceId
 :traceId rdf:type owl:DatatypeProperty ;
          rdfs:subPropertyOf owl:topDataProperty ;
-         rdfs:domain :LogRecord ;
+         rdfs:domain :LogRecord ,
+                     :Link ,
+                     :Span ;
          rdfs:range xsd:byte ;
          rdfs:comment """A unique identifier for a trace. All logs from the same trace share
 the same `trace_id`. The ID is a 16-byte array. An ID with all zeroes OR
@@ -220,6 +307,45 @@ trace if any of the following is true:
          rdfs:subPropertyOf owl:topDataProperty ;
          rdfs:domain :InstrumentationScope ;
          rdfs:range xsd:string .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#droppedEventsCount
+:droppedEventsCount rdf:type owl:DatatypeProperty ;
+                    rdfs:domain :Span ;
+                    rdfs:range xsd:unsignedInt .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#droppedLinksCount
+:droppedLinksCount rdf:type owl:DatatypeProperty ;
+                   rdfs:domain :Span ;
+                   rdfs:range xsd:unsignedInt .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#endTimeUnixNano
+:endTimeUnixNano rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf owl:topDataProperty ;
+                 rdfs:domain :Span ;
+                 rdfs:range xsd:unsignedLong .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#parentSpanId
+:parentSpanId rdf:type owl:DatatypeProperty ;
+              rdfs:domain :Span ;
+              rdfs:range xsd:byte .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#startTimeUnixNano
+:startTimeUnixNano rdf:type owl:DatatypeProperty ;
+                   rdfs:subPropertyOf owl:topDataProperty ;
+                   rdfs:domain :Span ;
+                   rdfs:range xsd:unsignedLong .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#traceState
+:traceState rdf:type owl:DatatypeProperty ;
+            rdfs:domain :Link ,
+                        :Span ;
+            rdfs:range xsd:string .
 
 
 #################################################################
@@ -463,7 +589,7 @@ When new fields are added into this message, the OTLP request MUST be updated as
                 rdfs:comment "Possible values for LogRecord.SeverityNumber."@en .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#SpanFlags
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/SpanFlags
 :SpanFlags rdf:type owl:Class ;
            owl:equivalentClass [ rdf:type owl:Class ;
                                  owl:oneOf ( :SPAN_FLAGS_CONTEXT_HAS_IS_REMOTE_MASK
@@ -485,7 +611,7 @@ Bit 9 (`IS_REMOTE`) indicates whether the span or link is remote.
 Bits 10-31 are reserved for future use.""" .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#SpanKind
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/SpanKind
 :SpanKind rdf:type owl:Class ;
           owl:equivalentClass [ rdf:type owl:Class ;
                                 owl:oneOf ( :SPAN_KIND_CLIENT
@@ -500,7 +626,12 @@ Bits 10-31 are reserved for future use.""" .
           rdfs:comment "SpanKind is the type of span. Can be used to specify additional relationships between spans in addition to a parent/child relationship."@en .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#StatusCode
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/Status
+:Status rdf:type owl:Class ;
+        rdfs:comment "The Status type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs."@en .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/StatusCode
 :StatusCode rdf:type owl:Class ;
             owl:equivalentClass [ rdf:type owl:Class ;
                                   owl:oneOf ( :STATUS_CODE_ERROR
@@ -510,6 +641,206 @@ Bits 10-31 are reserved for future use.""" .
                                 ] ;
             rdfs:subClassOf :Enum ;
             rdfs:comment "For the semantics of status codes see https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/api.md#set-status"@en .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#Event
+:Event rdf:type owl:Class ;
+       rdfs:subClassOf [ rdf:type owl:Restriction ;
+                         owl:onProperty :attribute ;
+                         owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                         owl:onClass :KeyValue
+                       ] ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty :droppedAttributesCount ;
+                         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                         owl:onDataRange xsd:int
+                       ] ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty :name ;
+                         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                         owl:onDataRange xsd:string
+                       ] ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty :timeUnixNano ;
+                         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                         owl:onDataRange xsd:unsignedInt
+                       ] ;
+       rdfs:comment "Event is a time-stamped annotation of the span, consisting of user-supplied text description and key-value pairs."@en .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#Link
+:Link rdf:type owl:Class ;
+      rdfs:subClassOf [ rdf:type owl:Restriction ;
+                        owl:onProperty :attribute ;
+                        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                        owl:onClass :KeyValue
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :droppedAttributesCount ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onDataRange xsd:int
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :spanId ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onDataRange xsd:byte
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :traceId ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onDataRange xsd:byte
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :traceState ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onDataRange xsd:string
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :flags ;
+                        owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onDataRange xsd:unsignedInt
+                      ] ;
+      rdfs:comment """A pointer from the current span to another span in the same trace or in a different trace.
+For example, this can be used in batching operations, where a single batch handler processes multiple requests from different traces or when the handler receives a request from a different project."""@en .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#ResourceSpans
+:ResourceSpans rdf:type owl:Class ;
+               rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                 owl:onProperty :scopeSpan ;
+                                 owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                 owl:onClass :ScopeSpans
+                               ] ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty :resource ;
+                                 owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                 owl:onClass :Resource
+                               ] ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty :schemaUrl ;
+                                 owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                 owl:onDataRange xsd:string
+                               ] ;
+               rdfs:comment "A collection of ScopeSpans from a Resource."@en .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#ScopeSpans
+:ScopeSpans rdf:type owl:Class ;
+            rdfs:subClassOf [ rdf:type owl:Restriction ;
+                              owl:onProperty :span ;
+                              owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                              owl:onClass :Span
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :scope ;
+                              owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                              owl:onClass :InstrumentationScope
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :schemaUrl ;
+                              owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                              owl:onDataRange xsd:string
+                            ] ;
+            rdfs:comment "A collection of Spans produced by an InstrumentationScope"@en .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#Span
+:Span rdf:type owl:Class ;
+      rdfs:subClassOf [ rdf:type owl:Restriction ;
+                        owl:onProperty :attribute ;
+                        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                        owl:onClass :KeyValue
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :event ;
+                        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                        owl:onClass :Event
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :link ;
+                        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                        owl:onClass :Link
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :kind ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onClass :SpanKind
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :status ;
+                        owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onClass :Status
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :droppedAttributesCount ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onDataRange xsd:int
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :name ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onDataRange xsd:string
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :spanId ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onDataRange xsd:byte
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :traceId ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onDataRange xsd:byte
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :droppedEventsCount ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onDataRange xsd:int
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :droppedLinksCount ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onDataRange xsd:int
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :endTimeUnixNano ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onDataRange xsd:unsignedLong
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :startTimeUnixNano ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onDataRange xsd:unsignedLong
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :flags ;
+                        owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onDataRange xsd:unsignedInt
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :parentSpanId ;
+                        owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onDataRange xsd:byte
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :traceState ;
+                        owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onDataRange xsd:string
+                      ] ;
+      rdfs:comment "A Span represents a single operation performed by a single component of the system."@en .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#TracesData
+:TracesData rdf:type owl:Class ;
+            rdfs:subClassOf [ rdf:type owl:Restriction ;
+                              owl:onProperty :resourceSpan ;
+                              owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                              owl:onClass :ResourceSpans
+                            ] ;
+            rdfs:comment """TracesData represents the traces data that can be stored in a persistent storage, OR can be embedded by other protocols that transfer OTLP traces data but do not implement the OTLP protocol.
+
+The main difference between this message and collector protocol is that in this message there will not be any \"control\" or \"metadata\" specific to OTLP protocol.
+
+When new fields are added into this message, the OTLP request MUST be updated as well."""@en .
 
 
 #################################################################
@@ -677,38 +1008,38 @@ Bits 10-31 are reserved for future use.""" .
                        :enumOptionValue "16"^^xsd:int .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#SPAN_FLAGS_CONTEXT_HAS_IS_REMOTE_MASK
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/SPAN_FLAGS_CONTEXT_HAS_IS_REMOTE_MASK
 :SPAN_FLAGS_CONTEXT_HAS_IS_REMOTE_MASK rdf:type owl:NamedIndividual ,
                                                 :SpanFlags ;
                                        :enumOptionValue "256"^^xsd:int .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#SPAN_FLAGS_CONTEXT_IS_REMOTE_MASK
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/SPAN_FLAGS_CONTEXT_IS_REMOTE_MASK
 :SPAN_FLAGS_CONTEXT_IS_REMOTE_MASK rdf:type owl:NamedIndividual ,
                                             :SpanFlags ;
                                    :enumOptionValue "512"^^xsd:int .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#SPAN_FLAGS_DO_NOT_USE
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/SPAN_FLAGS_DO_NOT_USE
 :SPAN_FLAGS_DO_NOT_USE rdf:type owl:NamedIndividual ,
                                 :SpanFlags ;
                        :enumOptionValue "0"^^xsd:int .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#SPAN_FLAGS_TRACE_FLAGS_MASK
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/SPAN_FLAGS_TRACE_FLAGS_MASK
 :SPAN_FLAGS_TRACE_FLAGS_MASK rdf:type owl:NamedIndividual ,
                                       :SpanFlags ;
                              :enumOptionValue "255"^^xsd:int .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#SPAN_KIND_CLIENT
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/SPAN_KIND_CLIENT
 :SPAN_KIND_CLIENT rdf:type owl:NamedIndividual ,
                            :SpanKind ;
                   :enumOptionValue "3"^^xsd:int ;
                   rdfs:comment "Indicates that the span describes a request to some remote service."@en .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#SPAN_KIND_CONSUMER
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/SPAN_KIND_CONSUMER
 :SPAN_KIND_CONSUMER rdf:type owl:NamedIndividual ,
                              :SpanKind ;
                     :enumOptionValue "5"^^xsd:int ;
@@ -716,14 +1047,14 @@ Bits 10-31 are reserved for future use.""" .
 Like the PRODUCER kind, there is often no direct critical path latency relationship between producer and consumer spans."""@en .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#SPAN_KIND_INTERNAL
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/SPAN_KIND_INTERNAL
 :SPAN_KIND_INTERNAL rdf:type owl:NamedIndividual ,
                              :SpanKind ;
                     :enumOptionValue "1"^^xsd:int ;
                     rdfs:comment "Indicates that the span represents an internal operation within an application, as opposed to an operation happening at the boundaries. Default value."@en .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#SPAN_KIND_PRODUCER
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/SPAN_KIND_PRODUCER
 :SPAN_KIND_PRODUCER rdf:type owl:NamedIndividual ,
                              :SpanKind ;
                     :enumOptionValue "4"^^xsd:int ;
@@ -731,14 +1062,14 @@ Like the PRODUCER kind, there is often no direct critical path latency relations
 Unlike CLIENT and SERVER, there is often no direct critical path latency relationship between producer and consumer spans. A PRODUCER span ends when the message was accepted by the broker while the logical processing of the message might span a much longer time."""@en .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#SPAN_KIND_SERVER
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/SPAN_KIND_SERVER
 :SPAN_KIND_SERVER rdf:type owl:NamedIndividual ,
                            :SpanKind ;
                   :enumOptionValue "2"^^xsd:int ;
                   rdfs:comment "Indicates that the span covers server-side handling of an RPC or other remote network request."@en .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#SPAN_KIND_UNSPECIFIED
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/SPAN_KIND_UNSPECIFIED
 :SPAN_KIND_UNSPECIFIED rdf:type owl:NamedIndividual ,
                                 :SpanKind ;
                        :enumOptionValue "0"^^xsd:int ;
@@ -746,25 +1077,44 @@ Unlike CLIENT and SERVER, there is often no direct critical path latency relatio
 Implementations MAY assume SpanKind to be INTERNAL when receiving UNSPECIFIED."""@en .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#STATUS_CODE_ERROR
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/STATUS_CODE_ERROR
 :STATUS_CODE_ERROR rdf:type owl:NamedIndividual ,
                             :StatusCode ;
                    :enumOptionValue "0"^^xsd:int ;
                    rdfs:comment "The Span contains an error."@en .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#STATUS_CODE_OK
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/STATUS_CODE_OK
 :STATUS_CODE_OK rdf:type owl:NamedIndividual ,
                          :StatusCode ;
                 :enumOptionValue "1"^^xsd:int ;
                 rdfs:comment "The Span has been validated by an Application developer or Operator to have completed successfully."@en .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#STATUS_CODE_UNSET
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/STATUS_CODE_UNSET
 :STATUS_CODE_UNSET rdf:type owl:NamedIndividual ,
                             :StatusCode ;
                    :enumOptionValue "2"^^xsd:int ;
                    rdfs:comment "The default status."@en .
+
+
+#################################################################
+#    General axioms
+#################################################################
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :AnyValue
+                :Enum
+                :InstrumentationScope
+                :LogRecord
+                :LogsData
+                :Resource
+                :ResourceLogs
+                :ScopeLogs
+                :Status
+                :Link
+              )
+] .
 
 
 ###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
