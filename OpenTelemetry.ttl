@@ -26,10 +26,10 @@
                          owl:unionOf ( :InstrumentationScope
                                        :LogRecord
                                        :Resource
+                                       :DataPoint
                                        :Event
                                        :Link
                                        :Span
-                                       :SummaryDataPoint
                                      )
                        ] ;
            rdfs:range :KeyValue .
@@ -71,6 +71,7 @@
 :resource rdf:type owl:ObjectProperty ;
           rdfs:domain [ rdf:type owl:Class ;
                         owl:unionOf ( :ResourceLogs
+                                      :ResourceMetrics
                                       :ResourceSpans
                                     )
                       ] ;
@@ -87,6 +88,7 @@
 :scope rdf:type owl:ObjectProperty ;
        rdfs:domain [ rdf:type owl:Class ;
                      owl:unionOf ( :ScopeLogs
+                                   :ScopeMetrics
                                    :ScopeSpans
                                  )
                    ] ;
@@ -105,10 +107,45 @@
                  rdfs:range :SeverityNumber .
 
 
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#aggregationTemporality
+:aggregationTemporality rdf:type owl:ObjectProperty ;
+                        rdfs:domain [ rdf:type owl:Class ;
+                                      owl:unionOf ( :ExponentialHistogram
+                                                    :Histogram
+                                                    :Sum
+                                                  )
+                                    ] ;
+                        rdfs:range :AggregationTemporality .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#data
+:data rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf owl:topObjectProperty ;
+      rdfs:domain :Metric ;
+      rdfs:range :MetricData .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#dataPoint
+:dataPoint rdf:type owl:ObjectProperty ;
+           rdfs:domain :MetricData ;
+           rdfs:range :DataPoint .
+
+
 ###  https://github.com/andrej-kocijan/opentelemetry-ontology#event
 :event rdf:type owl:ObjectProperty ;
        rdfs:domain :Span ;
        rdfs:range :Event .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#exemplar
+:exemplar rdf:type owl:ObjectProperty ;
+          rdfs:domain [ rdf:type owl:Class ;
+                        owl:unionOf ( :ExponentialHistogramDataPoint
+                                      :HistogramDataPoint
+                                      :NumberDataPoint
+                                    )
+                      ] ;
+          rdfs:range :Exemplar .
 
 
 ###  https://github.com/andrej-kocijan/opentelemetry-ontology#filteredAttribute
@@ -129,16 +166,55 @@
       rdfs:range :Link .
 
 
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#metadata
+:metadata rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf owl:topObjectProperty ;
+          rdfs:domain :Metric ;
+          rdfs:range :KeyValue .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#metric
+:metric rdf:type owl:ObjectProperty ;
+        rdfs:domain :ScopeMetrics ;
+        rdfs:range :Metric .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#negative
+:negative rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf owl:topObjectProperty ;
+          rdfs:domain :ExponentialHistogramDataPoint ;
+          rdfs:range :Buckets .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#positive
+:positive rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf owl:topObjectProperty ;
+          rdfs:domain :ExponentialHistogramDataPoint ;
+          rdfs:range :Buckets .
+
+
 ###  https://github.com/andrej-kocijan/opentelemetry-ontology#quantileValue
 :quantileValue rdf:type owl:ObjectProperty ;
                rdfs:domain :SummaryDataPoint ;
                rdfs:range :ValueAtQuantile .
 
 
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#resourceMetrics
+:resourceMetrics rdf:type owl:ObjectProperty ;
+                 rdfs:domain :MetricsData ;
+                 rdfs:range :ResourceMetrics .
+
+
 ###  https://github.com/andrej-kocijan/opentelemetry-ontology#resourceSpan
 :resourceSpan rdf:type owl:ObjectProperty ;
               rdfs:domain :TracesData ;
               rdfs:range :ResourceSpans .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#scopeMetrics
+:scopeMetrics rdf:type owl:ObjectProperty ;
+              rdfs:domain :ResourceMetrics ;
+              rdfs:range :ScopeMetrics .
 
 
 ###  https://github.com/andrej-kocijan/opentelemetry-ontology#scopeSpan
@@ -189,9 +265,9 @@
        rdfs:subPropertyOf owl:topDataProperty ;
        rdfs:domain [ rdf:type owl:Class ;
                      owl:unionOf ( :LogRecord
+                                   :DataPoint
                                    :Link
                                    :Span
-                                   :SummaryDataPoint
                                  )
                    ] ;
        rdfs:range xsd:unsignedInt ;
@@ -233,6 +309,7 @@ When creating new spans, bits 10-31 (most-significant 22-bits) MUST be zero.
       rdfs:domain [ rdf:type owl:Class ;
                     owl:unionOf ( :InstrumentationScope
                                   :Event
+                                  :Metric
                                   :Span
                                 )
                   ] ;
@@ -274,7 +351,9 @@ Value of 0 indicates unknown or missing timestamp.""" .
            rdfs:domain [ rdf:type owl:Class ;
                          owl:unionOf ( :ResourceLogs
                                        :ScopeLogs
+                                       :ResourceMetrics
                                        :ResourceSpans
+                                       :ScopeMetrics
                                        :ScopeSpans
                                      )
                        ] ;
@@ -318,9 +397,9 @@ span if any of the following is true:
               rdfs:subPropertyOf owl:topDataProperty ;
               rdfs:domain [ rdf:type owl:Class ;
                             owl:unionOf ( :LogRecord
+                                          :DataPoint
                                           :Event
                                           :Exemplar
-                                          :SummaryDataPoint
                                         )
                           ] ;
               rdfs:range xsd:unsignedLong ;
@@ -360,10 +439,46 @@ trace if any of the following is true:
          rdfs:range xsd:string .
 
 
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#bucketCount
+:bucketCount rdf:type owl:DatatypeProperty ;
+             rdfs:domain [ rdf:type owl:Class ;
+                           owl:unionOf ( :Buckets
+                                         :HistogramDataPoint
+                                       )
+                         ] ;
+             rdfs:range xsd:unsignedLong .
+
+
 ###  https://github.com/andrej-kocijan/opentelemetry-ontology#count
 :count rdf:type owl:DatatypeProperty ;
-       rdfs:domain :SummaryDataPoint ;
+       rdfs:domain [ rdf:type owl:Class ;
+                     owl:unionOf ( :ExponentialHistogramDataPoint
+                                   :HistogramDataPoint
+                                   :SummaryDataPoint
+                                 )
+                   ] ;
        rdfs:range xsd:unsignedLong .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#description
+:description rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf owl:topDataProperty ;
+             rdfs:domain :Metric ;
+             rdfs:range xsd:string .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#doubleOrIntValue
+:doubleOrIntValue rdf:type owl:DatatypeProperty ;
+                  rdfs:domain [ rdf:type owl:Class ;
+                                owl:unionOf ( :Exemplar
+                                              :NumberDataPoint
+                                            )
+                              ] ;
+                  rdfs:range [ rdf:type rdfs:Datatype ;
+                               owl:unionOf ( xsd:double
+                                             xsd:long
+                                           )
+                             ] .
 
 
 ###  https://github.com/andrej-kocijan/opentelemetry-ontology#droppedEventsCount
@@ -385,14 +500,44 @@ trace if any of the following is true:
                  rdfs:range xsd:unsignedLong .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#exemplarValue
-:exemplarValue rdf:type owl:DatatypeProperty ;
-               rdfs:domain :Exemplar ;
-               rdfs:range [ rdf:type rdfs:Datatype ;
-                            owl:unionOf ( xsd:double
-                                          xsd:long
-                                        )
-                          ] .
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#explicitBound
+:explicitBound rdf:type owl:DatatypeProperty ;
+               rdfs:domain :HistogramDataPoint ;
+               rdfs:range xsd:double .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#isMonotonic
+:isMonotonic rdf:type owl:DatatypeProperty ;
+             rdfs:domain :Sum ;
+             rdfs:range xsd:boolean .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#max
+:max rdf:type owl:DatatypeProperty ;
+     rdfs:subPropertyOf owl:topDataProperty ;
+     rdfs:domain [ rdf:type owl:Class ;
+                   owl:unionOf ( :ExponentialHistogramDataPoint
+                                 :HistogramDataPoint
+                               )
+                 ] ;
+     rdfs:range xsd:double .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#min
+:min rdf:type owl:DatatypeProperty ;
+     rdfs:subPropertyOf owl:topDataProperty ;
+     rdfs:domain [ rdf:type owl:Class ;
+                   owl:unionOf ( :ExponentialHistogramDataPoint
+                                 :HistogramDataPoint
+                               )
+                 ] ;
+     rdfs:range xsd:double .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#offset
+:offset rdf:type owl:DatatypeProperty ;
+        rdfs:domain :Buckets ;
+        rdfs:range xsd:int .
 
 
 ###  https://github.com/andrej-kocijan/opentelemetry-ontology#parentSpanId
@@ -415,12 +560,18 @@ trace if any of the following is true:
                rdfs:range xsd:double .
 
 
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#scale
+:scale rdf:type owl:DatatypeProperty ;
+       rdfs:domain :ExponentialHistogramDataPoint ;
+       rdfs:range xsd:int .
+
+
 ###  https://github.com/andrej-kocijan/opentelemetry-ontology#startTimeUnixNano
 :startTimeUnixNano rdf:type owl:DatatypeProperty ;
                    rdfs:subPropertyOf owl:topDataProperty ;
                    rdfs:domain [ rdf:type owl:Class ;
-                                 owl:unionOf ( :Span
-                                               :SummaryDataPoint
+                                 owl:unionOf ( :DataPoint
+                                               :Span
                                              )
                                ] ;
                    rdfs:range xsd:unsignedLong .
@@ -428,7 +579,12 @@ trace if any of the following is true:
 
 ###  https://github.com/andrej-kocijan/opentelemetry-ontology#sum
 :sum rdf:type owl:DatatypeProperty ;
-     rdfs:domain :SummaryDataPoint ;
+     rdfs:domain [ rdf:type owl:Class ;
+                   owl:unionOf ( :ExponentialHistogramDataPoint
+                                 :HistogramDataPoint
+                                 :SummaryDataPoint
+                               )
+                 ] ;
      rdfs:range xsd:double .
 
 
@@ -440,6 +596,26 @@ trace if any of the following is true:
                                       )
                         ] ;
             rdfs:range xsd:string .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#unit
+:unit rdf:type owl:DatatypeProperty ;
+      rdfs:subPropertyOf owl:topDataProperty ;
+      rdfs:domain :Metric ;
+      rdfs:range xsd:string .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#zeroCount
+:zeroCount rdf:type owl:DatatypeProperty ;
+           rdfs:domain :ExponentialHistogramDataPoint ;
+           rdfs:range xsd:int .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#zeroThreshold
+:zeroThreshold rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf owl:topDataProperty ;
+               rdfs:domain :ExponentialHistogramDataPoint ;
+               rdfs:range xsd:double .
 
 
 #################################################################
@@ -750,6 +926,45 @@ Bits 10-31 are reserved for future use.""" .
 It describes how those values relate to the time interval over which they are aggregated."""@en .
 
 
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#Buckets
+:Buckets rdf:type owl:Class ;
+         rdfs:subClassOf [ rdf:type owl:Restriction ;
+                           owl:onProperty :bucketCount ;
+                           owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                           owl:onDataRange xsd:unsignedLong
+                         ] ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty :offset ;
+                           owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                           owl:onDataRange xsd:int
+                         ] ;
+         rdfs:comment "Buckets are a set of bucket counts, encoded in a contiguous array of counts."@en .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#DataPoint
+:DataPoint rdf:type owl:Class ;
+           rdfs:subClassOf [ rdf:type owl:Restriction ;
+                             owl:onProperty :attribute ;
+                             owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                             owl:onClass :KeyValue
+                           ] ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :timeUnixNano ;
+                             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                             owl:onDataRange xsd:unsignedLong
+                           ] ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :startTimeUnixNano ;
+                             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                             owl:onDataRange xsd:unsignedLong
+                           ] ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :flags ;
+                             owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                             owl:onDataRange xsd:unsignedInt
+                           ] .
+
+
 ###  https://github.com/andrej-kocijan/opentelemetry-ontology#DataPointFlags
 :DataPointFlags rdf:type owl:Class ;
                 owl:equivalentClass [ rdf:type owl:Class ;
@@ -800,7 +1015,7 @@ It describes how those values relate to the time interval over which they are ag
                             owl:onDataRange xsd:unsignedLong
                           ] ,
                           [ rdf:type owl:Restriction ;
-                            owl:onProperty :exemplarValue ;
+                            owl:onProperty :doubleOrIntValue ;
                             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                             owl:onDataRange [ rdf:type rdfs:Datatype ;
                                               owl:unionOf ( xsd:double
@@ -820,6 +1035,162 @@ It describes how those values relate to the time interval over which they are ag
                           ] ;
           rdfs:comment """A representation of an exemplar, which is a sample input measurement.
 Exemplars also hold information about the environment when the measurement was recorded, for example the span and trace ID of the active span when the exemplar was recorded."""@en .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#ExponentialHistogram
+:ExponentialHistogram rdf:type owl:Class ;
+                      rdfs:subClassOf :MetricData ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty :dataPoint ;
+                                        owl:allValuesFrom :ExponentialHistogramDataPoint
+                                      ] ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty :dataPoint ;
+                                        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                        owl:onClass :ExponentialHistogramDataPoint
+                                      ] ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty :aggregationTemporality ;
+                                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                        owl:onClass :AggregationTemporality
+                                      ] ;
+                      rdfs:comment "ExponentialHistogram represents the type of a metric that is calculated by aggregating as a ExponentialHistogram of all reported double measurements over a time interval."@en .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#ExponentialHistogramDataPoint
+:ExponentialHistogramDataPoint rdf:type owl:Class ;
+                               rdfs:subClassOf :DataPoint ,
+                                               [ rdf:type owl:Restriction ;
+                                                 owl:onProperty :exemplar ;
+                                                 owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                                 owl:onClass :Exemplar
+                                               ] ,
+                                               [ rdf:type owl:Restriction ;
+                                                 owl:onProperty :negative ;
+                                                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                 owl:onClass :Buckets
+                                               ] ,
+                                               [ rdf:type owl:Restriction ;
+                                                 owl:onProperty :positive ;
+                                                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                 owl:onClass :Buckets
+                                               ] ,
+                                               [ rdf:type owl:Restriction ;
+                                                 owl:onProperty :count ;
+                                                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                 owl:onDataRange xsd:unsignedLong
+                                               ] ,
+                                               [ rdf:type owl:Restriction ;
+                                                 owl:onProperty :max ;
+                                                 owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                 owl:onDataRange xsd:double
+                                               ] ,
+                                               [ rdf:type owl:Restriction ;
+                                                 owl:onProperty :min ;
+                                                 owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                 owl:onDataRange xsd:double
+                                               ] ,
+                                               [ rdf:type owl:Restriction ;
+                                                 owl:onProperty :scale ;
+                                                 owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                 owl:onDataRange xsd:int
+                                               ] ,
+                                               [ rdf:type owl:Restriction ;
+                                                 owl:onProperty :sum ;
+                                                 owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                 owl:onDataRange xsd:double
+                                               ] ,
+                                               [ rdf:type owl:Restriction ;
+                                                 owl:onProperty :zeroCount ;
+                                                 owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                 owl:onDataRange xsd:unsignedLong
+                                               ] ,
+                                               [ rdf:type owl:Restriction ;
+                                                 owl:onProperty :zeroThreshold ;
+                                                 owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                 owl:onDataRange xsd:double
+                                               ] ;
+                               rdfs:comment "ExponentialHistogramDataPoint is a single data point in a timeseries that describes the time-varying values of a ExponentialHistogram of double values. A ExponentialHistogram contains summary statistics for a population of values, it may optionally contain the distribution of those values across a set of buckets."@en .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#Gauge
+:Gauge rdf:type owl:Class ;
+       rdfs:subClassOf :MetricData ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty :dataPoint ;
+                         owl:allValuesFrom :NumberDataPoint
+                       ] ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty :dataPoint ;
+                         owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                         owl:onClass :NumberDataPoint
+                       ] ;
+       rdfs:comment """Gauge represents the type of a scalar metric that always exports the \"current value\" for every data point. It should be used for an \"unknown\" aggregation.
+
+A Gauge does not support different aggregation temporalities. Given the aggregation is unknown, points cannot be combined using the same aggregation, regardless of aggregation temporalities. Therefore, AggregationTemporality is not included. Consequently, this also means \"StartTimeUnixNano\" is ignored for all data points."""@en .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#Histogram
+:Histogram rdf:type owl:Class ;
+           rdfs:subClassOf :MetricData ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :aggregationTemporality ;
+                             owl:allValuesFrom :AggregationTemporality
+                           ] ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :dataPoint ;
+                             owl:allValuesFrom :HistogramDataPoint
+                           ] ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :dataPoint ;
+                             owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                             owl:onClass :HistogramDataPoint
+                           ] ;
+           rdfs:comment "Histogram represents the type of a metric that is calculated by aggregating as a Histogram of all reported measurements over a time interval."@en .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#HistogramDataPoint
+:HistogramDataPoint rdf:type owl:Class ;
+                    rdfs:subClassOf :DataPoint ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty :exemplar ;
+                                      owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                      owl:onClass :Exemplar
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty :bucketCount ;
+                                      owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                      owl:onDataRange xsd:unsignedLong
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty :explicitBound ;
+                                      owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                      owl:onDataRange xsd:double
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty :count ;
+                                      owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                      owl:onDataRange xsd:unsignedLong
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty :max ;
+                                      owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                      owl:onDataRange xsd:double
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty :min ;
+                                      owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                      owl:onDataRange xsd:double
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty :sum ;
+                                      owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                      owl:onDataRange xsd:double
+                                    ] ;
+                    owl:disjointWith :SummaryDataPoint ;
+                    rdfs:comment """HistogramDataPoint is a single data point in a timeseries that describes the time-varying values of a Histogram. A Histogram contains summary statistics for a population of values, it may optionally contain the distribution of those values across a set of buckets.
+
+If the histogram contains the distribution of values, then both \"explicit_bounds\" and \"bucket counts\" fields must be defined.  If the histogram does not contain the distribution of values, then both \"explicit_bounds\" and \"bucket_counts\" must be omitted and only \"count\" and \"sum\" are known."""@en .
 
 
 ###  https://github.com/andrej-kocijan/opentelemetry-ontology#Link
@@ -858,6 +1229,82 @@ Exemplars also hold information about the environment when the measurement was r
 For example, this can be used in batching operations, where a single batch handler processes multiple requests from different traces or when the handler receives a request from a different project."""@en .
 
 
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#Metric
+:Metric rdf:type owl:Class ;
+        rdfs:subClassOf [ rdf:type owl:Restriction ;
+                          owl:onProperty :metadata ;
+                          owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                          owl:onClass :KeyValue
+                        ] ,
+                        [ rdf:type owl:Restriction ;
+                          owl:onProperty :data ;
+                          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                          owl:onClass :MetricData
+                        ] ,
+                        [ rdf:type owl:Restriction ;
+                          owl:onProperty :name ;
+                          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                          owl:onDataRange xsd:string
+                        ] ,
+                        [ rdf:type owl:Restriction ;
+                          owl:onProperty :description ;
+                          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                          owl:onDataRange xsd:string
+                        ] .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#MetricData
+:MetricData rdf:type owl:Class .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#MetricsData
+:MetricsData rdf:type owl:Class ;
+             rdfs:subClassOf [ rdf:type owl:Restriction ;
+                               owl:onProperty :resourceMetrics ;
+                               owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                               owl:onClass :ResourceMetrics
+                             ] .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#NumberDataPoint
+:NumberDataPoint rdf:type owl:Class ;
+                 rdfs:subClassOf :DataPoint ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty :exemplar ;
+                                   owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                   owl:onClass :Exemplar
+                                 ] ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty :doubleOrIntValue ;
+                                   owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                   owl:onDataRange [ rdf:type rdfs:Datatype ;
+                                                     owl:unionOf ( xsd:double
+                                                                   xsd:int
+                                                                 )
+                                                   ]
+                                 ] ;
+                 rdfs:comment "NumberDataPoint is a single data point in a timeseries that describes the time-varying scalar value of a metric."@en .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#ResourceMetrics
+:ResourceMetrics rdf:type owl:Class ;
+                 rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                   owl:onProperty :scopeMetrics ;
+                                   owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                   owl:onClass :ScopeMetrics
+                                 ] ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty :resource ;
+                                   owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                   owl:onClass :Resource
+                                 ] ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty :schemaUrl ;
+                                   owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                   owl:onDataRange xsd:string
+                                 ] .
+
+
 ###  https://github.com/andrej-kocijan/opentelemetry-ontology#ResourceSpans
 :ResourceSpans rdf:type owl:Class ;
                rdfs:subClassOf [ rdf:type owl:Restriction ;
@@ -876,6 +1323,26 @@ For example, this can be used in batching operations, where a single batch handl
                                  owl:onDataRange xsd:string
                                ] ;
                rdfs:comment "A collection of ScopeSpans from a Resource."@en .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#ScopeMetrics
+:ScopeMetrics rdf:type owl:Class ;
+              rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                owl:onProperty :metric ;
+                                owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                owl:onClass :Metric
+                              ] ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty :scope ;
+                                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                owl:onClass :InstrumentationScope
+                              ] ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty :schemaUrl ;
+                                owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                owl:onDataRange xsd:string
+                              ] ;
+              rdfs:comment "A collection of Metrics produced by an Scope."@en .
 
 
 ###  https://github.com/andrej-kocijan/opentelemetry-ontology#ScopeSpans
@@ -983,27 +1450,53 @@ For example, this can be used in batching operations, where a single batch handl
       rdfs:comment "A Span represents a single operation performed by a single component of the system."@en .
 
 
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#Sum
+:Sum rdf:type owl:Class ;
+     rdfs:subClassOf :MetricData ,
+                     [ rdf:type owl:Restriction ;
+                       owl:onProperty :dataPoint ;
+                       owl:allValuesFrom :NumberDataPoint
+                     ] ,
+                     [ rdf:type owl:Restriction ;
+                       owl:onProperty :dataPoint ;
+                       owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                       owl:onClass :NumberDataPoint
+                     ] ,
+                     [ rdf:type owl:Restriction ;
+                       owl:onProperty :aggregationTemporality ;
+                       owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                       owl:onClass :AggregationTemporality
+                     ] ,
+                     [ rdf:type owl:Restriction ;
+                       owl:onProperty :isMonotonic ;
+                       owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                       owl:onDataRange xsd:boolean
+                     ] ;
+     rdfs:comment "Sum represents the type of a scalar metric that is calculated as a sum of all reported measurements over a time interval."@en .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#Summary
+:Summary rdf:type owl:Class ;
+         rdfs:subClassOf :MetricData ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty :dataPoint ;
+                           owl:allValuesFrom :SummaryDataPoint
+                         ] ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty :dataPoint ;
+                           owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                           owl:onClass :SummaryDataPoint
+                         ] ;
+         rdfs:comment "Summary metric data are used to convey quantile summaries, a Prometheus (see: https://prometheus.io/docs/concepts/metric_types/#summary) and OpenMetrics (see: https://github.com/OpenObservability/OpenMetrics/blob/4dbf6075567ab43296eed941037c12951faafb92/protos/prometheus.proto#L45) data type. These data points cannot always be merged in a meaningful way.  While they can be useful in some applications, histogram data points are recommended for new applications."@en .
+
+
 ###  https://github.com/andrej-kocijan/opentelemetry-ontology#SummaryDataPoint
 :SummaryDataPoint rdf:type owl:Class ;
-                  rdfs:subClassOf [ rdf:type owl:Restriction ;
+                  rdfs:subClassOf :DataPoint ,
+                                  [ rdf:type owl:Restriction ;
                                     owl:onProperty :quantileValue ;
                                     owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
                                     owl:onClass :ValueAtQuantile
-                                  ] ,
-                                  [ rdf:type owl:Restriction ;
-                                    owl:onProperty :timeUnixNano ;
-                                    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                    owl:onDataRange xsd:unsignedLong
-                                  ] ,
-                                  [ rdf:type owl:Restriction ;
-                                    owl:onProperty :startTimeUnixNano ;
-                                    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                    owl:onDataRange xsd:unsignedLong
-                                  ] ,
-                                  [ rdf:type owl:Restriction ;
-                                    owl:onProperty :flags ;
-                                    owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                    owl:onDataRange xsd:unsignedInt
                                   ] ,
                                   [ rdf:type owl:Restriction ;
                                     owl:onProperty :count ;
@@ -1379,6 +1872,16 @@ Instead use bitwise \"and\" with the appropriate mask as shown above."""@en .
                 :ScopeLogs
                 :Status
                 :Link
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :ExponentialHistogram
+                :Gauge
+                :Histogram
+                :Sum
+                :Summary
               )
 ] .
 
