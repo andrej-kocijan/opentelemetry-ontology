@@ -29,6 +29,7 @@
                                        :Event
                                        :Link
                                        :Span
+                                       :SummaryDataPoint
                                      )
                        ] ;
            rdfs:range :KeyValue .
@@ -110,6 +111,12 @@
        rdfs:range :Event .
 
 
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#filteredAttribute
+:filteredAttribute rdf:type owl:ObjectProperty ;
+                   rdfs:domain :Exemplar ;
+                   rdfs:range :KeyValue .
+
+
 ###  https://github.com/andrej-kocijan/opentelemetry-ontology#kind
 :kind rdf:type owl:ObjectProperty ;
       rdfs:domain :Span ;
@@ -120,6 +127,12 @@
 :link rdf:type owl:ObjectProperty ;
       rdfs:domain :Span ;
       rdfs:range :Link .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#quantileValue
+:quantileValue rdf:type owl:ObjectProperty ;
+               rdfs:domain :SummaryDataPoint ;
+               rdfs:range :ValueAtQuantile .
 
 
 ###  https://github.com/andrej-kocijan/opentelemetry-ontology#resourceSpan
@@ -178,6 +191,7 @@
                      owl:unionOf ( :LogRecord
                                    :Link
                                    :Span
+                                   :SummaryDataPoint
                                  )
                    ] ;
        rdfs:range xsd:unsignedInt ;
@@ -279,6 +293,7 @@ Value of 0 indicates unknown or missing timestamp.""" .
         rdfs:subPropertyOf owl:topDataProperty ;
         rdfs:domain [ rdf:type owl:Class ;
                       owl:unionOf ( :LogRecord
+                                    :Exemplar
                                     :Link
                                     :Span
                                   )
@@ -304,6 +319,8 @@ span if any of the following is true:
               rdfs:domain [ rdf:type owl:Class ;
                             owl:unionOf ( :LogRecord
                                           :Event
+                                          :Exemplar
+                                          :SummaryDataPoint
                                         )
                           ] ;
               rdfs:range xsd:unsignedLong ;
@@ -317,6 +334,7 @@ Value of 0 indicates unknown or missing timestamp."""@en .
          rdfs:subPropertyOf owl:topDataProperty ;
          rdfs:domain [ rdf:type owl:Class ;
                        owl:unionOf ( :LogRecord
+                                     :Exemplar
                                      :Link
                                      :Span
                                    )
@@ -342,6 +360,12 @@ trace if any of the following is true:
          rdfs:range xsd:string .
 
 
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#count
+:count rdf:type owl:DatatypeProperty ;
+       rdfs:domain :SummaryDataPoint ;
+       rdfs:range xsd:unsignedLong .
+
+
 ###  https://github.com/andrej-kocijan/opentelemetry-ontology#droppedEventsCount
 :droppedEventsCount rdf:type owl:DatatypeProperty ;
                     rdfs:domain :Span ;
@@ -361,17 +385,51 @@ trace if any of the following is true:
                  rdfs:range xsd:unsignedLong .
 
 
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#exemplarValue
+:exemplarValue rdf:type owl:DatatypeProperty ;
+               rdfs:domain :Exemplar ;
+               rdfs:range [ rdf:type rdfs:Datatype ;
+                            owl:unionOf ( xsd:double
+                                          xsd:long
+                                        )
+                          ] .
+
+
 ###  https://github.com/andrej-kocijan/opentelemetry-ontology#parentSpanId
 :parentSpanId rdf:type owl:DatatypeProperty ;
               rdfs:domain :Span ;
               rdfs:range xsd:byte .
 
 
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#quantile
+:quantile rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf owl:topDataProperty ;
+          rdfs:domain :ValueAtQuantile ;
+          rdfs:range xsd:double .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#quantileValue
+:quantileValue rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf owl:topDataProperty ;
+               rdfs:domain :ValueAtQuantile ;
+               rdfs:range xsd:double .
+
+
 ###  https://github.com/andrej-kocijan/opentelemetry-ontology#startTimeUnixNano
 :startTimeUnixNano rdf:type owl:DatatypeProperty ;
                    rdfs:subPropertyOf owl:topDataProperty ;
-                   rdfs:domain :Span ;
+                   rdfs:domain [ rdf:type owl:Class ;
+                                 owl:unionOf ( :Span
+                                               :SummaryDataPoint
+                                             )
+                               ] ;
                    rdfs:range xsd:unsignedLong .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#sum
+:sum rdf:type owl:DatatypeProperty ;
+     rdfs:domain :SummaryDataPoint ;
+     rdfs:range xsd:double .
 
 
 ###  https://github.com/andrej-kocijan/opentelemetry-ontology#traceState
@@ -679,6 +737,31 @@ Bits 10-31 are reserved for future use.""" .
             rdfs:comment "For the semantics of status codes see https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/api.md#set-status"@en .
 
 
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#AggregationTemporality
+:AggregationTemporality rdf:type owl:Class ;
+                        owl:equivalentClass [ rdf:type owl:Class ;
+                                              owl:oneOf ( :AGGREGATION_TEMPORALITY_CUMULATIVE
+                                                          :AGGREGATION_TEMPORALITY_DELTA
+                                                          :AGGREGATION_TEMPORALITY_UNSPECIFIED
+                                                        )
+                                            ] ;
+                        rdfs:subClassOf :Enum ;
+                        rdfs:comment """AggregationTemporality defines how a metric aggregator reports aggregated values.
+It describes how those values relate to the time interval over which they are aggregated."""@en .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#DataPointFlags
+:DataPointFlags rdf:type owl:Class ;
+                owl:equivalentClass [ rdf:type owl:Class ;
+                                      owl:oneOf ( :DATA_POINT_FLAGS_DO_NOT_USE
+                                                  :DATA_POINT_FLAGS_NO_RECORDED_VALUE_MASK
+                                                )
+                                    ] ;
+                rdfs:subClassOf :Enum ;
+                rdfs:comment """DataPointFlags is defined as a protobuf 'uint32' type and is to be used as a bit-field representing 32 distinct boolean flags.  Each flag defined in this enum is a bit-mask.  To test the presence of a single flag in the flags of a data point, for example, use an expression like:
+  (point.flags & DATA_POINT_FLAGS_NO_RECORDED_VALUE_MASK) == DATA_POINT_FLAGS_NO_RECORDED_VALUE_MASK"""@en .
+
+
 ###  https://github.com/andrej-kocijan/opentelemetry-ontology#Event
 :Event rdf:type owl:Class ;
        rdfs:subClassOf [ rdf:type owl:Restriction ;
@@ -702,6 +785,41 @@ Bits 10-31 are reserved for future use.""" .
                          owl:onDataRange xsd:unsignedInt
                        ] ;
        rdfs:comment "Event is a time-stamped annotation of the span, consisting of user-supplied text description and key-value pairs."@en .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#Exemplar
+:Exemplar rdf:type owl:Class ;
+          rdfs:subClassOf [ rdf:type owl:Restriction ;
+                            owl:onProperty :filteredAttribute ;
+                            owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                            owl:onClass :KeyValue
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty :timeUnixNano ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onDataRange xsd:unsignedLong
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty :exemplarValue ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onDataRange [ rdf:type rdfs:Datatype ;
+                                              owl:unionOf ( xsd:double
+                                                            xsd:long
+                                                          )
+                                            ]
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty :spanId ;
+                            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onDataRange xsd:byte
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty :traceId ;
+                            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onDataRange xsd:byte
+                          ] ;
+          rdfs:comment """A representation of an exemplar, which is a sample input measurement.
+Exemplars also hold information about the environment when the measurement was recorded, for example the span and trace ID of the active span when the exemplar was recorded."""@en .
 
 
 ###  https://github.com/andrej-kocijan/opentelemetry-ontology#Link
@@ -865,6 +983,41 @@ For example, this can be used in batching operations, where a single batch handl
       rdfs:comment "A Span represents a single operation performed by a single component of the system."@en .
 
 
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#SummaryDataPoint
+:SummaryDataPoint rdf:type owl:Class ;
+                  rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                    owl:onProperty :quantileValue ;
+                                    owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                    owl:onClass :ValueAtQuantile
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty :timeUnixNano ;
+                                    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                    owl:onDataRange xsd:unsignedLong
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty :startTimeUnixNano ;
+                                    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                    owl:onDataRange xsd:unsignedLong
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty :flags ;
+                                    owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                    owl:onDataRange xsd:unsignedInt
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty :count ;
+                                    owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                    owl:onDataRange xsd:unsignedLong
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty :sum ;
+                                    owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                    owl:onDataRange xsd:double
+                                  ] ;
+                  rdfs:comment "SummaryDataPoint is a single data point in a timeseries that describes the time-varying values of a Summary metric."@en .
+
+
 ###  https://github.com/andrej-kocijan/opentelemetry-ontology#TracesData
 :TracesData rdf:type owl:Class ;
             rdfs:subClassOf [ rdf:type owl:Restriction ;
@@ -877,6 +1030,17 @@ For example, this can be used in batching operations, where a single batch handl
 The main difference between this message and collector protocol is that in this message there will not be any \"control\" or \"metadata\" specific to OTLP protocol.
 
 When new fields are added into this message, the OTLP request MUST be updated as well."""@en .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#ValueAtQuantile
+:ValueAtQuantile rdf:type owl:Class ;
+                 rdfs:comment """Represents the value at a given quantile of a distribution.
+
+To record Min and Max values following conventions are used:
+- The 1.0 quantile is equivalent to the maximum value observed.
+- The 0.0 quantile is equivalent to the minimum value observed.
+
+See the following issue for more context: https://github.com/open-telemetry/opentelemetry-proto/issues/125"""@en .
 
 
 #################################################################
@@ -1132,6 +1296,72 @@ Implementations MAY assume SpanKind to be INTERNAL when receiving UNSPECIFIED.""
                             :StatusCode ;
                    :enumOptionValue "2"^^xsd:int ;
                    rdfs:comment "The default status."@en .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#AGGREGATION_TEMPORALITY_CUMULATIVE
+:AGGREGATION_TEMPORALITY_CUMULATIVE rdf:type owl:NamedIndividual ,
+                                             :AggregationTemporality ;
+                                    :enumOptionValue "2"^^xsd:int ;
+                                    rdfs:comment """CUMULATIVE is an AggregationTemporality for a metric aggregator which reports changes since a fixed start time. This means that current values of a CUMULATIVE metric depend on all previous measurements since the start time. Because of this, the sender is required to retain this state in some form. If this state is lost or invalidated, the CUMULATIVE metric values MUST be reset and a new fixed start time following the last reported measurement time sent MUST be used.
+
+For example, consider a system measuring the number of requests that it receives and reports the sum of these requests every second as a CUMULATIVE metric:
+
+  1. The system starts receiving at time=t_0.
+  2. A request is received, the system measures 1 request.
+  3. A request is received, the system measures 1 request.
+  4. A request is received, the system measures 1 request.
+  5. The 1 second collection cycle ends. A metric is exported for the number of requests received over the interval of time t_0 to t_0+1 with a value of 3.
+  6. A request is received, the system measures 1 request.
+  7. A request is received, the system measures 1 request.
+  8. The 1 second collection cycle ends. A metric is exported for the number of requests received over the interval of time t_0 to t_0+2 with a value of 5.
+  9. The system experiences a fault and loses state.
+  10. The system recovers and resumes receiving at time=t_1.
+  11. A request is received, the system measures 1 request.
+  12. The 1 second collection cycle ends. A metric is exported for the number of requests received over the interval of time t_1 to t_0+1 with a value of 1.
+
+Note: Even though, when reporting changes since last report time, using CUMULATIVE is valid, it is not recommended. This may cause problems for systems that do not use start_time to determine when the aggregation value was reset (e.g. Prometheus)."""@en .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#AGGREGATION_TEMPORALITY_DELTA
+:AGGREGATION_TEMPORALITY_DELTA rdf:type owl:NamedIndividual ,
+                                        :AggregationTemporality ;
+                               :enumOptionValue "1"^^xsd:int ;
+                               rdfs:comment """DELTA is an AggregationTemporality for a metric aggregator which reports changes since last report time. Successive metrics contain aggregation of values from continuous and non-overlapping intervals.
+
+The values for a DELTA metric are based only on the time interval associated with one measurement cycle. There is no dependency on previous measurements like is the case for CUMULATIVE metrics.
+
+For example, consider a system measuring the number of requests that it receives and reports the sum of these requests every second as a DELTA metric:
+
+  1. The system starts receiving at time=t_0.
+  2. A request is received, the system measures 1 request.
+  3. A request is received, the system measures 1 request.
+  4. A request is received, the system measures 1 request.
+  5. The 1 second collection cycle ends. A metric is exported for the number of requests received over the interval of time t_0 to t_0+1 with a value of 3.
+  6. A request is received, the system measures 1 request.
+  7. A request is received, the system measures 1 request.
+  8. The 1 second collection cycle ends. A metric is exported for the number of requests received over the interval of time t_0+1 to t_0+2 with a value of 2."""@en .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#AGGREGATION_TEMPORALITY_UNSPECIFIED
+:AGGREGATION_TEMPORALITY_UNSPECIFIED rdf:type owl:NamedIndividual ,
+                                              :AggregationTemporality ;
+                                     :enumOptionValue "0"^^xsd:int ;
+                                     rdfs:comment "UNSPECIFIED is the default AggregationTemporality, it MUST not be used."@en .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#DATA_POINT_FLAGS_DO_NOT_USE
+:DATA_POINT_FLAGS_DO_NOT_USE rdf:type owl:NamedIndividual ,
+                                      :DataPointFlags ;
+                             :enumOptionValue "0"^^xsd:int ;
+                             rdfs:comment """The zero value for the enum. Should not be used for comparisons.
+Instead use bitwise \"and\" with the appropriate mask as shown above."""@en .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#DATA_POINT_FLAGS_NO_RECORDED_VALUE_MASK
+:DATA_POINT_FLAGS_NO_RECORDED_VALUE_MASK rdf:type owl:NamedIndividual ,
+                                                  :DataPointFlags ;
+                                         :enumOptionValue "1"^^xsd:int ;
+                                         rdfs:comment "This DataPoint is valid but has no recorded value.  This value SHOULD be used to reflect explicitly missing data in a series, as for an equivalent to the Prometheus \"staleness marker\"." .
 
 
 #################################################################
