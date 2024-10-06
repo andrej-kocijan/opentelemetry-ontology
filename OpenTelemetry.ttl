@@ -12,6 +12,17 @@
 #    Object Properties
 #################################################################
 
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/aggregationTemporality
+:aggregationTemporality rdf:type owl:ObjectProperty ;
+                        rdfs:domain [ rdf:type owl:Class ;
+                                      owl:unionOf ( :ExponentialHistogram
+                                                    :Histogram
+                                                    :Sum
+                                                  )
+                                    ] ;
+                        rdfs:range :AggregationTemporality .
+
+
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/anyValueListElement
 :anyValueListElement rdf:type owl:ObjectProperty ;
                      rdfs:subPropertyOf owl:topObjectProperty ;
@@ -23,12 +34,12 @@
 :attribute rdf:type owl:ObjectProperty ;
            rdfs:subPropertyOf owl:topObjectProperty ;
            rdfs:domain [ rdf:type owl:Class ;
-                         owl:unionOf ( :InstrumentationScope
+                         owl:unionOf ( :DataPoint
+                                       :Event
+                                       :InstrumentationScope
+                                       :Link
                                        :LogRecord
                                        :Resource
-                                       :DataPoint
-                                       :Event
-                                       :Link
                                        :Span
                                      )
                        ] ;
@@ -47,6 +58,42 @@
       rdfs:range :StatusCode .
 
 
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/data
+:data rdf:type owl:ObjectProperty ;
+      rdfs:subPropertyOf owl:topObjectProperty ;
+      rdfs:domain :Metric ;
+      rdfs:range :MetricData .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/dataPoint
+:dataPoint rdf:type owl:ObjectProperty ;
+           rdfs:domain :MetricData ;
+           rdfs:range :DataPoint .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/event
+:event rdf:type owl:ObjectProperty ;
+       rdfs:domain :Span ;
+       rdfs:range :Event .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/exemplar
+:exemplar rdf:type owl:ObjectProperty ;
+          rdfs:domain [ rdf:type owl:Class ;
+                        owl:unionOf ( :ExponentialHistogramDataPoint
+                                      :HistogramDataPoint
+                                      :NumberDataPoint
+                                    )
+                      ] ;
+          rdfs:range :Exemplar .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/filteredAttribute
+:filteredAttribute rdf:type owl:ObjectProperty ;
+                   rdfs:domain :Exemplar ;
+                   rdfs:range :KeyValue .
+
+
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/keyValueListElement
 :keyValueListElement rdf:type owl:ObjectProperty ;
                      rdfs:subPropertyOf owl:topObjectProperty ;
@@ -61,20 +108,64 @@
                rdfs:range :AnyValue .
 
 
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/kind
+:kind rdf:type owl:ObjectProperty ;
+      rdfs:domain :Span ;
+      rdfs:range :SpanKind .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/link
+:link rdf:type owl:ObjectProperty ;
+      rdfs:domain :Span ;
+      rdfs:range :Link .
+
+
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/logRecord
 :logRecord rdf:type owl:ObjectProperty ;
            rdfs:domain :ScopeLogs ;
            rdfs:range :LogRecord .
 
 
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/metadata
+:metadata rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf owl:topObjectProperty ;
+          rdfs:domain :Metric ;
+          rdfs:range :KeyValue .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/metric
+:metric rdf:type owl:ObjectProperty ;
+        rdfs:domain :ScopeMetrics ;
+        rdfs:range :Metric .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/negative
+:negative rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf owl:topObjectProperty ;
+          rdfs:domain :ExponentialHistogramDataPoint ;
+          rdfs:range :Buckets .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/positive
+:positive rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf owl:topObjectProperty ;
+          rdfs:domain :ExponentialHistogramDataPoint ;
+          rdfs:range :Buckets .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/quantileValue
+:quantileValue rdf:type owl:ObjectProperty ;
+               rdfs:domain [ rdf:type owl:Class ;
+                             owl:unionOf ( :SummaryDataPoint
+                                           :ValueAtQuantile
+                                         )
+                           ] ;
+               rdfs:range :ValueAtQuantile .
+
+
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/resource
 :resource rdf:type owl:ObjectProperty ;
-          rdfs:domain [ rdf:type owl:Class ;
-                        owl:unionOf ( :ResourceLogs
-                                      :ResourceMetrics
-                                      :ResourceSpans
-                                    )
-                      ] ;
+          rdfs:domain :ResourceData ;
           rdfs:range :Resource .
 
 
@@ -84,21 +175,40 @@
               rdfs:range :ResourceLogs .
 
 
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/resourceMetrics
+:resourceMetrics rdf:type owl:ObjectProperty ;
+                 rdfs:domain :MetricsData ;
+                 rdfs:range :ResourceMetrics .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/resourceSpan
+:resourceSpan rdf:type owl:ObjectProperty ;
+              rdfs:domain :TracesData ;
+              rdfs:range :ResourceSpans .
+
+
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/scope
 :scope rdf:type owl:ObjectProperty ;
-       rdfs:domain [ rdf:type owl:Class ;
-                     owl:unionOf ( :ScopeLogs
-                                   :ScopeMetrics
-                                   :ScopeSpans
-                                 )
-                   ] ;
+       rdfs:domain :ScopeData ;
        rdfs:range :InstrumentationScope .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/scopeLogs
-:scopeLogs rdf:type owl:ObjectProperty ;
-           rdfs:domain :ResourceLogs ;
-           rdfs:range :ScopeLogs .
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/scopeLog
+:scopeLog rdf:type owl:ObjectProperty ;
+          rdfs:domain :ResourceLogs ;
+          rdfs:range :ScopeLogs .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/scopeMetric
+:scopeMetric rdf:type owl:ObjectProperty ;
+             rdfs:domain :ResourceMetrics ;
+             rdfs:range :ScopeMetrics .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/scopeSpan
+:scopeSpan rdf:type owl:ObjectProperty ;
+           rdfs:domain :ResourceSpans ;
+           rdfs:range :ScopeSpans .
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/severitryNumber
@@ -107,129 +217,13 @@
                  rdfs:range :SeverityNumber .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#aggregationTemporality
-:aggregationTemporality rdf:type owl:ObjectProperty ;
-                        rdfs:domain [ rdf:type owl:Class ;
-                                      owl:unionOf ( :ExponentialHistogram
-                                                    :Histogram
-                                                    :Sum
-                                                  )
-                                    ] ;
-                        rdfs:range :AggregationTemporality .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#data
-:data rdf:type owl:ObjectProperty ;
-      rdfs:subPropertyOf owl:topObjectProperty ;
-      rdfs:domain :Metric ;
-      rdfs:range :MetricData .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#dataPoint
-:dataPoint rdf:type owl:ObjectProperty ;
-           rdfs:domain :MetricData ;
-           rdfs:range :DataPoint .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#event
-:event rdf:type owl:ObjectProperty ;
-       rdfs:domain :Span ;
-       rdfs:range :Event .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#exemplar
-:exemplar rdf:type owl:ObjectProperty ;
-          rdfs:domain [ rdf:type owl:Class ;
-                        owl:unionOf ( :ExponentialHistogramDataPoint
-                                      :HistogramDataPoint
-                                      :NumberDataPoint
-                                    )
-                      ] ;
-          rdfs:range :Exemplar .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#filteredAttribute
-:filteredAttribute rdf:type owl:ObjectProperty ;
-                   rdfs:domain :Exemplar ;
-                   rdfs:range :KeyValue .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#kind
-:kind rdf:type owl:ObjectProperty ;
-      rdfs:domain :Span ;
-      rdfs:range :SpanKind .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#link
-:link rdf:type owl:ObjectProperty ;
-      rdfs:domain :Span ;
-      rdfs:range :Link .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#metadata
-:metadata rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf owl:topObjectProperty ;
-          rdfs:domain :Metric ;
-          rdfs:range :KeyValue .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#metric
-:metric rdf:type owl:ObjectProperty ;
-        rdfs:domain :ScopeMetrics ;
-        rdfs:range :Metric .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#negative
-:negative rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf owl:topObjectProperty ;
-          rdfs:domain :ExponentialHistogramDataPoint ;
-          rdfs:range :Buckets .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#positive
-:positive rdf:type owl:ObjectProperty ;
-          rdfs:subPropertyOf owl:topObjectProperty ;
-          rdfs:domain :ExponentialHistogramDataPoint ;
-          rdfs:range :Buckets .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#quantileValue
-:quantileValue rdf:type owl:ObjectProperty ;
-               rdfs:domain :SummaryDataPoint ;
-               rdfs:range :ValueAtQuantile .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#resourceMetrics
-:resourceMetrics rdf:type owl:ObjectProperty ;
-                 rdfs:domain :MetricsData ;
-                 rdfs:range :ResourceMetrics .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#resourceSpan
-:resourceSpan rdf:type owl:ObjectProperty ;
-              rdfs:domain :TracesData ;
-              rdfs:range :ResourceSpans .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#scopeMetrics
-:scopeMetrics rdf:type owl:ObjectProperty ;
-              rdfs:domain :ResourceMetrics ;
-              rdfs:range :ScopeMetrics .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#scopeSpan
-:scopeSpan rdf:type owl:ObjectProperty ;
-           rdfs:domain :ResourceSpans ;
-           rdfs:range :ScopeSpans .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#span
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/span
 :span rdf:type owl:ObjectProperty ;
       rdfs:domain :ScopeSpans ;
       rdfs:range :Span .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#status
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/status
 :status rdf:type owl:ObjectProperty ;
         rdfs:domain :Span ;
         rdfs:range :Status .
@@ -239,15 +233,57 @@
 #    Data properties
 #################################################################
 
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/bucketCount
+:bucketCount rdf:type owl:DatatypeProperty ;
+             rdfs:domain [ rdf:type owl:Class ;
+                           owl:unionOf ( :Buckets
+                                         :HistogramDataPoint
+                                       )
+                         ] ;
+             rdfs:range xsd:unsignedLong .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/count
+:count rdf:type owl:DatatypeProperty ;
+       rdfs:domain [ rdf:type owl:Class ;
+                     owl:unionOf ( :ExponentialHistogramDataPoint
+                                   :HistogramDataPoint
+                                   :SummaryDataPoint
+                                 )
+                   ] ;
+       rdfs:range xsd:unsignedLong .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/description
+:description rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf owl:topDataProperty ;
+             rdfs:domain :Metric ;
+             rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/doubleOrIntValue
+:doubleOrIntValue rdf:type owl:DatatypeProperty ;
+                  rdfs:domain [ rdf:type owl:Class ;
+                                owl:unionOf ( :Exemplar
+                                              :NumberDataPoint
+                                            )
+                              ] ;
+                  rdfs:range [ rdf:type rdfs:Datatype ;
+                               owl:unionOf ( xsd:double
+                                             xsd:long
+                                           )
+                             ] .
+
+
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/droppedAttributesCount
 :droppedAttributesCount rdf:type owl:DatatypeProperty ;
                         rdfs:subPropertyOf owl:topDataProperty ;
                         rdfs:domain [ rdf:type owl:Class ;
-                                      owl:unionOf ( :InstrumentationScope
+                                      owl:unionOf ( :Event
+                                                    :InstrumentationScope
+                                                    :Link
                                                     :LogRecord
                                                     :Resource
-                                                    :Event
-                                                    :Link
                                                     :Span
                                                   )
                                     ] ;
@@ -255,18 +291,43 @@
                         rdfs:comment "droppedAttributesCount is the number of dropped attributes. If the value is 0, then no attributes were dropped."@en .
 
 
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/droppedEventsCount
+:droppedEventsCount rdf:type owl:DatatypeProperty ;
+                    rdfs:domain :Span ;
+                    rdfs:range xsd:unsignedInt .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/droppedLinksCount
+:droppedLinksCount rdf:type owl:DatatypeProperty ;
+                   rdfs:domain :Span ;
+                   rdfs:range xsd:unsignedInt .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/endTimeUnixNano
+:endTimeUnixNano rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf owl:topDataProperty ;
+                 rdfs:domain :Span ;
+                 rdfs:range xsd:unsignedLong .
+
+
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/enumOptionValue
 :enumOptionValue rdf:type owl:DatatypeProperty ;
                  rdfs:domain :Enum .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/explicitBound
+:explicitBound rdf:type owl:DatatypeProperty ;
+               rdfs:domain :HistogramDataPoint ;
+               rdfs:range xsd:double .
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/flags
 :flags rdf:type owl:DatatypeProperty ;
        rdfs:subPropertyOf owl:topDataProperty ;
        rdfs:domain [ rdf:type owl:Class ;
-                     owl:unionOf ( :LogRecord
-                                   :DataPoint
+                     owl:unionOf ( :DataPoint
                                    :Link
+                                   :LogRecord
                                    :Span
                                  )
                    ] ;
@@ -289,11 +350,28 @@ When creating new spans, bits 10-31 (most-significant 22-bits) MUST be zero.
                     "Flags, a bit field. 8 least significant bits are the trace flags as defined in W3C Trace Context specification. 24 most significant bits are reserved and must be set to 0. Readers must not assume that 24 most significant bits will be zero and must correctly mask the bits when reading 8-bit trace flag (use flags & LOG_RECORD_FLAGS_TRACE_FLAGS_MASK). [Optional]."@en .
 
 
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/isMonotonic
+:isMonotonic rdf:type owl:DatatypeProperty ;
+             rdfs:domain :Sum ;
+             rdfs:range xsd:boolean .
+
+
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/keyValueKey
 :keyValueKey rdf:type owl:DatatypeProperty ;
              rdfs:subPropertyOf owl:topDataProperty ;
              rdfs:domain :KeyValue ;
              rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/max
+:max rdf:type owl:DatatypeProperty ;
+     rdfs:subPropertyOf owl:topDataProperty ;
+     rdfs:domain [ rdf:type owl:Class ;
+                   owl:unionOf ( :ExponentialHistogramDataPoint
+                                 :HistogramDataPoint
+                               )
+                 ] ;
+     rdfs:range xsd:double .
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/message
@@ -303,12 +381,23 @@ When creating new spans, bits 10-31 (most-significant 22-bits) MUST be zero.
          rdfs:comment "A developer-facing human readable error message." .
 
 
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/min
+:min rdf:type owl:DatatypeProperty ;
+     rdfs:subPropertyOf owl:topDataProperty ;
+     rdfs:domain [ rdf:type owl:Class ;
+                   owl:unionOf ( :ExponentialHistogramDataPoint
+                                 :HistogramDataPoint
+                               )
+                 ] ;
+     rdfs:range xsd:double .
+
+
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/name
 :name rdf:type owl:DatatypeProperty ;
       rdfs:subPropertyOf owl:topDataProperty ;
       rdfs:domain [ rdf:type owl:Class ;
-                    owl:unionOf ( :InstrumentationScope
-                                  :Event
+                    owl:unionOf ( :Event
+                                  :InstrumentationScope
                                   :Metric
                                   :Span
                                 )
@@ -333,6 +422,18 @@ Value is UNIX Epoch time in nanoseconds since 00:00:00 UTC on 1 January 1970.
 Value of 0 indicates unknown or missing timestamp.""" .
 
 
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/offset
+:offset rdf:type owl:DatatypeProperty ;
+        rdfs:domain :Buckets ;
+        rdfs:range xsd:int .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/parentSpanId
+:parentSpanId rdf:type owl:DatatypeProperty ;
+              rdfs:domain :Span ;
+              rdfs:range xsd:byte .
+
+
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/primitiveValueValue
 :primitiveValueValue rdf:type owl:DatatypeProperty ;
                      rdfs:domain :PrimitiveValue ;
@@ -346,15 +447,30 @@ Value of 0 indicates unknown or missing timestamp.""" .
                                 ] .
 
 
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/quantile
+:quantile rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf owl:topDataProperty ;
+          rdfs:domain :ValueAtQuantile ;
+          rdfs:range xsd:double .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/quantileValue
+:quantileValue rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf owl:topDataProperty ;
+               rdfs:range xsd:double .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/scale
+:scale rdf:type owl:DatatypeProperty ;
+       rdfs:domain :ExponentialHistogramDataPoint ;
+       rdfs:range xsd:int .
+
+
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/schemaUrl
 :schemaUrl rdf:type owl:DatatypeProperty ;
            rdfs:domain [ rdf:type owl:Class ;
-                         owl:unionOf ( :ResourceLogs
-                                       :ScopeLogs
-                                       :ResourceMetrics
-                                       :ResourceSpans
-                                       :ScopeMetrics
-                                       :ScopeSpans
+                         owl:unionOf ( :ResourceData
+                                       :ScopeData
                                      )
                        ] ;
            rdfs:range xsd:string .
@@ -371,9 +487,9 @@ Value of 0 indicates unknown or missing timestamp.""" .
 :spanId rdf:type owl:DatatypeProperty ;
         rdfs:subPropertyOf owl:topDataProperty ;
         rdfs:domain [ rdf:type owl:Class ;
-                      owl:unionOf ( :LogRecord
-                                    :Exemplar
+                      owl:unionOf ( :Exemplar
                                     :Link
+                                    :LogRecord
                                     :Span
                                   )
                     ] ;
@@ -392,14 +508,36 @@ span if any of the following is true:
   - the field contains an invalid value.""" .
 
 
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/startTimeUnixNano
+:startTimeUnixNano rdf:type owl:DatatypeProperty ;
+                   rdfs:subPropertyOf owl:topDataProperty ;
+                   rdfs:domain [ rdf:type owl:Class ;
+                                 owl:unionOf ( :DataPoint
+                                               :Span
+                                             )
+                               ] ;
+                   rdfs:range xsd:unsignedLong .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/sum
+:sum rdf:type owl:DatatypeProperty ;
+     rdfs:domain [ rdf:type owl:Class ;
+                   owl:unionOf ( :ExponentialHistogramDataPoint
+                                 :HistogramDataPoint
+                                 :SummaryDataPoint
+                               )
+                 ] ;
+     rdfs:range xsd:double .
+
+
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/timeUnixNano
 :timeUnixNano rdf:type owl:DatatypeProperty ;
               rdfs:subPropertyOf owl:topDataProperty ;
               rdfs:domain [ rdf:type owl:Class ;
-                            owl:unionOf ( :LogRecord
-                                          :DataPoint
+                            owl:unionOf ( :DataPoint
                                           :Event
                                           :Exemplar
+                                          :LogRecord
                                         )
                           ] ;
               rdfs:range xsd:unsignedLong ;
@@ -412,9 +550,9 @@ Value of 0 indicates unknown or missing timestamp."""@en .
 :traceId rdf:type owl:DatatypeProperty ;
          rdfs:subPropertyOf owl:topDataProperty ;
          rdfs:domain [ rdf:type owl:Class ;
-                       owl:unionOf ( :LogRecord
-                                     :Exemplar
+                       owl:unionOf ( :Exemplar
                                      :Link
+                                     :LogRecord
                                      :Span
                                    )
                      ] ;
@@ -432,163 +570,7 @@ trace if any of the following is true:
   - the field contains an invalid value."""@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/version
-:version rdf:type owl:DatatypeProperty ;
-         rdfs:subPropertyOf owl:topDataProperty ;
-         rdfs:domain :InstrumentationScope ;
-         rdfs:range xsd:string .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#bucketCount
-:bucketCount rdf:type owl:DatatypeProperty ;
-             rdfs:domain [ rdf:type owl:Class ;
-                           owl:unionOf ( :Buckets
-                                         :HistogramDataPoint
-                                       )
-                         ] ;
-             rdfs:range xsd:unsignedLong .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#count
-:count rdf:type owl:DatatypeProperty ;
-       rdfs:domain [ rdf:type owl:Class ;
-                     owl:unionOf ( :ExponentialHistogramDataPoint
-                                   :HistogramDataPoint
-                                   :SummaryDataPoint
-                                 )
-                   ] ;
-       rdfs:range xsd:unsignedLong .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#description
-:description rdf:type owl:DatatypeProperty ;
-             rdfs:subPropertyOf owl:topDataProperty ;
-             rdfs:domain :Metric ;
-             rdfs:range xsd:string .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#doubleOrIntValue
-:doubleOrIntValue rdf:type owl:DatatypeProperty ;
-                  rdfs:domain [ rdf:type owl:Class ;
-                                owl:unionOf ( :Exemplar
-                                              :NumberDataPoint
-                                            )
-                              ] ;
-                  rdfs:range [ rdf:type rdfs:Datatype ;
-                               owl:unionOf ( xsd:double
-                                             xsd:long
-                                           )
-                             ] .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#droppedEventsCount
-:droppedEventsCount rdf:type owl:DatatypeProperty ;
-                    rdfs:domain :Span ;
-                    rdfs:range xsd:unsignedInt .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#droppedLinksCount
-:droppedLinksCount rdf:type owl:DatatypeProperty ;
-                   rdfs:domain :Span ;
-                   rdfs:range xsd:unsignedInt .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#endTimeUnixNano
-:endTimeUnixNano rdf:type owl:DatatypeProperty ;
-                 rdfs:subPropertyOf owl:topDataProperty ;
-                 rdfs:domain :Span ;
-                 rdfs:range xsd:unsignedLong .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#explicitBound
-:explicitBound rdf:type owl:DatatypeProperty ;
-               rdfs:domain :HistogramDataPoint ;
-               rdfs:range xsd:double .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#isMonotonic
-:isMonotonic rdf:type owl:DatatypeProperty ;
-             rdfs:domain :Sum ;
-             rdfs:range xsd:boolean .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#max
-:max rdf:type owl:DatatypeProperty ;
-     rdfs:subPropertyOf owl:topDataProperty ;
-     rdfs:domain [ rdf:type owl:Class ;
-                   owl:unionOf ( :ExponentialHistogramDataPoint
-                                 :HistogramDataPoint
-                               )
-                 ] ;
-     rdfs:range xsd:double .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#min
-:min rdf:type owl:DatatypeProperty ;
-     rdfs:subPropertyOf owl:topDataProperty ;
-     rdfs:domain [ rdf:type owl:Class ;
-                   owl:unionOf ( :ExponentialHistogramDataPoint
-                                 :HistogramDataPoint
-                               )
-                 ] ;
-     rdfs:range xsd:double .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#offset
-:offset rdf:type owl:DatatypeProperty ;
-        rdfs:domain :Buckets ;
-        rdfs:range xsd:int .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#parentSpanId
-:parentSpanId rdf:type owl:DatatypeProperty ;
-              rdfs:domain :Span ;
-              rdfs:range xsd:byte .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#quantile
-:quantile rdf:type owl:DatatypeProperty ;
-          rdfs:subPropertyOf owl:topDataProperty ;
-          rdfs:domain :ValueAtQuantile ;
-          rdfs:range xsd:double .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#quantileValue
-:quantileValue rdf:type owl:DatatypeProperty ;
-               rdfs:subPropertyOf owl:topDataProperty ;
-               rdfs:domain :ValueAtQuantile ;
-               rdfs:range xsd:double .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#scale
-:scale rdf:type owl:DatatypeProperty ;
-       rdfs:domain :ExponentialHistogramDataPoint ;
-       rdfs:range xsd:int .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#startTimeUnixNano
-:startTimeUnixNano rdf:type owl:DatatypeProperty ;
-                   rdfs:subPropertyOf owl:topDataProperty ;
-                   rdfs:domain [ rdf:type owl:Class ;
-                                 owl:unionOf ( :DataPoint
-                                               :Span
-                                             )
-                               ] ;
-                   rdfs:range xsd:unsignedLong .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#sum
-:sum rdf:type owl:DatatypeProperty ;
-     rdfs:domain [ rdf:type owl:Class ;
-                   owl:unionOf ( :ExponentialHistogramDataPoint
-                                 :HistogramDataPoint
-                                 :SummaryDataPoint
-                               )
-                 ] ;
-     rdfs:range xsd:double .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#traceState
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/traceState
 :traceState rdf:type owl:DatatypeProperty ;
             rdfs:domain [ rdf:type owl:Class ;
                           owl:unionOf ( :Link
@@ -598,20 +580,27 @@ trace if any of the following is true:
             rdfs:range xsd:string .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#unit
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/unit
 :unit rdf:type owl:DatatypeProperty ;
       rdfs:subPropertyOf owl:topDataProperty ;
       rdfs:domain :Metric ;
       rdfs:range xsd:string .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#zeroCount
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/version
+:version rdf:type owl:DatatypeProperty ;
+         rdfs:subPropertyOf owl:topDataProperty ;
+         rdfs:domain :InstrumentationScope ;
+         rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/zeroCount
 :zeroCount rdf:type owl:DatatypeProperty ;
            rdfs:domain :ExponentialHistogramDataPoint ;
            rdfs:range xsd:int .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#zeroThreshold
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/zeroThreshold
 :zeroThreshold rdf:type owl:DatatypeProperty ;
                rdfs:subPropertyOf owl:topDataProperty ;
                rdfs:domain :ExponentialHistogramDataPoint ;
@@ -621,6 +610,19 @@ trace if any of the following is true:
 #################################################################
 #    Classes
 #################################################################
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/AggregationTemporality
+:AggregationTemporality rdf:type owl:Class ;
+                        owl:equivalentClass [ rdf:type owl:Class ;
+                                              owl:oneOf ( :AGGREGATION_TEMPORALITY_CUMULATIVE
+                                                          :AGGREGATION_TEMPORALITY_DELTA
+                                                          :AGGREGATION_TEMPORALITY_UNSPECIFIED
+                                                        )
+                                            ] ;
+                        rdfs:subClassOf :Enum ;
+                        rdfs:comment """AggregationTemporality defines how a metric aggregator reports aggregated values.
+It describes how those values relate to the time interval over which they are aggregated."""@en .
+
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/AnyValue
 :AnyValue rdf:type owl:Class ;
@@ -632,6 +634,57 @@ trace if any of the following is true:
               rdfs:subClassOf :AnyValue .
 
 
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/Buckets
+:Buckets rdf:type owl:Class ;
+         rdfs:subClassOf [ rdf:type owl:Restriction ;
+                           owl:onProperty :bucketCount ;
+                           owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                           owl:onDataRange xsd:unsignedLong
+                         ] ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty :offset ;
+                           owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                           owl:onDataRange xsd:int
+                         ] ;
+         rdfs:comment "Buckets are a set of bucket counts, encoded in a contiguous array of counts."@en .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/DataPoint
+:DataPoint rdf:type owl:Class ;
+           rdfs:subClassOf [ rdf:type owl:Restriction ;
+                             owl:onProperty :attribute ;
+                             owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                             owl:onClass :KeyValue
+                           ] ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :startTimeUnixNano ;
+                             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                             owl:onDataRange xsd:unsignedLong
+                           ] ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :timeUnixNano ;
+                             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                             owl:onDataRange xsd:unsignedLong
+                           ] ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :flags ;
+                             owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                             owl:onDataRange xsd:unsignedInt
+                           ] .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/DataPointFlags
+:DataPointFlags rdf:type owl:Class ;
+                owl:equivalentClass [ rdf:type owl:Class ;
+                                      owl:oneOf ( :DATA_POINT_FLAGS_DO_NOT_USE
+                                                  :DATA_POINT_FLAGS_NO_RECORDED_VALUE_MASK
+                                                )
+                                    ] ;
+                rdfs:subClassOf :Enum ;
+                rdfs:comment """DataPointFlags is defined as a protobuf 'uint32' type and is to be used as a bit-field representing 32 distinct boolean flags.  Each flag defined in this enum is a bit-mask.  To test the presence of a single flag in the flags of a data point, for example, use an expression like:
+  (point.flags & DATA_POINT_FLAGS_NO_RECORDED_VALUE_MASK) == DATA_POINT_FLAGS_NO_RECORDED_VALUE_MASK"""@en .
+
+
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/Enum
 :Enum rdf:type owl:Class ;
       rdfs:subClassOf [ rdf:type owl:Restriction ;
@@ -639,6 +692,222 @@ trace if any of the following is true:
                         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                         owl:onDataRange xsd:int
                       ] .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/Event
+:Event rdf:type owl:Class ;
+       rdfs:subClassOf [ rdf:type owl:Restriction ;
+                         owl:onProperty :attribute ;
+                         owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                         owl:onClass :KeyValue
+                       ] ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty :droppedAttributesCount ;
+                         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                         owl:onDataRange xsd:int
+                       ] ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty :name ;
+                         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                         owl:onDataRange xsd:string
+                       ] ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty :timeUnixNano ;
+                         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                         owl:onDataRange xsd:unsignedInt
+                       ] ;
+       rdfs:comment "Event is a time-stamped annotation of the span, consisting of user-supplied text description and key-value pairs."@en .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/Exemplar
+:Exemplar rdf:type owl:Class ;
+          rdfs:subClassOf [ rdf:type owl:Restriction ;
+                            owl:onProperty :filteredAttribute ;
+                            owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                            owl:onClass :KeyValue
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty :doubleOrIntValue ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onDataRange [ rdf:type rdfs:Datatype ;
+                                              owl:unionOf ( xsd:double
+                                                            xsd:long
+                                                          )
+                                            ]
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty :timeUnixNano ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onDataRange xsd:unsignedLong
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty :spanId ;
+                            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onDataRange xsd:byte
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty :traceId ;
+                            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onDataRange xsd:byte
+                          ] ;
+          rdfs:comment """A representation of an exemplar, which is a sample input measurement.
+Exemplars also hold information about the environment when the measurement was recorded, for example the span and trace ID of the active span when the exemplar was recorded."""@en .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/ExponentialHistogram
+:ExponentialHistogram rdf:type owl:Class ;
+                      rdfs:subClassOf :MetricData ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty :dataPoint ;
+                                        owl:allValuesFrom :ExponentialHistogramDataPoint
+                                      ] ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty :dataPoint ;
+                                        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                        owl:onClass :ExponentialHistogramDataPoint
+                                      ] ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty :aggregationTemporality ;
+                                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                        owl:onClass :AggregationTemporality
+                                      ] ;
+                      rdfs:comment "ExponentialHistogram represents the type of a metric that is calculated by aggregating as a ExponentialHistogram of all reported double measurements over a time interval."@en .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/ExponentialHistogramDataPoint
+:ExponentialHistogramDataPoint rdf:type owl:Class ;
+                               rdfs:subClassOf :DataPoint ,
+                                               [ rdf:type owl:Restriction ;
+                                                 owl:onProperty :exemplar ;
+                                                 owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                                 owl:onClass :Exemplar
+                                               ] ,
+                                               [ rdf:type owl:Restriction ;
+                                                 owl:onProperty :negative ;
+                                                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                 owl:onClass :Buckets
+                                               ] ,
+                                               [ rdf:type owl:Restriction ;
+                                                 owl:onProperty :positive ;
+                                                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                 owl:onClass :Buckets
+                                               ] ,
+                                               [ rdf:type owl:Restriction ;
+                                                 owl:onProperty :count ;
+                                                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                 owl:onDataRange xsd:unsignedLong
+                                               ] ,
+                                               [ rdf:type owl:Restriction ;
+                                                 owl:onProperty :max ;
+                                                 owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                 owl:onDataRange xsd:double
+                                               ] ,
+                                               [ rdf:type owl:Restriction ;
+                                                 owl:onProperty :min ;
+                                                 owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                 owl:onDataRange xsd:double
+                                               ] ,
+                                               [ rdf:type owl:Restriction ;
+                                                 owl:onProperty :scale ;
+                                                 owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                 owl:onDataRange xsd:int
+                                               ] ,
+                                               [ rdf:type owl:Restriction ;
+                                                 owl:onProperty :sum ;
+                                                 owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                 owl:onDataRange xsd:double
+                                               ] ,
+                                               [ rdf:type owl:Restriction ;
+                                                 owl:onProperty :zeroCount ;
+                                                 owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                 owl:onDataRange xsd:unsignedLong
+                                               ] ,
+                                               [ rdf:type owl:Restriction ;
+                                                 owl:onProperty :zeroThreshold ;
+                                                 owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                 owl:onDataRange xsd:double
+                                               ] ;
+                               rdfs:comment "ExponentialHistogramDataPoint is a single data point in a timeseries that describes the time-varying values of a ExponentialHistogram of double values. A ExponentialHistogram contains summary statistics for a population of values, it may optionally contain the distribution of those values across a set of buckets."@en .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/Gauge
+:Gauge rdf:type owl:Class ;
+       rdfs:subClassOf :MetricData ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty :dataPoint ;
+                         owl:allValuesFrom :NumberDataPoint
+                       ] ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty :dataPoint ;
+                         owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                         owl:onClass :NumberDataPoint
+                       ] ;
+       rdfs:comment """Gauge represents the type of a scalar metric that always exports the \"current value\" for every data point. It should be used for an \"unknown\" aggregation.
+
+A Gauge does not support different aggregation temporalities. Given the aggregation is unknown, points cannot be combined using the same aggregation, regardless of aggregation temporalities. Therefore, AggregationTemporality is not included. Consequently, this also means \"StartTimeUnixNano\" is ignored for all data points."""@en .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/Histogram
+:Histogram rdf:type owl:Class ;
+           rdfs:subClassOf :MetricData ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :aggregationTemporality ;
+                             owl:allValuesFrom :AggregationTemporality
+                           ] ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :dataPoint ;
+                             owl:allValuesFrom :HistogramDataPoint
+                           ] ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :dataPoint ;
+                             owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                             owl:onClass :HistogramDataPoint
+                           ] ;
+           rdfs:comment "Histogram represents the type of a metric that is calculated by aggregating as a Histogram of all reported measurements over a time interval."@en .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/HistogramDataPoint
+:HistogramDataPoint rdf:type owl:Class ;
+                    rdfs:subClassOf :DataPoint ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty :exemplar ;
+                                      owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                      owl:onClass :Exemplar
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty :bucketCount ;
+                                      owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                      owl:onDataRange xsd:unsignedLong
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty :explicitBound ;
+                                      owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                      owl:onDataRange xsd:double
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty :count ;
+                                      owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                      owl:onDataRange xsd:unsignedLong
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty :max ;
+                                      owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                      owl:onDataRange xsd:double
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty :min ;
+                                      owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                      owl:onDataRange xsd:double
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty :sum ;
+                                      owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                      owl:onDataRange xsd:double
+                                    ] ;
+                    owl:disjointWith :SummaryDataPoint ;
+                    rdfs:comment """HistogramDataPoint is a single data point in a timeseries that describes the time-varying values of a Histogram. A Histogram contains summary statistics for a population of values, it may optionally contain the distribution of those values across a set of buckets.
+
+If the histogram contains the distribution of values, then both \"explicit_bounds\" and \"bucket counts\" fields must be defined.  If the histogram does not contain the distribution of values, then both \"explicit_bounds\" and \"bucket_counts\" must be omitted and only \"count\" and \"sum\" are known."""@en .
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/InstrumentationScope
@@ -680,6 +949,42 @@ trace if any of the following is true:
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/KeyValueList
 :KeyValueList rdf:type owl:Class ;
               rdfs:subClassOf :AnyValue .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/Link
+:Link rdf:type owl:Class ;
+      rdfs:subClassOf [ rdf:type owl:Restriction ;
+                        owl:onProperty :attribute ;
+                        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                        owl:onClass :KeyValue
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :droppedAttributesCount ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onDataRange xsd:int
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :spanId ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onDataRange xsd:byte
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :traceId ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onDataRange xsd:byte
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :traceState ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onDataRange xsd:string
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :flags ;
+                        owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onDataRange xsd:unsignedInt
+                      ] ;
+      rdfs:comment """A pointer from the current span to another span in the same trace or in a different trace.
+For example, this can be used in batching operations, where a single batch handler processes multiple requests from different traces or when the handler receives a request from a different project."""@en .
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/LogRecord
@@ -758,6 +1063,68 @@ The main difference between this message and collector protocol is that in this 
 When new fields are added into this message, the OTLP request MUST be updated as well."""@en .
 
 
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/Metric
+:Metric rdf:type owl:Class ;
+        rdfs:subClassOf [ rdf:type owl:Restriction ;
+                          owl:onProperty :metadata ;
+                          owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                          owl:onClass :KeyValue
+                        ] ,
+                        [ rdf:type owl:Restriction ;
+                          owl:onProperty :data ;
+                          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                          owl:onClass :MetricData
+                        ] ,
+                        [ rdf:type owl:Restriction ;
+                          owl:onProperty :description ;
+                          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                          owl:onDataRange xsd:string
+                        ] ,
+                        [ rdf:type owl:Restriction ;
+                          owl:onProperty :name ;
+                          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                          owl:onDataRange xsd:string
+                        ] .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/MetricData
+:MetricData rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/MetricsData
+:MetricsData rdf:type owl:Class ;
+             rdfs:subClassOf [ rdf:type owl:Restriction ;
+                               owl:onProperty :resourceMetrics ;
+                               owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                               owl:onClass :ResourceMetrics
+                             ] ;
+             rdfs:comment """MetricsData represents the metrics data that can be stored in a persistent storage, OR can be embedded by other protocols that transfer OTLP metrics data but do not implement the OTLP protocol.
+
+The main difference between this message and collector protocol is that in this message there will not be any \"control\" or \"metadata\" specific to OTLP protocol.
+
+When new fields are added into this message, the OTLP request MUST be updated as well."""@en .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/NumberDataPoint
+:NumberDataPoint rdf:type owl:Class ;
+                 rdfs:subClassOf :DataPoint ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty :exemplar ;
+                                   owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                   owl:onClass :Exemplar
+                                 ] ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty :doubleOrIntValue ;
+                                   owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                   owl:onDataRange [ rdf:type rdfs:Datatype ;
+                                                     owl:unionOf ( xsd:double
+                                                                   xsd:int
+                                                                 )
+                                                   ]
+                                 ] ;
+                 rdfs:comment "NumberDataPoint is a single data point in a timeseries that describes the time-varying scalar value of a metric."@en .
+
+
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/PrimitiveValue
 :PrimitiveValue rdf:type owl:Class ;
                 rdfs:subClassOf :AnyValue ,
@@ -787,42 +1154,68 @@ When new fields are added into this message, the OTLP request MUST be updated as
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/ResourceLogs
 :ResourceLogs rdf:type owl:Class ;
-              rdfs:subClassOf [ rdf:type owl:Restriction ;
-                                owl:onProperty :scopeLogs ;
+              rdfs:subClassOf :ResourceData ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty :scopeLog ;
                                 owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
                                 owl:onClass :ScopeLogs
-                              ] ,
-                              [ rdf:type owl:Restriction ;
-                                owl:onProperty :resource ;
-                                owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                owl:onClass :Resource
-                              ] ,
-                              [ rdf:type owl:Restriction ;
-                                owl:onProperty :schemaUrl ;
-                                owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                owl:onDataRange xsd:string
                               ] ;
               rdfs:comment "A collection of ScopeLogs from a Resource." .
 
 
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/ResourceMetrics
+:ResourceMetrics rdf:type owl:Class ;
+                 rdfs:subClassOf :ResourceData ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty :scopeMetric ;
+                                   owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                   owl:onClass :ScopeMetrics
+                                 ] ;
+                 rdfs:comment "A collection of ScopeMetrics from a Resource." .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/ResourceSpans
+:ResourceSpans rdf:type owl:Class ;
+               rdfs:subClassOf :ResourceData ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty :scopeSpan ;
+                                 owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                 owl:onClass :ScopeSpans
+                               ] ;
+               rdfs:comment "A collection of ScopeSpans from a Resource."@en .
+
+
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/ScopeLogs
 :ScopeLogs rdf:type owl:Class ;
-           rdfs:subClassOf [ rdf:type owl:Restriction ;
+           rdfs:subClassOf :ScopeData ,
+                           [ rdf:type owl:Restriction ;
                              owl:onProperty :logRecord ;
                              owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
                              owl:onClass :LogRecord
-                           ] ,
-                           [ rdf:type owl:Restriction ;
-                             owl:onProperty :scope ;
-                             owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                             owl:onClass :InstrumentationScope
-                           ] ,
-                           [ rdf:type owl:Restriction ;
-                             owl:onProperty :schemaUrl ;
-                             owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                             owl:onDataRange xsd:string
                            ] ;
-           rdfs:comment "A collection of Logs produced by a Scope." .
+           rdfs:comment "A collection of Logs produced by a Scope."@en .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/ScopeMetrics
+:ScopeMetrics rdf:type owl:Class ;
+              rdfs:subClassOf :ScopeData ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty :metric ;
+                                owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                                owl:onClass :Metric
+                              ] ;
+              rdfs:comment "A collection of Metrics produced by an Scope."@en .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/ScopeSpans
+:ScopeSpans rdf:type owl:Class ;
+            rdfs:subClassOf :ScopeData ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :span ;
+                              owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                              owl:onClass :Span
+                            ] ;
+            rdfs:comment "A collection of Spans produced by an InstrumentationScope"@en .
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/SeverityNumber
@@ -857,6 +1250,91 @@ When new fields are added into this message, the OTLP request MUST be updated as
                                     ] ;
                 rdfs:subClassOf :Enum ;
                 rdfs:comment "Possible values for LogRecord.SeverityNumber."@en .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/Span
+:Span rdf:type owl:Class ;
+      rdfs:subClassOf [ rdf:type owl:Restriction ;
+                        owl:onProperty :attribute ;
+                        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                        owl:onClass :KeyValue
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :event ;
+                        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                        owl:onClass :Event
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :link ;
+                        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                        owl:onClass :Link
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :kind ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onClass :SpanKind
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :status ;
+                        owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onClass :Status
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :droppedAttributesCount ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onDataRange xsd:int
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :droppedEventsCount ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onDataRange xsd:int
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :droppedLinksCount ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onDataRange xsd:int
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :endTimeUnixNano ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onDataRange xsd:unsignedLong
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :name ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onDataRange xsd:string
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :spanId ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onDataRange xsd:byte
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :startTimeUnixNano ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onDataRange xsd:unsignedLong
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :traceId ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onDataRange xsd:byte
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :flags ;
+                        owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onDataRange xsd:unsignedInt
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :parentSpanId ;
+                        owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onDataRange xsd:byte
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :traceState ;
+                        owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onDataRange xsd:string
+                      ] ;
+      rdfs:comment "A Span represents a single operation performed by a single component of the system."@en .
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/SpanFlags
@@ -913,544 +1391,7 @@ Bits 10-31 are reserved for future use.""" .
             rdfs:comment "For the semantics of status codes see https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/api.md#set-status"@en .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#AggregationTemporality
-:AggregationTemporality rdf:type owl:Class ;
-                        owl:equivalentClass [ rdf:type owl:Class ;
-                                              owl:oneOf ( :AGGREGATION_TEMPORALITY_CUMULATIVE
-                                                          :AGGREGATION_TEMPORALITY_DELTA
-                                                          :AGGREGATION_TEMPORALITY_UNSPECIFIED
-                                                        )
-                                            ] ;
-                        rdfs:subClassOf :Enum ;
-                        rdfs:comment """AggregationTemporality defines how a metric aggregator reports aggregated values.
-It describes how those values relate to the time interval over which they are aggregated."""@en .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#Buckets
-:Buckets rdf:type owl:Class ;
-         rdfs:subClassOf [ rdf:type owl:Restriction ;
-                           owl:onProperty :bucketCount ;
-                           owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
-                           owl:onDataRange xsd:unsignedLong
-                         ] ,
-                         [ rdf:type owl:Restriction ;
-                           owl:onProperty :offset ;
-                           owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                           owl:onDataRange xsd:int
-                         ] ;
-         rdfs:comment "Buckets are a set of bucket counts, encoded in a contiguous array of counts."@en .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#DataPoint
-:DataPoint rdf:type owl:Class ;
-           rdfs:subClassOf [ rdf:type owl:Restriction ;
-                             owl:onProperty :attribute ;
-                             owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
-                             owl:onClass :KeyValue
-                           ] ,
-                           [ rdf:type owl:Restriction ;
-                             owl:onProperty :timeUnixNano ;
-                             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                             owl:onDataRange xsd:unsignedLong
-                           ] ,
-                           [ rdf:type owl:Restriction ;
-                             owl:onProperty :startTimeUnixNano ;
-                             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                             owl:onDataRange xsd:unsignedLong
-                           ] ,
-                           [ rdf:type owl:Restriction ;
-                             owl:onProperty :flags ;
-                             owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                             owl:onDataRange xsd:unsignedInt
-                           ] .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#DataPointFlags
-:DataPointFlags rdf:type owl:Class ;
-                owl:equivalentClass [ rdf:type owl:Class ;
-                                      owl:oneOf ( :DATA_POINT_FLAGS_DO_NOT_USE
-                                                  :DATA_POINT_FLAGS_NO_RECORDED_VALUE_MASK
-                                                )
-                                    ] ;
-                rdfs:subClassOf :Enum ;
-                rdfs:comment """DataPointFlags is defined as a protobuf 'uint32' type and is to be used as a bit-field representing 32 distinct boolean flags.  Each flag defined in this enum is a bit-mask.  To test the presence of a single flag in the flags of a data point, for example, use an expression like:
-  (point.flags & DATA_POINT_FLAGS_NO_RECORDED_VALUE_MASK) == DATA_POINT_FLAGS_NO_RECORDED_VALUE_MASK"""@en .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#Event
-:Event rdf:type owl:Class ;
-       rdfs:subClassOf [ rdf:type owl:Restriction ;
-                         owl:onProperty :attribute ;
-                         owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
-                         owl:onClass :KeyValue
-                       ] ,
-                       [ rdf:type owl:Restriction ;
-                         owl:onProperty :droppedAttributesCount ;
-                         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                         owl:onDataRange xsd:int
-                       ] ,
-                       [ rdf:type owl:Restriction ;
-                         owl:onProperty :name ;
-                         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                         owl:onDataRange xsd:string
-                       ] ,
-                       [ rdf:type owl:Restriction ;
-                         owl:onProperty :timeUnixNano ;
-                         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                         owl:onDataRange xsd:unsignedInt
-                       ] ;
-       rdfs:comment "Event is a time-stamped annotation of the span, consisting of user-supplied text description and key-value pairs."@en .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#Exemplar
-:Exemplar rdf:type owl:Class ;
-          rdfs:subClassOf [ rdf:type owl:Restriction ;
-                            owl:onProperty :filteredAttribute ;
-                            owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
-                            owl:onClass :KeyValue
-                          ] ,
-                          [ rdf:type owl:Restriction ;
-                            owl:onProperty :timeUnixNano ;
-                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                            owl:onDataRange xsd:unsignedLong
-                          ] ,
-                          [ rdf:type owl:Restriction ;
-                            owl:onProperty :doubleOrIntValue ;
-                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                            owl:onDataRange [ rdf:type rdfs:Datatype ;
-                                              owl:unionOf ( xsd:double
-                                                            xsd:long
-                                                          )
-                                            ]
-                          ] ,
-                          [ rdf:type owl:Restriction ;
-                            owl:onProperty :spanId ;
-                            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                            owl:onDataRange xsd:byte
-                          ] ,
-                          [ rdf:type owl:Restriction ;
-                            owl:onProperty :traceId ;
-                            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                            owl:onDataRange xsd:byte
-                          ] ;
-          rdfs:comment """A representation of an exemplar, which is a sample input measurement.
-Exemplars also hold information about the environment when the measurement was recorded, for example the span and trace ID of the active span when the exemplar was recorded."""@en .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#ExponentialHistogram
-:ExponentialHistogram rdf:type owl:Class ;
-                      rdfs:subClassOf :MetricData ,
-                                      [ rdf:type owl:Restriction ;
-                                        owl:onProperty :dataPoint ;
-                                        owl:allValuesFrom :ExponentialHistogramDataPoint
-                                      ] ,
-                                      [ rdf:type owl:Restriction ;
-                                        owl:onProperty :dataPoint ;
-                                        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
-                                        owl:onClass :ExponentialHistogramDataPoint
-                                      ] ,
-                                      [ rdf:type owl:Restriction ;
-                                        owl:onProperty :aggregationTemporality ;
-                                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                        owl:onClass :AggregationTemporality
-                                      ] ;
-                      rdfs:comment "ExponentialHistogram represents the type of a metric that is calculated by aggregating as a ExponentialHistogram of all reported double measurements over a time interval."@en .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#ExponentialHistogramDataPoint
-:ExponentialHistogramDataPoint rdf:type owl:Class ;
-                               rdfs:subClassOf :DataPoint ,
-                                               [ rdf:type owl:Restriction ;
-                                                 owl:onProperty :exemplar ;
-                                                 owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
-                                                 owl:onClass :Exemplar
-                                               ] ,
-                                               [ rdf:type owl:Restriction ;
-                                                 owl:onProperty :negative ;
-                                                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                                 owl:onClass :Buckets
-                                               ] ,
-                                               [ rdf:type owl:Restriction ;
-                                                 owl:onProperty :positive ;
-                                                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                                 owl:onClass :Buckets
-                                               ] ,
-                                               [ rdf:type owl:Restriction ;
-                                                 owl:onProperty :count ;
-                                                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                                 owl:onDataRange xsd:unsignedLong
-                                               ] ,
-                                               [ rdf:type owl:Restriction ;
-                                                 owl:onProperty :max ;
-                                                 owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                                 owl:onDataRange xsd:double
-                                               ] ,
-                                               [ rdf:type owl:Restriction ;
-                                                 owl:onProperty :min ;
-                                                 owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                                 owl:onDataRange xsd:double
-                                               ] ,
-                                               [ rdf:type owl:Restriction ;
-                                                 owl:onProperty :scale ;
-                                                 owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                                 owl:onDataRange xsd:int
-                                               ] ,
-                                               [ rdf:type owl:Restriction ;
-                                                 owl:onProperty :sum ;
-                                                 owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                                 owl:onDataRange xsd:double
-                                               ] ,
-                                               [ rdf:type owl:Restriction ;
-                                                 owl:onProperty :zeroCount ;
-                                                 owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                                 owl:onDataRange xsd:unsignedLong
-                                               ] ,
-                                               [ rdf:type owl:Restriction ;
-                                                 owl:onProperty :zeroThreshold ;
-                                                 owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                                 owl:onDataRange xsd:double
-                                               ] ;
-                               rdfs:comment "ExponentialHistogramDataPoint is a single data point in a timeseries that describes the time-varying values of a ExponentialHistogram of double values. A ExponentialHistogram contains summary statistics for a population of values, it may optionally contain the distribution of those values across a set of buckets."@en .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#Gauge
-:Gauge rdf:type owl:Class ;
-       rdfs:subClassOf :MetricData ,
-                       [ rdf:type owl:Restriction ;
-                         owl:onProperty :dataPoint ;
-                         owl:allValuesFrom :NumberDataPoint
-                       ] ,
-                       [ rdf:type owl:Restriction ;
-                         owl:onProperty :dataPoint ;
-                         owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
-                         owl:onClass :NumberDataPoint
-                       ] ;
-       rdfs:comment """Gauge represents the type of a scalar metric that always exports the \"current value\" for every data point. It should be used for an \"unknown\" aggregation.
-
-A Gauge does not support different aggregation temporalities. Given the aggregation is unknown, points cannot be combined using the same aggregation, regardless of aggregation temporalities. Therefore, AggregationTemporality is not included. Consequently, this also means \"StartTimeUnixNano\" is ignored for all data points."""@en .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#Histogram
-:Histogram rdf:type owl:Class ;
-           rdfs:subClassOf :MetricData ,
-                           [ rdf:type owl:Restriction ;
-                             owl:onProperty :aggregationTemporality ;
-                             owl:allValuesFrom :AggregationTemporality
-                           ] ,
-                           [ rdf:type owl:Restriction ;
-                             owl:onProperty :dataPoint ;
-                             owl:allValuesFrom :HistogramDataPoint
-                           ] ,
-                           [ rdf:type owl:Restriction ;
-                             owl:onProperty :dataPoint ;
-                             owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
-                             owl:onClass :HistogramDataPoint
-                           ] ;
-           rdfs:comment "Histogram represents the type of a metric that is calculated by aggregating as a Histogram of all reported measurements over a time interval."@en .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#HistogramDataPoint
-:HistogramDataPoint rdf:type owl:Class ;
-                    rdfs:subClassOf :DataPoint ,
-                                    [ rdf:type owl:Restriction ;
-                                      owl:onProperty :exemplar ;
-                                      owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
-                                      owl:onClass :Exemplar
-                                    ] ,
-                                    [ rdf:type owl:Restriction ;
-                                      owl:onProperty :bucketCount ;
-                                      owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
-                                      owl:onDataRange xsd:unsignedLong
-                                    ] ,
-                                    [ rdf:type owl:Restriction ;
-                                      owl:onProperty :explicitBound ;
-                                      owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
-                                      owl:onDataRange xsd:double
-                                    ] ,
-                                    [ rdf:type owl:Restriction ;
-                                      owl:onProperty :count ;
-                                      owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                      owl:onDataRange xsd:unsignedLong
-                                    ] ,
-                                    [ rdf:type owl:Restriction ;
-                                      owl:onProperty :max ;
-                                      owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                      owl:onDataRange xsd:double
-                                    ] ,
-                                    [ rdf:type owl:Restriction ;
-                                      owl:onProperty :min ;
-                                      owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                      owl:onDataRange xsd:double
-                                    ] ,
-                                    [ rdf:type owl:Restriction ;
-                                      owl:onProperty :sum ;
-                                      owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                      owl:onDataRange xsd:double
-                                    ] ;
-                    owl:disjointWith :SummaryDataPoint ;
-                    rdfs:comment """HistogramDataPoint is a single data point in a timeseries that describes the time-varying values of a Histogram. A Histogram contains summary statistics for a population of values, it may optionally contain the distribution of those values across a set of buckets.
-
-If the histogram contains the distribution of values, then both \"explicit_bounds\" and \"bucket counts\" fields must be defined.  If the histogram does not contain the distribution of values, then both \"explicit_bounds\" and \"bucket_counts\" must be omitted and only \"count\" and \"sum\" are known."""@en .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#Link
-:Link rdf:type owl:Class ;
-      rdfs:subClassOf [ rdf:type owl:Restriction ;
-                        owl:onProperty :attribute ;
-                        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
-                        owl:onClass :KeyValue
-                      ] ,
-                      [ rdf:type owl:Restriction ;
-                        owl:onProperty :droppedAttributesCount ;
-                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                        owl:onDataRange xsd:int
-                      ] ,
-                      [ rdf:type owl:Restriction ;
-                        owl:onProperty :spanId ;
-                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                        owl:onDataRange xsd:byte
-                      ] ,
-                      [ rdf:type owl:Restriction ;
-                        owl:onProperty :traceId ;
-                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                        owl:onDataRange xsd:byte
-                      ] ,
-                      [ rdf:type owl:Restriction ;
-                        owl:onProperty :traceState ;
-                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                        owl:onDataRange xsd:string
-                      ] ,
-                      [ rdf:type owl:Restriction ;
-                        owl:onProperty :flags ;
-                        owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                        owl:onDataRange xsd:unsignedInt
-                      ] ;
-      rdfs:comment """A pointer from the current span to another span in the same trace or in a different trace.
-For example, this can be used in batching operations, where a single batch handler processes multiple requests from different traces or when the handler receives a request from a different project."""@en .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#Metric
-:Metric rdf:type owl:Class ;
-        rdfs:subClassOf [ rdf:type owl:Restriction ;
-                          owl:onProperty :metadata ;
-                          owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
-                          owl:onClass :KeyValue
-                        ] ,
-                        [ rdf:type owl:Restriction ;
-                          owl:onProperty :data ;
-                          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                          owl:onClass :MetricData
-                        ] ,
-                        [ rdf:type owl:Restriction ;
-                          owl:onProperty :name ;
-                          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                          owl:onDataRange xsd:string
-                        ] ,
-                        [ rdf:type owl:Restriction ;
-                          owl:onProperty :description ;
-                          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                          owl:onDataRange xsd:string
-                        ] .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#MetricData
-:MetricData rdf:type owl:Class .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#MetricsData
-:MetricsData rdf:type owl:Class ;
-             rdfs:subClassOf [ rdf:type owl:Restriction ;
-                               owl:onProperty :resourceMetrics ;
-                               owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
-                               owl:onClass :ResourceMetrics
-                             ] .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#NumberDataPoint
-:NumberDataPoint rdf:type owl:Class ;
-                 rdfs:subClassOf :DataPoint ,
-                                 [ rdf:type owl:Restriction ;
-                                   owl:onProperty :exemplar ;
-                                   owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
-                                   owl:onClass :Exemplar
-                                 ] ,
-                                 [ rdf:type owl:Restriction ;
-                                   owl:onProperty :doubleOrIntValue ;
-                                   owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                   owl:onDataRange [ rdf:type rdfs:Datatype ;
-                                                     owl:unionOf ( xsd:double
-                                                                   xsd:int
-                                                                 )
-                                                   ]
-                                 ] ;
-                 rdfs:comment "NumberDataPoint is a single data point in a timeseries that describes the time-varying scalar value of a metric."@en .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#ResourceMetrics
-:ResourceMetrics rdf:type owl:Class ;
-                 rdfs:subClassOf [ rdf:type owl:Restriction ;
-                                   owl:onProperty :scopeMetrics ;
-                                   owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
-                                   owl:onClass :ScopeMetrics
-                                 ] ,
-                                 [ rdf:type owl:Restriction ;
-                                   owl:onProperty :resource ;
-                                   owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                   owl:onClass :Resource
-                                 ] ,
-                                 [ rdf:type owl:Restriction ;
-                                   owl:onProperty :schemaUrl ;
-                                   owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                   owl:onDataRange xsd:string
-                                 ] .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#ResourceSpans
-:ResourceSpans rdf:type owl:Class ;
-               rdfs:subClassOf [ rdf:type owl:Restriction ;
-                                 owl:onProperty :scopeSpan ;
-                                 owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
-                                 owl:onClass :ScopeSpans
-                               ] ,
-                               [ rdf:type owl:Restriction ;
-                                 owl:onProperty :resource ;
-                                 owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                 owl:onClass :Resource
-                               ] ,
-                               [ rdf:type owl:Restriction ;
-                                 owl:onProperty :schemaUrl ;
-                                 owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                 owl:onDataRange xsd:string
-                               ] ;
-               rdfs:comment "A collection of ScopeSpans from a Resource."@en .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#ScopeMetrics
-:ScopeMetrics rdf:type owl:Class ;
-              rdfs:subClassOf [ rdf:type owl:Restriction ;
-                                owl:onProperty :metric ;
-                                owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
-                                owl:onClass :Metric
-                              ] ,
-                              [ rdf:type owl:Restriction ;
-                                owl:onProperty :scope ;
-                                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                owl:onClass :InstrumentationScope
-                              ] ,
-                              [ rdf:type owl:Restriction ;
-                                owl:onProperty :schemaUrl ;
-                                owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                owl:onDataRange xsd:string
-                              ] ;
-              rdfs:comment "A collection of Metrics produced by an Scope."@en .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#ScopeSpans
-:ScopeSpans rdf:type owl:Class ;
-            rdfs:subClassOf [ rdf:type owl:Restriction ;
-                              owl:onProperty :span ;
-                              owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
-                              owl:onClass :Span
-                            ] ,
-                            [ rdf:type owl:Restriction ;
-                              owl:onProperty :scope ;
-                              owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                              owl:onClass :InstrumentationScope
-                            ] ,
-                            [ rdf:type owl:Restriction ;
-                              owl:onProperty :schemaUrl ;
-                              owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                              owl:onDataRange xsd:string
-                            ] ;
-            rdfs:comment "A collection of Spans produced by an InstrumentationScope"@en .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#Span
-:Span rdf:type owl:Class ;
-      rdfs:subClassOf [ rdf:type owl:Restriction ;
-                        owl:onProperty :attribute ;
-                        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
-                        owl:onClass :KeyValue
-                      ] ,
-                      [ rdf:type owl:Restriction ;
-                        owl:onProperty :event ;
-                        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
-                        owl:onClass :Event
-                      ] ,
-                      [ rdf:type owl:Restriction ;
-                        owl:onProperty :link ;
-                        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
-                        owl:onClass :Link
-                      ] ,
-                      [ rdf:type owl:Restriction ;
-                        owl:onProperty :kind ;
-                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                        owl:onClass :SpanKind
-                      ] ,
-                      [ rdf:type owl:Restriction ;
-                        owl:onProperty :status ;
-                        owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                        owl:onClass :Status
-                      ] ,
-                      [ rdf:type owl:Restriction ;
-                        owl:onProperty :droppedAttributesCount ;
-                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                        owl:onDataRange xsd:int
-                      ] ,
-                      [ rdf:type owl:Restriction ;
-                        owl:onProperty :name ;
-                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                        owl:onDataRange xsd:string
-                      ] ,
-                      [ rdf:type owl:Restriction ;
-                        owl:onProperty :spanId ;
-                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                        owl:onDataRange xsd:byte
-                      ] ,
-                      [ rdf:type owl:Restriction ;
-                        owl:onProperty :traceId ;
-                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                        owl:onDataRange xsd:byte
-                      ] ,
-                      [ rdf:type owl:Restriction ;
-                        owl:onProperty :droppedEventsCount ;
-                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                        owl:onDataRange xsd:int
-                      ] ,
-                      [ rdf:type owl:Restriction ;
-                        owl:onProperty :droppedLinksCount ;
-                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                        owl:onDataRange xsd:int
-                      ] ,
-                      [ rdf:type owl:Restriction ;
-                        owl:onProperty :endTimeUnixNano ;
-                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                        owl:onDataRange xsd:unsignedLong
-                      ] ,
-                      [ rdf:type owl:Restriction ;
-                        owl:onProperty :startTimeUnixNano ;
-                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                        owl:onDataRange xsd:unsignedLong
-                      ] ,
-                      [ rdf:type owl:Restriction ;
-                        owl:onProperty :flags ;
-                        owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                        owl:onDataRange xsd:unsignedInt
-                      ] ,
-                      [ rdf:type owl:Restriction ;
-                        owl:onProperty :parentSpanId ;
-                        owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                        owl:onDataRange xsd:byte
-                      ] ,
-                      [ rdf:type owl:Restriction ;
-                        owl:onProperty :traceState ;
-                        owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                        owl:onDataRange xsd:string
-                      ] ;
-      rdfs:comment "A Span represents a single operation performed by a single component of the system."@en .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#Sum
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/Sum
 :Sum rdf:type owl:Class ;
      rdfs:subClassOf :MetricData ,
                      [ rdf:type owl:Restriction ;
@@ -1475,7 +1416,7 @@ For example, this can be used in batching operations, where a single batch handl
      rdfs:comment "Sum represents the type of a scalar metric that is calculated as a sum of all reported measurements over a time interval."@en .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#Summary
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/Summary
 :Summary rdf:type owl:Class ;
          rdfs:subClassOf :MetricData ,
                          [ rdf:type owl:Restriction ;
@@ -1490,7 +1431,7 @@ For example, this can be used in batching operations, where a single batch handl
          rdfs:comment "Summary metric data are used to convey quantile summaries, a Prometheus (see: https://prometheus.io/docs/concepts/metric_types/#summary) and OpenMetrics (see: https://github.com/OpenObservability/OpenMetrics/blob/4dbf6075567ab43296eed941037c12951faafb92/protos/prometheus.proto#L45) data type. These data points cannot always be merged in a meaningful way.  While they can be useful in some applications, histogram data points are recommended for new applications."@en .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#SummaryDataPoint
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/SummaryDataPoint
 :SummaryDataPoint rdf:type owl:Class ;
                   rdfs:subClassOf :DataPoint ,
                                   [ rdf:type owl:Restriction ;
@@ -1511,7 +1452,7 @@ For example, this can be used in batching operations, where a single batch handl
                   rdfs:comment "SummaryDataPoint is a single data point in a timeseries that describes the time-varying values of a Summary metric."@en .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#TracesData
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/TracesData
 :TracesData rdf:type owl:Class ;
             rdfs:subClassOf [ rdf:type owl:Restriction ;
                               owl:onProperty :resourceSpan ;
@@ -1525,7 +1466,7 @@ The main difference between this message and collector protocol is that in this 
 When new fields are added into this message, the OTLP request MUST be updated as well."""@en .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#ValueAtQuantile
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/ValueAtQuantile
 :ValueAtQuantile rdf:type owl:Class ;
                  rdfs:comment """Represents the value at a given quantile of a distribution.
 
@@ -1536,9 +1477,103 @@ To record Min and Max values following conventions are used:
 See the following issue for more context: https://github.com/open-telemetry/opentelemetry-proto/issues/125"""@en .
 
 
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#ResourceData
+:ResourceData rdf:type owl:Class ;
+              rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                owl:onProperty :resource ;
+                                owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                owl:onClass :Resource
+                              ] ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty :schemaUrl ;
+                                owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                owl:onDataRange xsd:string
+                              ] .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#ScopeData
+:ScopeData rdf:type owl:Class ;
+           rdfs:subClassOf [ rdf:type owl:Restriction ;
+                             owl:onProperty :scope ;
+                             owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                             owl:onClass :InstrumentationScope
+                           ] ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :schemaUrl ;
+                             owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                             owl:onDataRange xsd:string
+                           ] .
+
+
 #################################################################
 #    Individuals
 #################################################################
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/AGGREGATION_TEMPORALITY_CUMULATIVE
+:AGGREGATION_TEMPORALITY_CUMULATIVE rdf:type owl:NamedIndividual ,
+                                             :AggregationTemporality ;
+                                    :enumOptionValue "2"^^xsd:int ;
+                                    rdfs:comment """CUMULATIVE is an AggregationTemporality for a metric aggregator which reports changes since a fixed start time. This means that current values of a CUMULATIVE metric depend on all previous measurements since the start time. Because of this, the sender is required to retain this state in some form. If this state is lost or invalidated, the CUMULATIVE metric values MUST be reset and a new fixed start time following the last reported measurement time sent MUST be used.
+
+For example, consider a system measuring the number of requests that it receives and reports the sum of these requests every second as a CUMULATIVE metric:
+
+  1. The system starts receiving at time=t_0.
+  2. A request is received, the system measures 1 request.
+  3. A request is received, the system measures 1 request.
+  4. A request is received, the system measures 1 request.
+  5. The 1 second collection cycle ends. A metric is exported for the number of requests received over the interval of time t_0 to t_0+1 with a value of 3.
+  6. A request is received, the system measures 1 request.
+  7. A request is received, the system measures 1 request.
+  8. The 1 second collection cycle ends. A metric is exported for the number of requests received over the interval of time t_0 to t_0+2 with a value of 5.
+  9. The system experiences a fault and loses state.
+  10. The system recovers and resumes receiving at time=t_1.
+  11. A request is received, the system measures 1 request.
+  12. The 1 second collection cycle ends. A metric is exported for the number of requests received over the interval of time t_1 to t_0+1 with a value of 1.
+
+Note: Even though, when reporting changes since last report time, using CUMULATIVE is valid, it is not recommended. This may cause problems for systems that do not use start_time to determine when the aggregation value was reset (e.g. Prometheus)."""@en .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/AGGREGATION_TEMPORALITY_DELTA
+:AGGREGATION_TEMPORALITY_DELTA rdf:type owl:NamedIndividual ,
+                                        :AggregationTemporality ;
+                               :enumOptionValue "1"^^xsd:int ;
+                               rdfs:comment """DELTA is an AggregationTemporality for a metric aggregator which reports changes since last report time. Successive metrics contain aggregation of values from continuous and non-overlapping intervals.
+
+The values for a DELTA metric are based only on the time interval associated with one measurement cycle. There is no dependency on previous measurements like is the case for CUMULATIVE metrics.
+
+For example, consider a system measuring the number of requests that it receives and reports the sum of these requests every second as a DELTA metric:
+
+  1. The system starts receiving at time=t_0.
+  2. A request is received, the system measures 1 request.
+  3. A request is received, the system measures 1 request.
+  4. A request is received, the system measures 1 request.
+  5. The 1 second collection cycle ends. A metric is exported for the number of requests received over the interval of time t_0 to t_0+1 with a value of 3.
+  6. A request is received, the system measures 1 request.
+  7. A request is received, the system measures 1 request.
+  8. The 1 second collection cycle ends. A metric is exported for the number of requests received over the interval of time t_0+1 to t_0+2 with a value of 2."""@en .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/AGGREGATION_TEMPORALITY_UNSPECIFIED
+:AGGREGATION_TEMPORALITY_UNSPECIFIED rdf:type owl:NamedIndividual ,
+                                              :AggregationTemporality ;
+                                     :enumOptionValue "0"^^xsd:int ;
+                                     rdfs:comment "UNSPECIFIED is the default AggregationTemporality, it MUST not be used."@en .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/DATA_POINT_FLAGS_DO_NOT_USE
+:DATA_POINT_FLAGS_DO_NOT_USE rdf:type owl:NamedIndividual ,
+                                      :DataPointFlags ;
+                             :enumOptionValue "0"^^xsd:int ;
+                             rdfs:comment """The zero value for the enum. Should not be used for comparisons.
+Instead use bitwise \"and\" with the appropriate mask as shown above."""@en .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/DATA_POINT_FLAGS_NO_RECORDED_VALUE_MASK
+:DATA_POINT_FLAGS_NO_RECORDED_VALUE_MASK rdf:type owl:NamedIndividual ,
+                                                  :DataPointFlags ;
+                                         :enumOptionValue "1"^^xsd:int ;
+                                         rdfs:comment "This DataPoint is valid but has no recorded value.  This value SHOULD be used to reflect explicitly missing data in a series, as for an equivalent to the Prometheus \"staleness marker\"." .
+
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/LOG_RECORD_FLAGS_DO_NOT_USE
 :LOG_RECORD_FLAGS_DO_NOT_USE rdf:type owl:NamedIndividual ,
@@ -1791,72 +1826,6 @@ Implementations MAY assume SpanKind to be INTERNAL when receiving UNSPECIFIED.""
                    rdfs:comment "The default status."@en .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#AGGREGATION_TEMPORALITY_CUMULATIVE
-:AGGREGATION_TEMPORALITY_CUMULATIVE rdf:type owl:NamedIndividual ,
-                                             :AggregationTemporality ;
-                                    :enumOptionValue "2"^^xsd:int ;
-                                    rdfs:comment """CUMULATIVE is an AggregationTemporality for a metric aggregator which reports changes since a fixed start time. This means that current values of a CUMULATIVE metric depend on all previous measurements since the start time. Because of this, the sender is required to retain this state in some form. If this state is lost or invalidated, the CUMULATIVE metric values MUST be reset and a new fixed start time following the last reported measurement time sent MUST be used.
-
-For example, consider a system measuring the number of requests that it receives and reports the sum of these requests every second as a CUMULATIVE metric:
-
-  1. The system starts receiving at time=t_0.
-  2. A request is received, the system measures 1 request.
-  3. A request is received, the system measures 1 request.
-  4. A request is received, the system measures 1 request.
-  5. The 1 second collection cycle ends. A metric is exported for the number of requests received over the interval of time t_0 to t_0+1 with a value of 3.
-  6. A request is received, the system measures 1 request.
-  7. A request is received, the system measures 1 request.
-  8. The 1 second collection cycle ends. A metric is exported for the number of requests received over the interval of time t_0 to t_0+2 with a value of 5.
-  9. The system experiences a fault and loses state.
-  10. The system recovers and resumes receiving at time=t_1.
-  11. A request is received, the system measures 1 request.
-  12. The 1 second collection cycle ends. A metric is exported for the number of requests received over the interval of time t_1 to t_0+1 with a value of 1.
-
-Note: Even though, when reporting changes since last report time, using CUMULATIVE is valid, it is not recommended. This may cause problems for systems that do not use start_time to determine when the aggregation value was reset (e.g. Prometheus)."""@en .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#AGGREGATION_TEMPORALITY_DELTA
-:AGGREGATION_TEMPORALITY_DELTA rdf:type owl:NamedIndividual ,
-                                        :AggregationTemporality ;
-                               :enumOptionValue "1"^^xsd:int ;
-                               rdfs:comment """DELTA is an AggregationTemporality for a metric aggregator which reports changes since last report time. Successive metrics contain aggregation of values from continuous and non-overlapping intervals.
-
-The values for a DELTA metric are based only on the time interval associated with one measurement cycle. There is no dependency on previous measurements like is the case for CUMULATIVE metrics.
-
-For example, consider a system measuring the number of requests that it receives and reports the sum of these requests every second as a DELTA metric:
-
-  1. The system starts receiving at time=t_0.
-  2. A request is received, the system measures 1 request.
-  3. A request is received, the system measures 1 request.
-  4. A request is received, the system measures 1 request.
-  5. The 1 second collection cycle ends. A metric is exported for the number of requests received over the interval of time t_0 to t_0+1 with a value of 3.
-  6. A request is received, the system measures 1 request.
-  7. A request is received, the system measures 1 request.
-  8. The 1 second collection cycle ends. A metric is exported for the number of requests received over the interval of time t_0+1 to t_0+2 with a value of 2."""@en .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#AGGREGATION_TEMPORALITY_UNSPECIFIED
-:AGGREGATION_TEMPORALITY_UNSPECIFIED rdf:type owl:NamedIndividual ,
-                                              :AggregationTemporality ;
-                                     :enumOptionValue "0"^^xsd:int ;
-                                     rdfs:comment "UNSPECIFIED is the default AggregationTemporality, it MUST not be used."@en .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#DATA_POINT_FLAGS_DO_NOT_USE
-:DATA_POINT_FLAGS_DO_NOT_USE rdf:type owl:NamedIndividual ,
-                                      :DataPointFlags ;
-                             :enumOptionValue "0"^^xsd:int ;
-                             rdfs:comment """The zero value for the enum. Should not be used for comparisons.
-Instead use bitwise \"and\" with the appropriate mask as shown above."""@en .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#DATA_POINT_FLAGS_NO_RECORDED_VALUE_MASK
-:DATA_POINT_FLAGS_NO_RECORDED_VALUE_MASK rdf:type owl:NamedIndividual ,
-                                                  :DataPointFlags ;
-                                         :enumOptionValue "1"^^xsd:int ;
-                                         rdfs:comment "This DataPoint is valid but has no recorded value.  This value SHOULD be used to reflect explicitly missing data in a series, as for an equivalent to the Prometheus \"staleness marker\"." .
-
-
 #################################################################
 #    General axioms
 #################################################################
@@ -1865,13 +1834,13 @@ Instead use bitwise \"and\" with the appropriate mask as shown above."""@en .
   owl:members ( :AnyValue
                 :Enum
                 :InstrumentationScope
+                :Link
                 :LogRecord
                 :LogsData
                 :Resource
                 :ResourceLogs
                 :ScopeLogs
                 :Status
-                :Link
               )
 ] .
 
