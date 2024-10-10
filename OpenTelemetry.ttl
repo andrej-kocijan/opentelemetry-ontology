@@ -518,7 +518,7 @@ Value of 0 indicates unknown or missing timestamp.""" .
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/parentSpanId
 :parentSpanId rdf:type owl:DatatypeProperty ;
               rdfs:domain :Span ;
-              rdfs:range xsd:byte .
+              rdfs:range xsd:string .
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/primitiveValueValue
@@ -580,7 +580,7 @@ Value of 0 indicates unknown or missing timestamp.""" .
                                     :Span
                                   )
                     ] ;
-        rdfs:range xsd:byte ;
+        rdfs:range xsd:string ;
         rdfs:comment """A unique identifier for a span within a trace, assigned when the span
 is created. The ID is an 8-byte array. An ID with all zeroes OR of length
 other than 8 bytes is considered invalid (empty string in OTLP/JSON
@@ -644,7 +644,7 @@ Value of 0 indicates unknown or missing timestamp."""@en .
                                      :Trace
                                    )
                      ] ;
-         rdfs:range xsd:byte ;
+         rdfs:range xsd:string ;
          rdfs:comment """A unique identifier for a trace. All logs from the same trace share
 the same `trace_id`. The ID is a 16-byte array. An ID with all zeroes OR
 of length other than 16 bytes is considered invalid (empty string in OTLP/JSON
@@ -836,12 +836,12 @@ It describes how those values relate to the time interval over which they are ag
                           [ rdf:type owl:Restriction ;
                             owl:onProperty :spanId ;
                             owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                            owl:onDataRange xsd:byte
+                            owl:onDataRange xsd:string
                           ] ,
                           [ rdf:type owl:Restriction ;
                             owl:onProperty :traceId ;
                             owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                            owl:onDataRange xsd:byte
+                            owl:onDataRange xsd:string
                           ] ;
           rdfs:comment """A representation of an exemplar, which is a sample input measurement.
 Exemplars also hold information about the environment when the measurement was recorded, for example the span and trace ID of the active span when the exemplar was recorded."""@en .
@@ -1064,12 +1064,12 @@ If the histogram contains the distribution of values, then both \"explicit_bound
                       [ rdf:type owl:Restriction ;
                         owl:onProperty :spanId ;
                         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                        owl:onDataRange xsd:byte
+                        owl:onDataRange xsd:string
                       ] ,
                       [ rdf:type owl:Restriction ;
                         owl:onProperty :traceId ;
                         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                        owl:onDataRange xsd:byte
+                        owl:onDataRange xsd:string
                       ] ,
                       [ rdf:type owl:Restriction ;
                         owl:onProperty :traceState ;
@@ -1120,7 +1120,7 @@ For example, this can be used in batching operations, where a single batch handl
                            [ rdf:type owl:Restriction ;
                              owl:onProperty :spanId ;
                              owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                             owl:onDataRange xsd:byte
+                             owl:onDataRange xsd:string
                            ] ,
                            [ rdf:type owl:Restriction ;
                              owl:onProperty :timeUnixNano ;
@@ -1130,7 +1130,7 @@ For example, this can be used in batching operations, where a single batch handl
                            [ rdf:type owl:Restriction ;
                              owl:onProperty :traceId ;
                              owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                             owl:onDataRange xsd:byte
+                             owl:onDataRange xsd:string
                            ] ;
            rdfs:comment """A log record according to OpenTelemetry Log Data Model:
 https://github.com/open-telemetry/oteps/blob/main/text/logs/0097-log-data-model.md"""@en .
@@ -1473,7 +1473,7 @@ When new fields are added into this message, the OTLP request MUST be updated as
                       [ rdf:type owl:Restriction ;
                         owl:onProperty :spanId ;
                         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                        owl:onDataRange xsd:byte
+                        owl:onDataRange xsd:string
                       ] ,
                       [ rdf:type owl:Restriction ;
                         owl:onProperty :startTimeUnixNano ;
@@ -1483,7 +1483,7 @@ When new fields are added into this message, the OTLP request MUST be updated as
                       [ rdf:type owl:Restriction ;
                         owl:onProperty :traceId ;
                         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                        owl:onDataRange xsd:byte
+                        owl:onDataRange xsd:string
                       ] ,
                       [ rdf:type owl:Restriction ;
                         owl:onProperty :flags ;
@@ -1493,7 +1493,7 @@ When new fields are added into this message, the OTLP request MUST be updated as
                       [ rdf:type owl:Restriction ;
                         owl:onProperty :parentSpanId ;
                         owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                        owl:onDataRange xsd:byte
+                        owl:onDataRange xsd:string
                       ] ,
                       [ rdf:type owl:Restriction ;
                         owl:onProperty :traceState ;
@@ -1628,7 +1628,7 @@ Bits 10-31 are reserved for future use.""" .
                        [ rdf:type owl:Restriction ;
                          owl:onProperty :traceId ;
                          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                         owl:onDataRange xsd:byte
+                         owl:onDataRange xsd:string
                        ] .
 
 
