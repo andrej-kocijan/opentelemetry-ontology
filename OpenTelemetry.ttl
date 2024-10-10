@@ -229,6 +229,93 @@
         rdfs:range :Status .
 
 
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#childSpan
+:childSpan rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf owl:topObjectProperty ;
+           owl:inverseOf :parentSpan ;
+           rdfs:domain :Span ;
+           rdfs:range :Span .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#containsSpan
+:containsSpan rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf owl:topObjectProperty ;
+              owl:inverseOf :trace ;
+              rdfs:domain :Trace ;
+              rdfs:range :Span .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#exemplarOf
+:exemplarOf rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf owl:topObjectProperty ;
+            owl:inverseOf :spanExemplar ;
+            rdfs:domain :Exemplar ;
+            rdfs:range :Span .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#linked
+:linked rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf owl:topObjectProperty ;
+        owl:inverseOf :linkedTo ;
+        rdfs:domain :Span ;
+        rdfs:range :Span ;
+        owl:propertyChainAxiom ( :link
+                                 :linkedSpan
+                               ) .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#linkedSpan
+:linkedSpan rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf owl:topObjectProperty ;
+            rdfs:domain :Link ;
+            rdfs:range :Span .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#linkedTo
+:linkedTo rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf owl:topObjectProperty ;
+          rdfs:domain :Span ;
+          rdfs:range :Span .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#logOf
+:logOf rdf:type owl:ObjectProperty ;
+       rdfs:subPropertyOf owl:topObjectProperty ;
+       owl:inverseOf :spanLog ;
+       rdfs:domain :LogRecord ;
+       rdfs:range :Span .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#parentSpan
+:parentSpan rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf owl:topObjectProperty ;
+            rdfs:domain :Span ;
+            rdfs:range :Span ;
+            rdfs:comment "Defined by combination of traceId and parentSpanId"@en .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#spanExemplar
+:spanExemplar rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf owl:topObjectProperty ;
+              rdfs:domain :Span ;
+              rdfs:range :Exemplar .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#spanLog
+:spanLog rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf owl:topObjectProperty ;
+         rdfs:domain :Span ;
+         rdfs:range :LogRecord .
+
+
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#trace
+:trace rdf:type owl:ObjectProperty ;
+       rdfs:subPropertyOf owl:topObjectProperty ;
+       rdfs:domain :Span ;
+       rdfs:range :Trace ;
+       rdfs:comment "Define via the traceId data property"@en .
+
+
 #################################################################
 #    Data properties
 #################################################################
@@ -554,6 +641,7 @@ Value of 0 indicates unknown or missing timestamp."""@en .
                                      :Link
                                      :LogRecord
                                      :Span
+                                     :Trace
                                    )
                      ] ;
          rdfs:range xsd:byte ;
@@ -725,6 +813,11 @@ It describes how those values relate to the time interval over which they are ag
                             owl:onProperty :filteredAttribute ;
                             owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
                             owl:onClass :KeyValue
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty :exemplarOf ;
+                            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onClass :Span
                           ] ,
                           [ rdf:type owl:Restriction ;
                             owl:onProperty :doubleOrIntValue ;
@@ -959,6 +1052,11 @@ If the histogram contains the distribution of values, then both \"explicit_bound
                         owl:onClass :KeyValue
                       ] ,
                       [ rdf:type owl:Restriction ;
+                        owl:onProperty :linkedSpan ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onClass :Span
+                      ] ,
+                      [ rdf:type owl:Restriction ;
                         owl:onProperty :droppedAttributesCount ;
                         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                         owl:onDataRange xsd:int
@@ -993,6 +1091,11 @@ For example, this can be used in batching operations, where a single batch handl
                              owl:onProperty :severitryNumber ;
                              owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                              owl:onClass :SeverityNumber
+                           ] ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :logOf ;
+                             owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                             owl:onClass :Span
                            ] ,
                            [ rdf:type owl:Restriction ;
                              owl:onProperty :droppedAttributesCount ;
@@ -1152,6 +1255,20 @@ When new fields are added into this message, the OTLP request MUST be updated as
           rdfs:comment "Resource information."@en .
 
 
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/ResourceData
+:ResourceData rdf:type owl:Class ;
+              rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                owl:onProperty :resource ;
+                                owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                owl:onClass :Resource
+                              ] ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty :schemaUrl ;
+                                owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                owl:onDataRange xsd:string
+                              ] .
+
+
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/ResourceLogs
 :ResourceLogs rdf:type owl:Class ;
               rdfs:subClassOf :ResourceData ,
@@ -1183,6 +1300,20 @@ When new fields are added into this message, the OTLP request MUST be updated as
                                  owl:onClass :ScopeSpans
                                ] ;
                rdfs:comment "A collection of ScopeSpans from a Resource."@en .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/ScopeData
+:ScopeData rdf:type owl:Class ;
+           rdfs:subClassOf [ rdf:type owl:Restriction ;
+                             owl:onProperty :scope ;
+                             owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                             owl:onClass :InstrumentationScope
+                           ] ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :schemaUrl ;
+                             owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                             owl:onDataRange xsd:string
+                           ] .
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/untitled-ontology-17/ScopeLogs
@@ -1270,14 +1401,49 @@ When new fields are added into this message, the OTLP request MUST be updated as
                         owl:onClass :Link
                       ] ,
                       [ rdf:type owl:Restriction ;
+                        owl:onProperty :childSpan ;
+                        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                        owl:onClass :Span
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :linked ;
+                        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                        owl:onClass :Span
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :linkedTo ;
+                        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                        owl:onClass :Span
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :spanExemplar ;
+                        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                        owl:onClass :Exemplar
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :spanLog ;
+                        owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                        owl:onClass :LogRecord
+                      ] ,
+                      [ rdf:type owl:Restriction ;
                         owl:onProperty :kind ;
                         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                         owl:onClass :SpanKind
                       ] ,
                       [ rdf:type owl:Restriction ;
+                        owl:onProperty :trace ;
+                        owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onClass :Trace
+                      ] ,
+                      [ rdf:type owl:Restriction ;
                         owl:onProperty :status ;
                         owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                         owl:onClass :Status
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :parentSpan ;
+                        owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onClass :Span
                       ] ,
                       [ rdf:type owl:Restriction ;
                         owl:onProperty :droppedAttributesCount ;
@@ -1477,32 +1643,18 @@ To record Min and Max values following conventions are used:
 See the following issue for more context: https://github.com/open-telemetry/opentelemetry-proto/issues/125"""@en .
 
 
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#ResourceData
-:ResourceData rdf:type owl:Class ;
-              rdfs:subClassOf [ rdf:type owl:Restriction ;
-                                owl:onProperty :resource ;
-                                owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                owl:onClass :Resource
-                              ] ,
-                              [ rdf:type owl:Restriction ;
-                                owl:onProperty :schemaUrl ;
-                                owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                owl:onDataRange xsd:string
-                              ] .
-
-
-###  https://github.com/andrej-kocijan/opentelemetry-ontology#ScopeData
-:ScopeData rdf:type owl:Class ;
-           rdfs:subClassOf [ rdf:type owl:Restriction ;
-                             owl:onProperty :scope ;
-                             owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                             owl:onClass :InstrumentationScope
-                           ] ,
-                           [ rdf:type owl:Restriction ;
-                             owl:onProperty :schemaUrl ;
-                             owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                             owl:onDataRange xsd:string
-                           ] .
+###  https://github.com/andrej-kocijan/opentelemetry-ontology#Trace
+:Trace rdf:type owl:Class ;
+       rdfs:subClassOf [ rdf:type owl:Restriction ;
+                         owl:onProperty :containsSpan ;
+                         owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                         owl:onClass :Span
+                       ] ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty :traceId ;
+                         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                         owl:onDataRange xsd:byte
+                       ] .
 
 
 #################################################################
