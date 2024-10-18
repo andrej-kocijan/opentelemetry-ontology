@@ -320,6 +320,14 @@
 #    Data properties
 #################################################################
 
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#serviceName
+:serviceName rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf owl:topDataProperty ;
+             rdfs:domain :Resource ;
+             rdfs:range xsd:string ;
+             rdfs:comment "Not present in the proto specification, but almost always present in traces' resources"@en .
+
+
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/bucketCount
 :bucketCount rdf:type owl:DatatypeProperty ;
              rdfs:domain [ rdf:type owl:Class ;
@@ -1020,6 +1028,9 @@ If the histogram contains the distribution of values, then both \"explicit_bound
                                         owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                                         owl:onDataRange xsd:string
                                       ] ;
+                      owl:hasKey ( :name
+                                   :version
+                                 ) ;
                       rdfs:comment "InstrumentationScope is a message representing the instrumentation scope information such as the fully qualified name and version." .
 
 
@@ -1248,10 +1259,22 @@ When new fields are added into this message, the OTLP request MUST be updated as
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/Resource
 :Resource rdf:type owl:Class ;
           rdfs:subClassOf [ rdf:type owl:Restriction ;
+                            owl:onProperty :attribute ;
+                            owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                            owl:onClass :KeyValue
+                          ] ,
+                          [ rdf:type owl:Restriction ;
                             owl:onProperty :droppedAttributesCount ;
                             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                             owl:onDataRange xsd:unsignedInt
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty :serviceName ;
+                            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onDataRange xsd:string
                           ] ;
+          owl:hasKey ( :serviceName
+                     ) ;
           rdfs:comment "Resource information."@en .
 
 
@@ -1500,6 +1523,9 @@ When new fields are added into this message, the OTLP request MUST be updated as
                         owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                         owl:onDataRange xsd:string
                       ] ;
+      owl:hasKey ( :spanId
+                   :traceId
+                 ) ;
       rdfs:comment "A Span represents a single operation performed by a single component of the system."@en .
 
 
@@ -1629,7 +1655,9 @@ Bits 10-31 are reserved for future use.""" .
                          owl:onProperty :traceId ;
                          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                          owl:onDataRange xsd:string
-                       ] .
+                       ] ;
+       owl:hasKey ( :traceId
+                  ) .
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/TracesData
