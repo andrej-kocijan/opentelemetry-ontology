@@ -56,6 +56,7 @@
 :childSpan rdf:type owl:ObjectProperty ;
            rdfs:subPropertyOf owl:topObjectProperty ;
            owl:inverseOf :parentSpan ;
+           rdf:type owl:IrreflexiveProperty ;
            rdfs:domain :Span ;
            rdfs:range :Span .
 
@@ -206,6 +207,7 @@
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/parentSpan
 :parentSpan rdf:type owl:ObjectProperty ;
             rdfs:subPropertyOf owl:topObjectProperty ;
+            rdf:type owl:IrreflexiveProperty ;
             rdfs:domain :Span ;
             rdfs:range :Span ;
             rdfs:comment "Defined by combination of traceId and parentSpanId"@en .
