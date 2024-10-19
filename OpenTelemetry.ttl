@@ -322,14 +322,6 @@
 #    Data properties
 #################################################################
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#serviceName
-:serviceName rdf:type owl:DatatypeProperty ;
-             rdfs:subPropertyOf owl:topDataProperty ;
-             rdfs:domain :Resource ;
-             rdfs:range xsd:string ;
-             rdfs:comment "Not present in the proto specification, but almost always present in traces' resources"@en .
-
-
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/bucketCount
 :bucketCount rdf:type owl:DatatypeProperty ;
              rdfs:domain [ rdf:type owl:Class ;
@@ -384,7 +376,11 @@
                                                     :Span
                                                   )
                                     ] ;
-                        rdfs:range xsd:unsignedInt ;
+                        rdfs:range [ rdf:type rdfs:Datatype ;
+                                     owl:unionOf ( xsd:long
+                                                   xsd:unsignedInt
+                                                 )
+                                   ] ;
                         rdfs:comment "droppedAttributesCount is the number of dropped attributes. If the value is 0, then no attributes were dropped."@en .
 
 
@@ -571,6 +567,14 @@ Value of 0 indicates unknown or missing timestamp.""" .
                                      )
                        ] ;
            rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/serviceName
+:serviceName rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf owl:topDataProperty ;
+             rdfs:domain :Resource ;
+             rdfs:range xsd:string ;
+             rdfs:comment "Not present in the proto specification, but almost always present in traces' resources"@en .
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/severityText
@@ -802,7 +806,11 @@ It describes how those values relate to the time interval over which they are ag
                        [ rdf:type owl:Restriction ;
                          owl:onProperty :droppedAttributesCount ;
                          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                         owl:onDataRange xsd:int
+                         owl:onDataRange [ rdf:type rdfs:Datatype ;
+                                           owl:unionOf ( xsd:int
+                                                         xsd:long
+                                                       )
+                                         ]
                        ] ,
                        [ rdf:type owl:Restriction ;
                          owl:onProperty :name ;
@@ -1018,7 +1026,11 @@ If the histogram contains the distribution of values, then both \"explicit_bound
                       rdfs:subClassOf [ rdf:type owl:Restriction ;
                                         owl:onProperty :droppedAttributesCount ;
                                         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                        owl:onDataRange xsd:unsignedInt
+                                        owl:onDataRange [ rdf:type rdfs:Datatype ;
+                                                          owl:unionOf ( xsd:int
+                                                                        xsd:long
+                                                                      )
+                                                        ]
                                       ] ,
                                       [ rdf:type owl:Restriction ;
                                         owl:onProperty :version ;
@@ -1072,7 +1084,11 @@ If the histogram contains the distribution of values, then both \"explicit_bound
                       [ rdf:type owl:Restriction ;
                         owl:onProperty :droppedAttributesCount ;
                         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                        owl:onDataRange xsd:int
+                        owl:onDataRange [ rdf:type rdfs:Datatype ;
+                                          owl:unionOf ( xsd:int
+                                                        xsd:long
+                                                      )
+                                        ]
                       ] ,
                       [ rdf:type owl:Restriction ;
                         owl:onProperty :spanId ;
@@ -1113,7 +1129,11 @@ For example, this can be used in batching operations, where a single batch handl
                            [ rdf:type owl:Restriction ;
                              owl:onProperty :droppedAttributesCount ;
                              owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                             owl:onDataRange xsd:unsignedInt
+                             owl:onDataRange [ rdf:type rdfs:Datatype ;
+                                               owl:unionOf ( xsd:int
+                                                             xsd:long
+                                                           )
+                                             ]
                            ] ,
                            [ rdf:type owl:Restriction ;
                              owl:onProperty :flags ;
@@ -1268,7 +1288,11 @@ When new fields are added into this message, the OTLP request MUST be updated as
                           [ rdf:type owl:Restriction ;
                             owl:onProperty :droppedAttributesCount ;
                             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                            owl:onDataRange xsd:unsignedInt
+                            owl:onDataRange [ rdf:type rdfs:Datatype ;
+                                              owl:unionOf ( xsd:int
+                                                            xsd:long
+                                                          )
+                                            ]
                           ] ,
                           [ rdf:type owl:Restriction ;
                             owl:onProperty :serviceName ;
@@ -1473,7 +1497,11 @@ When new fields are added into this message, the OTLP request MUST be updated as
                       [ rdf:type owl:Restriction ;
                         owl:onProperty :droppedAttributesCount ;
                         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                        owl:onDataRange xsd:int
+                        owl:onDataRange [ rdf:type rdfs:Datatype ;
+                                          owl:unionOf ( xsd:int
+                                                        xsd:long
+                                                      )
+                                        ]
                       ] ,
                       [ rdf:type owl:Restriction ;
                         owl:onProperty :droppedEventsCount ;
