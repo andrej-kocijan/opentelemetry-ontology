@@ -25,9 +25,7 @@
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/anyValueListElement
 :anyValueListElement rdf:type owl:ObjectProperty ;
-                     rdfs:subPropertyOf owl:topObjectProperty ;
-                     rdfs:domain :AnyValueList ;
-                     rdfs:range :AnyValue .
+                     rdfs:subPropertyOf owl:topObjectProperty .
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/attribute
@@ -48,8 +46,7 @@
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/body
 :body rdf:type owl:ObjectProperty ;
-      rdfs:domain :LogRecord ;
-      rdfs:range :AnyValue .
+      rdfs:domain :LogRecord .
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/childSpan
@@ -122,15 +119,7 @@
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/keyValueListElement
 :keyValueListElement rdf:type owl:ObjectProperty ;
                      rdfs:subPropertyOf owl:topObjectProperty ;
-                     rdfs:domain :KeyValueList ;
                      rdfs:range :KeyValue .
-
-
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/keyValueValue
-:keyValueValue rdf:type owl:ObjectProperty ;
-               rdfs:subPropertyOf owl:topObjectProperty ;
-               rdfs:domain :KeyValue ;
-               rdfs:range :AnyValue .
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/kind
@@ -318,6 +307,12 @@
        rdfs:comment "Define via the traceId data property"@en .
 
 
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/value
+:value rdf:type owl:ObjectProperty ;
+       rdfs:subPropertyOf owl:topObjectProperty ;
+       rdfs:domain :KeyValue .
+
+
 #################################################################
 #    Data properties
 #################################################################
@@ -449,11 +444,11 @@ When creating new spans, bits 10-31 (most-significant 22-bits) MUST be zero.
              rdfs:range xsd:boolean .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/keyValueKey
-:keyValueKey rdf:type owl:DatatypeProperty ;
-             rdfs:subPropertyOf owl:topDataProperty ;
-             rdfs:domain :KeyValue ;
-             rdfs:range xsd:string .
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/key
+:key rdf:type owl:DatatypeProperty ;
+     rdfs:subPropertyOf owl:topDataProperty ;
+     rdfs:domain :KeyValue ;
+     rdfs:range xsd:string .
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/max
@@ -529,7 +524,6 @@ Value of 0 indicates unknown or missing timestamp.""" .
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/primitiveValueValue
 :primitiveValueValue rdf:type owl:DatatypeProperty ;
-                     rdfs:domain :PrimitiveValue ;
                      rdfs:range [ rdf:type rdfs:Datatype ;
                                   owl:unionOf ( xsd:boolean
                                                 xsd:byte
@@ -724,16 +718,6 @@ trace if any of the following is true:
                         rdfs:subClassOf :Enum ;
                         rdfs:comment """AggregationTemporality defines how a metric aggregator reports aggregated values.
 It describes how those values relate to the time interval over which they are aggregated."""@en .
-
-
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/AnyValue
-:AnyValue rdf:type owl:Class ;
-          rdfs:comment "AnyValue is used to represent any type of attribute value. AnyValue may contain a primitive value such as a string or integer or it may contain an arbitrary nested object containing arrays, key-value lists and primitives."@en .
-
-
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/AnyValueList
-:AnyValueList rdf:type owl:Class ;
-              rdfs:subClassOf :AnyValue .
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/Buckets
@@ -1050,23 +1034,12 @@ If the histogram contains the distribution of values, then both \"explicit_bound
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/KeyValue
 :KeyValue rdf:type owl:Class ;
-          rdfs:subClassOf :AnyValue ,
-                          [ rdf:type owl:Restriction ;
-                            owl:onProperty :keyValueValue ;
-                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                            owl:onClass :AnyValue
-                          ] ,
-                          [ rdf:type owl:Restriction ;
-                            owl:onProperty :keyValueKey ;
+          rdfs:subClassOf [ rdf:type owl:Restriction ;
+                            owl:onProperty :key ;
                             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                             owl:onDataRange xsd:string
                           ] ;
           rdfs:comment "KeyValue is a key-value pair that is used to store Span attributes, Link attributes, etc."@en .
-
-
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/KeyValueList
-:KeyValueList rdf:type owl:Class ;
-              rdfs:subClassOf :AnyValue .
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/Link
@@ -1259,23 +1232,6 @@ When new fields are added into this message, the OTLP request MUST be updated as
                                                    ]
                                  ] ;
                  rdfs:comment "NumberDataPoint is a single data point in a timeseries that describes the time-varying scalar value of a metric."@en .
-
-
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/PrimitiveValue
-:PrimitiveValue rdf:type owl:Class ;
-                rdfs:subClassOf :AnyValue ,
-                                [ rdf:type owl:Restriction ;
-                                  owl:onProperty :primitiveValueValue ;
-                                  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                  owl:onDataRange [ rdf:type rdfs:Datatype ;
-                                                    owl:unionOf ( xsd:boolean
-                                                                  xsd:byte
-                                                                  xsd:double
-                                                                  xsd:int
-                                                                  xsd:string
-                                                                )
-                                                  ]
-                                ] .
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/Resource
@@ -2039,21 +1995,6 @@ Implementations MAY assume SpanKind to be INTERNAL when receiving UNSPECIFIED.""
 #################################################################
 #    General axioms
 #################################################################
-
-[ rdf:type owl:AllDisjointClasses ;
-  owl:members ( :AnyValue
-                :Enum
-                :InstrumentationScope
-                :Link
-                :LogRecord
-                :LogsData
-                :Resource
-                :ResourceLogs
-                :ScopeLogs
-                :Status
-              )
-] .
-
 
 [ rdf:type owl:AllDisjointClasses ;
   owl:members ( :ExponentialHistogram
