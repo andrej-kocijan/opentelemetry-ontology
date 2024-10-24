@@ -225,16 +225,16 @@
           rdfs:range :Resource .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/resourceLogs
-:resourceLogs rdf:type owl:ObjectProperty ;
-              rdfs:domain :LogsData ;
-              rdfs:range :ResourceLogs .
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/resourceLog
+:resourceLog rdf:type owl:ObjectProperty ;
+             rdfs:domain :LogsData ;
+             rdfs:range :ResourceLogs .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/resourceMetrics
-:resourceMetrics rdf:type owl:ObjectProperty ;
-                 rdfs:domain :MetricsData ;
-                 rdfs:range :ResourceMetrics .
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/resourceMetric
+:resourceMetric rdf:type owl:ObjectProperty ;
+                rdfs:domain :MetricsData ;
+                rdfs:range :ResourceMetrics .
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/resourceSpan
@@ -1161,7 +1161,7 @@ Bits 8-31 are reserved for future use."""@en .
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/LogsData
 :LogsData rdf:type owl:Class ;
           rdfs:subClassOf [ rdf:type owl:Restriction ;
-                            owl:onProperty :resourceLogs ;
+                            owl:onProperty :resourceLog ;
                             owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
                             owl:onClass :ResourceLogs
                           ] ;
@@ -1203,7 +1203,7 @@ When new fields are added into this message, the OTLP request MUST be updated as
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/MetricsData
 :MetricsData rdf:type owl:Class ;
              rdfs:subClassOf [ rdf:type owl:Restriction ;
-                               owl:onProperty :resourceMetrics ;
+                               owl:onProperty :resourceMetric ;
                                owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
                                owl:onClass :ResourceMetrics
                              ] ;
