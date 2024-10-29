@@ -537,13 +537,6 @@ Value of 0 indicates unknown or missing timestamp.""" .
           rdfs:range xsd:double .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/quantileValue
-:quantileValue rdf:type owl:DatatypeProperty ;
-               rdfs:subPropertyOf owl:topDataProperty ;
-               rdfs:domain :ValueAtQuantile ;
-               rdfs:range xsd:double .
-
-
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/scale
 :scale rdf:type owl:DatatypeProperty ;
        rdfs:domain :ExponentialHistogramDataPoint ;
@@ -678,6 +671,13 @@ trace if any of the following is true:
       rdfs:subPropertyOf owl:topDataProperty ;
       rdfs:domain :Metric ;
       rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/valueAtQuantileValue
+:valueAtQuantileValue rdf:type owl:DatatypeProperty ;
+                      rdfs:subPropertyOf owl:topDataProperty ;
+                      rdfs:domain :ValueAtQuantile ;
+                      rdfs:range xsd:double .
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/version
