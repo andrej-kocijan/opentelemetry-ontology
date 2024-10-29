@@ -345,20 +345,6 @@
              rdfs:range xsd:string .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/doubleOrIntValue
-:doubleOrIntValue rdf:type owl:DatatypeProperty ;
-                  rdfs:domain [ rdf:type owl:Class ;
-                                owl:unionOf ( :Exemplar
-                                              :NumberDataPoint
-                                            )
-                              ] ;
-                  rdfs:range [ rdf:type rdfs:Datatype ;
-                               owl:unionOf ( xsd:double
-                                             xsd:long
-                                           )
-                             ] .
-
-
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/droppedAttributesCount
 :droppedAttributesCount rdf:type owl:DatatypeProperty ;
                         rdfs:subPropertyOf owl:topDataProperty ;
@@ -492,6 +478,20 @@ When creating new spans, bits 10-31 (most-significant 22-bits) MUST be zero.
                   ] ;
       rdfs:range xsd:string ;
       rdfs:comment "An empty instrumentation scope name means the name is unknown."@en .
+
+
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/numberDataPointValue
+:numberDataPointValue rdf:type owl:DatatypeProperty ;
+                      rdfs:domain [ rdf:type owl:Class ;
+                                    owl:unionOf ( :Exemplar
+                                                  :NumberDataPoint
+                                                )
+                                  ] ;
+                      rdfs:range [ rdf:type rdfs:Datatype ;
+                                   owl:unionOf ( xsd:double
+                                                 xsd:long
+                                               )
+                                 ] .
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/observedTimeUnixNano
@@ -822,7 +822,7 @@ It describes how those values relate to the time interval over which they are ag
                             owl:onClass :Span
                           ] ,
                           [ rdf:type owl:Restriction ;
-                            owl:onProperty :doubleOrIntValue ;
+                            owl:onProperty :numberDataPointValue ;
                             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                             owl:onDataRange [ rdf:type rdfs:Datatype ;
                                               owl:unionOf ( xsd:double
@@ -1223,7 +1223,7 @@ When new fields are added into this message, the OTLP request MUST be updated as
                                    owl:onClass :Exemplar
                                  ] ,
                                  [ rdf:type owl:Restriction ;
-                                   owl:onProperty :doubleOrIntValue ;
+                                   owl:onProperty :numberDataPointValue ;
                                    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                                    owl:onDataRange [ rdf:type rdfs:Datatype ;
                                                      owl:unionOf ( xsd:double
