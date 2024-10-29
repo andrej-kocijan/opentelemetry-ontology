@@ -211,11 +211,7 @@
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/quantileValue
 :quantileValue rdf:type owl:ObjectProperty ;
-               rdfs:domain [ rdf:type owl:Class ;
-                             owl:unionOf ( :SummaryDataPoint
-                                           :ValueAtQuantile
-                                         )
-                           ] ;
+               rdfs:domain :SummaryDataPoint ;
                rdfs:range :ValueAtQuantile .
 
 
@@ -544,6 +540,7 @@ Value of 0 indicates unknown or missing timestamp.""" .
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/quantileValue
 :quantileValue rdf:type owl:DatatypeProperty ;
                rdfs:subPropertyOf owl:topDataProperty ;
+               rdfs:domain :ValueAtQuantile ;
                rdfs:range xsd:double .
 
 
