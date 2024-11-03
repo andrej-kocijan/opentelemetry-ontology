@@ -1,10 +1,10 @@
-@prefix : <http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/> .
+@prefix : <http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@base <http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/> .
+@base <http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#> .
 
 <http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology> rdf:type owl:Ontology .
 
@@ -12,7 +12,7 @@
 #    Object Properties
 #################################################################
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/aggregationTemporality
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#aggregationTemporality
 :aggregationTemporality rdf:type owl:ObjectProperty ;
                         rdfs:domain [ rdf:type owl:Class ;
                                       owl:unionOf ( :ExponentialHistogram
@@ -23,12 +23,12 @@
                         rdfs:range :AggregationTemporality .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/anyValueListElement
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#anyValueListElement
 :anyValueListElement rdf:type owl:ObjectProperty ;
                      rdfs:subPropertyOf owl:topObjectProperty .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/attribute
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#attribute
 :attribute rdf:type owl:ObjectProperty ;
            rdfs:subPropertyOf owl:topObjectProperty ;
            rdfs:domain [ rdf:type owl:Class ;
@@ -44,12 +44,12 @@
            rdfs:range :KeyValue .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/body
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#body
 :body rdf:type owl:ObjectProperty ;
       rdfs:domain :LogRecord .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/childSpan
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#childSpan
 :childSpan rdf:type owl:ObjectProperty ;
            rdfs:subPropertyOf owl:topObjectProperty ;
            owl:inverseOf :parentSpan ;
@@ -58,13 +58,13 @@
            rdfs:range :Span .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/code
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#code
 :code rdf:type owl:ObjectProperty ;
       rdfs:domain :Status ;
       rdfs:range :StatusCode .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/containsSpan
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#containsSpan
 :containsSpan rdf:type owl:ObjectProperty ;
               rdfs:subPropertyOf owl:topObjectProperty ;
               owl:inverseOf :trace ;
@@ -72,26 +72,26 @@
               rdfs:range :Span .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/data
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#data
 :data rdf:type owl:ObjectProperty ;
       rdfs:subPropertyOf owl:topObjectProperty ;
       rdfs:domain :Metric ;
       rdfs:range :MetricData .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/dataPoint
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#dataPoint
 :dataPoint rdf:type owl:ObjectProperty ;
            rdfs:domain :MetricData ;
            rdfs:range :DataPoint .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/event
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#event
 :event rdf:type owl:ObjectProperty ;
        rdfs:domain :Span ;
        rdfs:range :Event .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/exemplar
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#exemplar
 :exemplar rdf:type owl:ObjectProperty ;
           rdfs:domain [ rdf:type owl:Class ;
                         owl:unionOf ( :ExponentialHistogramDataPoint
@@ -102,7 +102,7 @@
           rdfs:range :Exemplar .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/exemplarOf
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#exemplarOf
 :exemplarOf rdf:type owl:ObjectProperty ;
             rdfs:subPropertyOf owl:topObjectProperty ;
             owl:inverseOf :spanExemplar ;
@@ -110,31 +110,31 @@
             rdfs:range :Span .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/filteredAttribute
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#filteredAttribute
 :filteredAttribute rdf:type owl:ObjectProperty ;
                    rdfs:domain :Exemplar ;
                    rdfs:range :KeyValue .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/keyValueListElement
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#keyValueListElement
 :keyValueListElement rdf:type owl:ObjectProperty ;
                      rdfs:subPropertyOf owl:topObjectProperty ;
                      rdfs:range :KeyValue .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/kind
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#kind
 :kind rdf:type owl:ObjectProperty ;
       rdfs:domain :Span ;
       rdfs:range :SpanKind .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/link
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#link
 :link rdf:type owl:ObjectProperty ;
       rdfs:domain :Span ;
       rdfs:range :Link .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/linked
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#linked
 :linked rdf:type owl:ObjectProperty ;
         rdfs:subPropertyOf owl:topObjectProperty ;
         owl:inverseOf :linkedTo ;
@@ -145,21 +145,21 @@
                                ) .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/linkedSpan
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#linkedSpan
 :linkedSpan rdf:type owl:ObjectProperty ;
             rdfs:subPropertyOf owl:topObjectProperty ;
             rdfs:domain :Link ;
             rdfs:range :Span .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/linkedTo
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#linkedTo
 :linkedTo rdf:type owl:ObjectProperty ;
           rdfs:subPropertyOf owl:topObjectProperty ;
           rdfs:domain :Span ;
           rdfs:range :Span .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/logOf
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#logOf
 :logOf rdf:type owl:ObjectProperty ;
        rdfs:subPropertyOf owl:topObjectProperty ;
        owl:inverseOf :spanLog ;
@@ -167,33 +167,33 @@
        rdfs:range :Span .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/logRecord
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#logRecord
 :logRecord rdf:type owl:ObjectProperty ;
            rdfs:domain :ScopeLogs ;
            rdfs:range :LogRecord .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/metadata
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#metadata
 :metadata rdf:type owl:ObjectProperty ;
           rdfs:subPropertyOf owl:topObjectProperty ;
           rdfs:domain :Metric ;
           rdfs:range :KeyValue .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/metric
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#metric
 :metric rdf:type owl:ObjectProperty ;
         rdfs:domain :ScopeMetrics ;
         rdfs:range :Metric .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/negative
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#negative
 :negative rdf:type owl:ObjectProperty ;
           rdfs:subPropertyOf owl:topObjectProperty ;
           rdfs:domain :ExponentialHistogramDataPoint ;
           rdfs:range :Buckets .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/parentSpan
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#parentSpan
 :parentSpan rdf:type owl:ObjectProperty ;
             rdfs:subPropertyOf owl:topObjectProperty ;
             rdf:type owl:IrreflexiveProperty ;
@@ -202,100 +202,100 @@
             rdfs:comment "Defined by combination of traceId and parentSpanId"@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/positive
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#positive
 :positive rdf:type owl:ObjectProperty ;
           rdfs:subPropertyOf owl:topObjectProperty ;
           rdfs:domain :ExponentialHistogramDataPoint ;
           rdfs:range :Buckets .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/quantileValue
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#quantileValue
 :quantileValue rdf:type owl:ObjectProperty ;
                rdfs:domain :SummaryDataPoint ;
                rdfs:range :ValueAtQuantile .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/resource
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#resource
 :resource rdf:type owl:ObjectProperty ;
           rdfs:domain :ResourceData ;
           rdfs:range :Resource .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/resourceLog
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#resourceLog
 :resourceLog rdf:type owl:ObjectProperty ;
              rdfs:domain :LogsData ;
              rdfs:range :ResourceLogs .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/resourceMetric
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#resourceMetric
 :resourceMetric rdf:type owl:ObjectProperty ;
                 rdfs:domain :MetricsData ;
                 rdfs:range :ResourceMetrics .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/resourceSpan
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#resourceSpan
 :resourceSpan rdf:type owl:ObjectProperty ;
               rdfs:domain :TracesData ;
               rdfs:range :ResourceSpans .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/scope
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#scope
 :scope rdf:type owl:ObjectProperty ;
        rdfs:domain :ScopeData ;
        rdfs:range :InstrumentationScope .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/scopeLog
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#scopeLog
 :scopeLog rdf:type owl:ObjectProperty ;
           rdfs:domain :ResourceLogs ;
           rdfs:range :ScopeLogs .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/scopeMetric
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#scopeMetric
 :scopeMetric rdf:type owl:ObjectProperty ;
              rdfs:domain :ResourceMetrics ;
              rdfs:range :ScopeMetrics .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/scopeSpan
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#scopeSpan
 :scopeSpan rdf:type owl:ObjectProperty ;
            rdfs:domain :ResourceSpans ;
            rdfs:range :ScopeSpans .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/severitryNumber
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#severitryNumber
 :severitryNumber rdf:type owl:ObjectProperty ;
                  rdfs:domain :LogRecord ;
                  rdfs:range :SeverityNumber .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/span
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#span
 :span rdf:type owl:ObjectProperty ;
       rdfs:domain :ScopeSpans ;
       rdfs:range :Span .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/spanExemplar
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#spanExemplar
 :spanExemplar rdf:type owl:ObjectProperty ;
               rdfs:subPropertyOf owl:topObjectProperty ;
               rdfs:domain :Span ;
               rdfs:range :Exemplar .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/spanLog
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#spanLog
 :spanLog rdf:type owl:ObjectProperty ;
          rdfs:subPropertyOf owl:topObjectProperty ;
          rdfs:domain :Span ;
          rdfs:range :LogRecord .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/status
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#status
 :status rdf:type owl:ObjectProperty ;
         rdfs:domain :Span ;
         rdfs:range :Status .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/trace
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#trace
 :trace rdf:type owl:ObjectProperty ;
        rdfs:subPropertyOf owl:topObjectProperty ;
        rdfs:domain :Span ;
@@ -303,7 +303,7 @@
        rdfs:comment "Define via the traceId data property"@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/value
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#value
 :value rdf:type owl:ObjectProperty ;
        rdfs:subPropertyOf owl:topObjectProperty ;
        rdfs:domain :KeyValue .
@@ -313,7 +313,7 @@
 #    Data properties
 #################################################################
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/bucketCount
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#bucketCount
 :bucketCount rdf:type owl:DatatypeProperty ;
              rdfs:domain [ rdf:type owl:Class ;
                            owl:unionOf ( :Buckets
@@ -323,7 +323,7 @@
              rdfs:range xsd:long .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/count
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#count
 :count rdf:type owl:DatatypeProperty ;
        rdfs:domain [ rdf:type owl:Class ;
                      owl:unionOf ( :ExponentialHistogramDataPoint
@@ -334,14 +334,14 @@
        rdfs:range xsd:long .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/description
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#description
 :description rdf:type owl:DatatypeProperty ;
              rdfs:subPropertyOf owl:topDataProperty ;
              rdfs:domain :Metric ;
              rdfs:range xsd:string .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/droppedAttributesCount
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#droppedAttributesCount
 :droppedAttributesCount rdf:type owl:DatatypeProperty ;
                         rdfs:subPropertyOf owl:topDataProperty ;
                         rdfs:domain [ rdf:type owl:Class ;
@@ -361,19 +361,19 @@
                         rdfs:comment "droppedAttributesCount is the number of dropped attributes. If the value is 0, then no attributes were dropped."@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/droppedEventsCount
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#droppedEventsCount
 :droppedEventsCount rdf:type owl:DatatypeProperty ;
                     rdfs:domain :Span ;
                     rdfs:range xsd:long .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/droppedLinksCount
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#droppedLinksCount
 :droppedLinksCount rdf:type owl:DatatypeProperty ;
                    rdfs:domain :Span ;
                    rdfs:range xsd:long .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/endTimeUnixNano
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#endTimeUnixNano
 :endTimeUnixNano rdf:type owl:DatatypeProperty ;
                  rdfs:subPropertyOf owl:topDataProperty ;
                  rdfs:domain :Span ;
@@ -384,18 +384,18 @@
                             ] .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/enumOptionValue
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#enumOptionValue
 :enumOptionValue rdf:type owl:DatatypeProperty ;
                  rdfs:domain :Enum .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/explicitBound
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#explicitBound
 :explicitBound rdf:type owl:DatatypeProperty ;
                rdfs:domain :HistogramDataPoint ;
                rdfs:range xsd:double .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/flags
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#flags
 :flags rdf:type owl:DatatypeProperty ;
        rdfs:subPropertyOf owl:topDataProperty ;
        rdfs:domain [ rdf:type owl:Class ;
@@ -424,20 +424,20 @@ When creating new spans, bits 10-31 (most-significant 22-bits) MUST be zero.
                     "Flags, a bit field. 8 least significant bits are the trace flags as defined in W3C Trace Context specification. 24 most significant bits are reserved and must be set to 0. Readers must not assume that 24 most significant bits will be zero and must correctly mask the bits when reading 8-bit trace flag (use flags & LOG_RECORD_FLAGS_TRACE_FLAGS_MASK). [Optional]."@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/isMonotonic
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#isMonotonic
 :isMonotonic rdf:type owl:DatatypeProperty ;
              rdfs:domain :Sum ;
              rdfs:range xsd:boolean .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/key
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#key
 :key rdf:type owl:DatatypeProperty ;
      rdfs:subPropertyOf owl:topDataProperty ;
      rdfs:domain :KeyValue ;
      rdfs:range xsd:string .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/max
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#max
 :max rdf:type owl:DatatypeProperty ;
      rdfs:subPropertyOf owl:topDataProperty ;
      rdfs:domain [ rdf:type owl:Class ;
@@ -448,14 +448,14 @@ When creating new spans, bits 10-31 (most-significant 22-bits) MUST be zero.
      rdfs:range xsd:double .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/message
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#message
 :message rdf:type owl:DatatypeProperty ;
          rdfs:domain :Status ;
          rdfs:range xsd:string ;
          rdfs:comment "A developer-facing human readable error message." .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/min
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#min
 :min rdf:type owl:DatatypeProperty ;
      rdfs:subPropertyOf owl:topDataProperty ;
      rdfs:domain [ rdf:type owl:Class ;
@@ -466,7 +466,7 @@ When creating new spans, bits 10-31 (most-significant 22-bits) MUST be zero.
      rdfs:range xsd:double .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/name
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#name
 :name rdf:type owl:DatatypeProperty ;
       rdfs:subPropertyOf owl:topDataProperty ;
       rdfs:domain [ rdf:type owl:Class ;
@@ -480,7 +480,7 @@ When creating new spans, bits 10-31 (most-significant 22-bits) MUST be zero.
       rdfs:comment "An empty instrumentation scope name means the name is unknown."@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/numberDataPointValue
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#numberDataPointValue
 :numberDataPointValue rdf:type owl:DatatypeProperty ;
                       rdfs:domain [ rdf:type owl:Class ;
                                     owl:unionOf ( :Exemplar
@@ -494,7 +494,7 @@ When creating new spans, bits 10-31 (most-significant 22-bits) MUST be zero.
                                  ] .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/observedTimeUnixNano
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#observedTimeUnixNano
 :observedTimeUnixNano rdf:type owl:DatatypeProperty ;
                       rdfs:subPropertyOf owl:topDataProperty ;
                       rdfs:domain :LogRecord ;
@@ -510,32 +510,32 @@ Value is UNIX Epoch time in nanoseconds since 00:00:00 UTC on 1 January 1970.
 Value of 0 indicates unknown or missing timestamp.""" .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/offset
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#offset
 :offset rdf:type owl:DatatypeProperty ;
         rdfs:domain :Buckets ;
         rdfs:range xsd:int .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/parentSpanId
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#parentSpanId
 :parentSpanId rdf:type owl:DatatypeProperty ;
               rdfs:domain :Span ;
               rdfs:range xsd:string .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/quantile
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#quantile
 :quantile rdf:type owl:DatatypeProperty ;
           rdfs:subPropertyOf owl:topDataProperty ;
           rdfs:domain :ValueAtQuantile ;
           rdfs:range xsd:double .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/scale
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#scale
 :scale rdf:type owl:DatatypeProperty ;
        rdfs:domain :ExponentialHistogramDataPoint ;
        rdfs:range xsd:int .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/schemaUrl
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#schemaUrl
 :schemaUrl rdf:type owl:DatatypeProperty ;
            rdfs:domain [ rdf:type owl:Class ;
                          owl:unionOf ( :ResourceData
@@ -545,7 +545,7 @@ Value of 0 indicates unknown or missing timestamp.""" .
            rdfs:range xsd:string .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/serviceName
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#serviceName
 :serviceName rdf:type owl:DatatypeProperty ;
              rdfs:subPropertyOf owl:topDataProperty ;
              rdfs:domain :Resource ;
@@ -553,14 +553,14 @@ Value of 0 indicates unknown or missing timestamp.""" .
              rdfs:comment "Not present in the proto specification, but almost always present in traces' resources"@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/severityText
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#severityText
 :severityText rdf:type owl:DatatypeProperty ;
               rdfs:domain :LogRecord ;
               rdfs:range xsd:string ;
               rdfs:comment "The severity text (also known as log level). The original string representation as it is known at the source. [Optional]." .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/spanId
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#spanId
 :spanId rdf:type owl:DatatypeProperty ;
         rdfs:subPropertyOf owl:topDataProperty ;
         rdfs:domain [ rdf:type owl:Class ;
@@ -585,7 +585,7 @@ span if any of the following is true:
   - the field contains an invalid value.""" .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/startTimeUnixNano
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#startTimeUnixNano
 :startTimeUnixNano rdf:type owl:DatatypeProperty ;
                    rdfs:subPropertyOf owl:topDataProperty ;
                    rdfs:domain [ rdf:type owl:Class ;
@@ -600,7 +600,7 @@ span if any of the following is true:
                               ] .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/sum
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#sum
 :sum rdf:type owl:DatatypeProperty ;
      rdfs:domain [ rdf:type owl:Class ;
                    owl:unionOf ( :ExponentialHistogramDataPoint
@@ -611,7 +611,7 @@ span if any of the following is true:
      rdfs:range xsd:double .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/timeUnixNano
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#timeUnixNano
 :timeUnixNano rdf:type owl:DatatypeProperty ;
               rdfs:subPropertyOf owl:topDataProperty ;
               rdfs:domain [ rdf:type owl:Class ;
@@ -631,7 +631,7 @@ Value is UNIX Epoch time in nanoseconds since 00:00:00 UTC on 1 January 1970.
 Value of 0 indicates unknown or missing timestamp."""@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/traceId
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#traceId
 :traceId rdf:type owl:DatatypeProperty ;
          rdfs:subPropertyOf owl:topDataProperty ;
          rdfs:domain [ rdf:type owl:Class ;
@@ -656,7 +656,7 @@ trace if any of the following is true:
   - the field contains an invalid value."""@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/traceState
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#traceState
 :traceState rdf:type owl:DatatypeProperty ;
             rdfs:domain [ rdf:type owl:Class ;
                           owl:unionOf ( :Link
@@ -666,34 +666,34 @@ trace if any of the following is true:
             rdfs:range xsd:string .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/unit
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#unit
 :unit rdf:type owl:DatatypeProperty ;
       rdfs:subPropertyOf owl:topDataProperty ;
       rdfs:domain :Metric ;
       rdfs:range xsd:string .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/valueAtQuantileValue
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#valueAtQuantileValue
 :valueAtQuantileValue rdf:type owl:DatatypeProperty ;
                       rdfs:subPropertyOf owl:topDataProperty ;
                       rdfs:domain :ValueAtQuantile ;
                       rdfs:range xsd:double .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/version
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#version
 :version rdf:type owl:DatatypeProperty ;
          rdfs:subPropertyOf owl:topDataProperty ;
          rdfs:domain :InstrumentationScope ;
          rdfs:range xsd:string .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/zeroCount
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#zeroCount
 :zeroCount rdf:type owl:DatatypeProperty ;
            rdfs:domain :ExponentialHistogramDataPoint ;
            rdfs:range xsd:long .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/zeroThreshold
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#zeroThreshold
 :zeroThreshold rdf:type owl:DatatypeProperty ;
                rdfs:subPropertyOf owl:topDataProperty ;
                rdfs:domain :ExponentialHistogramDataPoint ;
@@ -704,7 +704,7 @@ trace if any of the following is true:
 #    Classes
 #################################################################
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/AggregationTemporality
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#AggregationTemporality
 :AggregationTemporality rdf:type owl:Class ;
                         owl:equivalentClass [ rdf:type owl:Class ;
                                               owl:oneOf ( :AGGREGATION_TEMPORALITY_CUMULATIVE
@@ -717,7 +717,7 @@ trace if any of the following is true:
 It describes how those values relate to the time interval over which they are aggregated."""@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/Buckets
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#Buckets
 :Buckets rdf:type owl:Class ;
          rdfs:subClassOf [ rdf:type owl:Restriction ;
                            owl:onProperty :bucketCount ;
@@ -732,7 +732,7 @@ It describes how those values relate to the time interval over which they are ag
          rdfs:comment "Buckets are a set of bucket counts, encoded in a contiguous array of counts."@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/DataPoint
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#DataPoint
 :DataPoint rdf:type owl:Class ;
            rdfs:subClassOf [ rdf:type owl:Restriction ;
                              owl:onProperty :attribute ;
@@ -764,7 +764,7 @@ It describes how those values relate to the time interval over which they are ag
                            ] .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/DataPointFlags
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#DataPointFlags
 :DataPointFlags rdf:type owl:Class ;
                 owl:equivalentClass [ rdf:type owl:Class ;
                                       owl:oneOf ( :DATA_POINT_FLAGS_DO_NOT_USE
@@ -776,7 +776,7 @@ It describes how those values relate to the time interval over which they are ag
   (point.flags & DATA_POINT_FLAGS_NO_RECORDED_VALUE_MASK) == DATA_POINT_FLAGS_NO_RECORDED_VALUE_MASK"""@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/Enum
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#Enum
 :Enum rdf:type owl:Class ;
       rdfs:subClassOf [ rdf:type owl:Restriction ;
                         owl:onProperty :enumOptionValue ;
@@ -785,7 +785,7 @@ It describes how those values relate to the time interval over which they are ag
                       ] .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/Event
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#Event
 :Event rdf:type owl:Class ;
        rdfs:subClassOf [ rdf:type owl:Restriction ;
                          owl:onProperty :attribute ;
@@ -818,7 +818,7 @@ It describes how those values relate to the time interval over which they are ag
        rdfs:comment "Event is a time-stamped annotation of the span, consisting of user-supplied text description and key-value pairs."@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/Exemplar
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#Exemplar
 :Exemplar rdf:type owl:Class ;
           rdfs:subClassOf [ rdf:type owl:Restriction ;
                             owl:onProperty :filteredAttribute ;
@@ -862,7 +862,7 @@ It describes how those values relate to the time interval over which they are ag
 Exemplars also hold information about the environment when the measurement was recorded, for example the span and trace ID of the active span when the exemplar was recorded."""@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/ExponentialHistogram
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#ExponentialHistogram
 :ExponentialHistogram rdf:type owl:Class ;
                       rdfs:subClassOf :MetricData ,
                                       [ rdf:type owl:Restriction ;
@@ -882,7 +882,7 @@ Exemplars also hold information about the environment when the measurement was r
                       rdfs:comment "ExponentialHistogram represents the type of a metric that is calculated by aggregating as a ExponentialHistogram of all reported double measurements over a time interval."@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/ExponentialHistogramDataPoint
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#ExponentialHistogramDataPoint
 :ExponentialHistogramDataPoint rdf:type owl:Class ;
                                rdfs:subClassOf :DataPoint ,
                                                [ rdf:type owl:Restriction ;
@@ -938,7 +938,7 @@ Exemplars also hold information about the environment when the measurement was r
                                rdfs:comment "ExponentialHistogramDataPoint is a single data point in a timeseries that describes the time-varying values of a ExponentialHistogram of double values. A ExponentialHistogram contains summary statistics for a population of values, it may optionally contain the distribution of those values across a set of buckets."@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/Gauge
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#Gauge
 :Gauge rdf:type owl:Class ;
        rdfs:subClassOf :MetricData ,
                        [ rdf:type owl:Restriction ;
@@ -955,7 +955,7 @@ Exemplars also hold information about the environment when the measurement was r
 A Gauge does not support different aggregation temporalities. Given the aggregation is unknown, points cannot be combined using the same aggregation, regardless of aggregation temporalities. Therefore, AggregationTemporality is not included. Consequently, this also means \"StartTimeUnixNano\" is ignored for all data points."""@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/Histogram
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#Histogram
 :Histogram rdf:type owl:Class ;
            rdfs:subClassOf :MetricData ,
                            [ rdf:type owl:Restriction ;
@@ -974,7 +974,7 @@ A Gauge does not support different aggregation temporalities. Given the aggregat
            rdfs:comment "Histogram represents the type of a metric that is calculated by aggregating as a Histogram of all reported measurements over a time interval."@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/HistogramDataPoint
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#HistogramDataPoint
 :HistogramDataPoint rdf:type owl:Class ;
                     rdfs:subClassOf :DataPoint ,
                                     [ rdf:type owl:Restriction ;
@@ -1018,7 +1018,7 @@ A Gauge does not support different aggregation temporalities. Given the aggregat
 If the histogram contains the distribution of values, then both \"explicit_bounds\" and \"bucket counts\" fields must be defined.  If the histogram does not contain the distribution of values, then both \"explicit_bounds\" and \"bucket_counts\" must be omitted and only \"count\" and \"sum\" are known."""@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/InstrumentationScope
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#InstrumentationScope
 :InstrumentationScope rdf:type owl:Class ;
                       rdfs:subClassOf [ rdf:type owl:Restriction ;
                                         owl:onProperty :droppedAttributesCount ;
@@ -1045,7 +1045,7 @@ If the histogram contains the distribution of values, then both \"explicit_bound
                       rdfs:comment "InstrumentationScope is a message representing the instrumentation scope information such as the fully qualified name and version." .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/KeyValue
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#KeyValue
 :KeyValue rdf:type owl:Class ;
           rdfs:subClassOf [ rdf:type owl:Restriction ;
                             owl:onProperty :key ;
@@ -1055,7 +1055,7 @@ If the histogram contains the distribution of values, then both \"explicit_bound
           rdfs:comment "KeyValue is a key-value pair that is used to store Span attributes, Link attributes, etc."@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/Link
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#Link
 :Link rdf:type owl:Class ;
       rdfs:subClassOf [ rdf:type owl:Restriction ;
                         owl:onProperty :attribute ;
@@ -1100,7 +1100,7 @@ If the histogram contains the distribution of values, then both \"explicit_bound
 For example, this can be used in batching operations, where a single batch handler processes multiple requests from different traces or when the handler receives a request from a different project."""@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/LogRecord
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#LogRecord
 :LogRecord rdf:type owl:Class ;
            rdfs:subClassOf [ rdf:type owl:Restriction ;
                              owl:onProperty :logOf ;
@@ -1159,7 +1159,7 @@ For example, this can be used in batching operations, where a single batch handl
 https://github.com/open-telemetry/oteps/blob/main/text/logs/0097-log-data-model.md"""@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/LogRecordFlags
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#LogRecordFlags
 :LogRecordFlags rdf:type owl:Class ;
                 owl:equivalentClass [ rdf:type owl:Class ;
                                       owl:oneOf ( :LOG_RECORD_FLAGS_DO_NOT_USE
@@ -1175,7 +1175,7 @@ Bits 0-7 are used for trace flags.
 Bits 8-31 are reserved for future use."""@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/LogsData
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#LogsData
 :LogsData rdf:type owl:Class ;
           rdfs:subClassOf [ rdf:type owl:Restriction ;
                             owl:onProperty :resourceLog ;
@@ -1189,7 +1189,7 @@ The main difference between this message and collector protocol is that in this 
 When new fields are added into this message, the OTLP request MUST be updated as well."""@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/Metric
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#Metric
 :Metric rdf:type owl:Class ;
         rdfs:subClassOf [ rdf:type owl:Restriction ;
                           owl:onProperty :metadata ;
@@ -1213,11 +1213,11 @@ When new fields are added into this message, the OTLP request MUST be updated as
                         ] .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/MetricData
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#MetricData
 :MetricData rdf:type owl:Class .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/MetricsData
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#MetricsData
 :MetricsData rdf:type owl:Class ;
              rdfs:subClassOf [ rdf:type owl:Restriction ;
                                owl:onProperty :resourceMetric ;
@@ -1231,7 +1231,7 @@ The main difference between this message and collector protocol is that in this 
 When new fields are added into this message, the OTLP request MUST be updated as well."""@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/NumberDataPoint
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#NumberDataPoint
 :NumberDataPoint rdf:type owl:Class ;
                  rdfs:subClassOf :DataPoint ,
                                  [ rdf:type owl:Restriction ;
@@ -1251,7 +1251,7 @@ When new fields are added into this message, the OTLP request MUST be updated as
                  rdfs:comment "NumberDataPoint is a single data point in a timeseries that describes the time-varying scalar value of a metric."@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/Resource
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#Resource
 :Resource rdf:type owl:Class ;
           rdfs:subClassOf [ rdf:type owl:Restriction ;
                             owl:onProperty :attribute ;
@@ -1277,7 +1277,7 @@ When new fields are added into this message, the OTLP request MUST be updated as
           rdfs:comment "Resource information."@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/ResourceData
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#ResourceData
 :ResourceData rdf:type owl:Class ;
               rdfs:subClassOf [ rdf:type owl:Restriction ;
                                 owl:onProperty :resource ;
@@ -1291,7 +1291,7 @@ When new fields are added into this message, the OTLP request MUST be updated as
                               ] .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/ResourceLogs
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#ResourceLogs
 :ResourceLogs rdf:type owl:Class ;
               rdfs:subClassOf :ResourceData ,
                               [ rdf:type owl:Restriction ;
@@ -1302,7 +1302,7 @@ When new fields are added into this message, the OTLP request MUST be updated as
               rdfs:comment "A collection of ScopeLogs from a Resource." .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/ResourceMetrics
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#ResourceMetrics
 :ResourceMetrics rdf:type owl:Class ;
                  rdfs:subClassOf :ResourceData ,
                                  [ rdf:type owl:Restriction ;
@@ -1313,7 +1313,7 @@ When new fields are added into this message, the OTLP request MUST be updated as
                  rdfs:comment "A collection of ScopeMetrics from a Resource." .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/ResourceSpans
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#ResourceSpans
 :ResourceSpans rdf:type owl:Class ;
                rdfs:subClassOf :ResourceData ,
                                [ rdf:type owl:Restriction ;
@@ -1324,7 +1324,7 @@ When new fields are added into this message, the OTLP request MUST be updated as
                rdfs:comment "A collection of ScopeSpans from a Resource."@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/ScopeData
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#ScopeData
 :ScopeData rdf:type owl:Class ;
            rdfs:subClassOf [ rdf:type owl:Restriction ;
                              owl:onProperty :scope ;
@@ -1338,7 +1338,7 @@ When new fields are added into this message, the OTLP request MUST be updated as
                            ] .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/ScopeLogs
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#ScopeLogs
 :ScopeLogs rdf:type owl:Class ;
            rdfs:subClassOf :ScopeData ,
                            [ rdf:type owl:Restriction ;
@@ -1349,7 +1349,7 @@ When new fields are added into this message, the OTLP request MUST be updated as
            rdfs:comment "A collection of Logs produced by a Scope."@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/ScopeMetrics
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#ScopeMetrics
 :ScopeMetrics rdf:type owl:Class ;
               rdfs:subClassOf :ScopeData ,
                               [ rdf:type owl:Restriction ;
@@ -1360,7 +1360,7 @@ When new fields are added into this message, the OTLP request MUST be updated as
               rdfs:comment "A collection of Metrics produced by an Scope."@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/ScopeSpans
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#ScopeSpans
 :ScopeSpans rdf:type owl:Class ;
             rdfs:subClassOf :ScopeData ,
                             [ rdf:type owl:Restriction ;
@@ -1371,7 +1371,7 @@ When new fields are added into this message, the OTLP request MUST be updated as
             rdfs:comment "A collection of Spans produced by an InstrumentationScope"@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/SeverityNumber
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#SeverityNumber
 :SeverityNumber rdf:type owl:Class ;
                 owl:equivalentClass [ rdf:type owl:Class ;
                                       owl:oneOf ( :SEVERITY_NUMBER_DEBUG
@@ -1405,7 +1405,7 @@ When new fields are added into this message, the OTLP request MUST be updated as
                 rdfs:comment "Possible values for LogRecord.SeverityNumber."@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/Span
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#Span
 :Span rdf:type owl:Class ;
       rdfs:subClassOf [ rdf:type owl:Restriction ;
                         owl:onProperty :attribute ;
@@ -1540,7 +1540,7 @@ When new fields are added into this message, the OTLP request MUST be updated as
       rdfs:comment "A Span represents a single operation performed by a single component of the system."@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/SpanFlags
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#SpanFlags
 :SpanFlags rdf:type owl:Class ;
            owl:equivalentClass [ rdf:type owl:Class ;
                                  owl:oneOf ( :SPAN_FLAGS_CONTEXT_HAS_IS_REMOTE_MASK
@@ -1562,7 +1562,7 @@ Bit 9 (`IS_REMOTE`) indicates whether the span or link is remote.
 Bits 10-31 are reserved for future use.""" .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/SpanKind
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#SpanKind
 :SpanKind rdf:type owl:Class ;
           owl:equivalentClass [ rdf:type owl:Class ;
                                 owl:oneOf ( :SPAN_KIND_CLIENT
@@ -1577,12 +1577,12 @@ Bits 10-31 are reserved for future use.""" .
           rdfs:comment "SpanKind is the type of span. Can be used to specify additional relationships between spans in addition to a parent/child relationship."@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/Status
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#Status
 :Status rdf:type owl:Class ;
         rdfs:comment "The Status type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs."@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/StatusCode
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#StatusCode
 :StatusCode rdf:type owl:Class ;
             owl:equivalentClass [ rdf:type owl:Class ;
                                   owl:oneOf ( :STATUS_CODE_ERROR
@@ -1594,7 +1594,7 @@ Bits 10-31 are reserved for future use.""" .
             rdfs:comment "For the semantics of status codes see https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/api.md#set-status"@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/Sum
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#Sum
 :Sum rdf:type owl:Class ;
      rdfs:subClassOf :MetricData ,
                      [ rdf:type owl:Restriction ;
@@ -1619,7 +1619,7 @@ Bits 10-31 are reserved for future use.""" .
      rdfs:comment "Sum represents the type of a scalar metric that is calculated as a sum of all reported measurements over a time interval."@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/Summary
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#Summary
 :Summary rdf:type owl:Class ;
          rdfs:subClassOf :MetricData ,
                          [ rdf:type owl:Restriction ;
@@ -1634,7 +1634,7 @@ Bits 10-31 are reserved for future use.""" .
          rdfs:comment "Summary metric data are used to convey quantile summaries, a Prometheus (see: https://prometheus.io/docs/concepts/metric_types/#summary) and OpenMetrics (see: https://github.com/OpenObservability/OpenMetrics/blob/4dbf6075567ab43296eed941037c12951faafb92/protos/prometheus.proto#L45) data type. These data points cannot always be merged in a meaningful way.  While they can be useful in some applications, histogram data points are recommended for new applications."@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/SummaryDataPoint
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#SummaryDataPoint
 :SummaryDataPoint rdf:type owl:Class ;
                   rdfs:subClassOf :DataPoint ,
                                   [ rdf:type owl:Restriction ;
@@ -1655,7 +1655,7 @@ Bits 10-31 are reserved for future use.""" .
                   rdfs:comment "SummaryDataPoint is a single data point in a timeseries that describes the time-varying values of a Summary metric."@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/Trace
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#Trace
 :Trace rdf:type owl:Class ;
        rdfs:subClassOf [ rdf:type owl:Restriction ;
                          owl:onProperty :containsSpan ;
@@ -1671,7 +1671,7 @@ Bits 10-31 are reserved for future use.""" .
                   ) .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/TracesData
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#TracesData
 :TracesData rdf:type owl:Class ;
             rdfs:subClassOf [ rdf:type owl:Restriction ;
                               owl:onProperty :resourceSpan ;
@@ -1685,7 +1685,7 @@ The main difference between this message and collector protocol is that in this 
 When new fields are added into this message, the OTLP request MUST be updated as well."""@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/ValueAtQuantile
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#ValueAtQuantile
 :ValueAtQuantile rdf:type owl:Class ;
                  rdfs:comment """Represents the value at a given quantile of a distribution.
 
@@ -1700,7 +1700,7 @@ See the following issue for more context: https://github.com/open-telemetry/open
 #    Individuals
 #################################################################
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/AGGREGATION_TEMPORALITY_CUMULATIVE
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#AGGREGATION_TEMPORALITY_CUMULATIVE
 :AGGREGATION_TEMPORALITY_CUMULATIVE rdf:type owl:NamedIndividual ,
                                              :AggregationTemporality ;
                                     :enumOptionValue "2"^^xsd:int ;
@@ -1724,7 +1724,7 @@ For example, consider a system measuring the number of requests that it receives
 Note: Even though, when reporting changes since last report time, using CUMULATIVE is valid, it is not recommended. This may cause problems for systems that do not use start_time to determine when the aggregation value was reset (e.g. Prometheus)."""@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/AGGREGATION_TEMPORALITY_DELTA
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#AGGREGATION_TEMPORALITY_DELTA
 :AGGREGATION_TEMPORALITY_DELTA rdf:type owl:NamedIndividual ,
                                         :AggregationTemporality ;
                                :enumOptionValue "1"^^xsd:int ;
@@ -1744,14 +1744,14 @@ For example, consider a system measuring the number of requests that it receives
   8. The 1 second collection cycle ends. A metric is exported for the number of requests received over the interval of time t_0+1 to t_0+2 with a value of 2."""@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/AGGREGATION_TEMPORALITY_UNSPECIFIED
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#AGGREGATION_TEMPORALITY_UNSPECIFIED
 :AGGREGATION_TEMPORALITY_UNSPECIFIED rdf:type owl:NamedIndividual ,
                                               :AggregationTemporality ;
                                      :enumOptionValue "0"^^xsd:int ;
                                      rdfs:comment "UNSPECIFIED is the default AggregationTemporality, it MUST not be used."@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/DATA_POINT_FLAGS_DO_NOT_USE
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#DATA_POINT_FLAGS_DO_NOT_USE
 :DATA_POINT_FLAGS_DO_NOT_USE rdf:type owl:NamedIndividual ,
                                       :DataPointFlags ;
                              :enumOptionValue "0"^^xsd:int ;
@@ -1759,206 +1759,206 @@ For example, consider a system measuring the number of requests that it receives
 Instead use bitwise \"and\" with the appropriate mask as shown above."""@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/DATA_POINT_FLAGS_NO_RECORDED_VALUE_MASK
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#DATA_POINT_FLAGS_NO_RECORDED_VALUE_MASK
 :DATA_POINT_FLAGS_NO_RECORDED_VALUE_MASK rdf:type owl:NamedIndividual ,
                                                   :DataPointFlags ;
                                          :enumOptionValue "1"^^xsd:int ;
                                          rdfs:comment "This DataPoint is valid but has no recorded value.  This value SHOULD be used to reflect explicitly missing data in a series, as for an equivalent to the Prometheus \"staleness marker\"." .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/LOG_RECORD_FLAGS_DO_NOT_USE
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#LOG_RECORD_FLAGS_DO_NOT_USE
 :LOG_RECORD_FLAGS_DO_NOT_USE rdf:type owl:NamedIndividual ,
                                       :LogRecordFlags ;
                              :enumOptionValue "0"^^xsd:int .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/LOG_RECORD_FLAGS_TRACE_FLAGS_MASK
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#LOG_RECORD_FLAGS_TRACE_FLAGS_MASK
 :LOG_RECORD_FLAGS_TRACE_FLAGS_MASK rdf:type owl:NamedIndividual ,
                                             :LogRecordFlags .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/SEVERITY_NUMBER_DEBUG
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#SEVERITY_NUMBER_DEBUG
 :SEVERITY_NUMBER_DEBUG rdf:type owl:NamedIndividual ,
                                 :SeverityNumber ;
                        :enumOptionValue "5"^^xsd:int .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/SEVERITY_NUMBER_DEBUG2
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#SEVERITY_NUMBER_DEBUG2
 :SEVERITY_NUMBER_DEBUG2 rdf:type owl:NamedIndividual ,
                                  :SeverityNumber ;
                         :enumOptionValue "6"^^xsd:int .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/SEVERITY_NUMBER_DEBUG3
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#SEVERITY_NUMBER_DEBUG3
 :SEVERITY_NUMBER_DEBUG3 rdf:type owl:NamedIndividual ,
                                  :SeverityNumber ;
                         :enumOptionValue "7"^^xsd:int .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/SEVERITY_NUMBER_DEBUG4
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#SEVERITY_NUMBER_DEBUG4
 :SEVERITY_NUMBER_DEBUG4 rdf:type owl:NamedIndividual ,
                                  :SeverityNumber ;
                         :enumOptionValue "8"^^xsd:int .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/SEVERITY_NUMBER_ERROR
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#SEVERITY_NUMBER_ERROR
 :SEVERITY_NUMBER_ERROR rdf:type owl:NamedIndividual ,
                                 :SeverityNumber ;
                        :enumOptionValue "17"^^xsd:int .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/SEVERITY_NUMBER_ERROR2
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#SEVERITY_NUMBER_ERROR2
 :SEVERITY_NUMBER_ERROR2 rdf:type owl:NamedIndividual ,
                                  :SeverityNumber ;
                         :enumOptionValue "18"^^xsd:int .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/SEVERITY_NUMBER_ERROR3
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#SEVERITY_NUMBER_ERROR3
 :SEVERITY_NUMBER_ERROR3 rdf:type owl:NamedIndividual ,
                                  :SeverityNumber ;
                         :enumOptionValue "19"^^xsd:int .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/SEVERITY_NUMBER_ERROR4
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#SEVERITY_NUMBER_ERROR4
 :SEVERITY_NUMBER_ERROR4 rdf:type owl:NamedIndividual ,
                                  :SeverityNumber ;
                         :enumOptionValue "20"^^xsd:int .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/SEVERITY_NUMBER_FATAL
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#SEVERITY_NUMBER_FATAL
 :SEVERITY_NUMBER_FATAL rdf:type owl:NamedIndividual ,
                                 :SeverityNumber ;
                        :enumOptionValue "21"^^xsd:int .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/SEVERITY_NUMBER_FATAL2
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#SEVERITY_NUMBER_FATAL2
 :SEVERITY_NUMBER_FATAL2 rdf:type owl:NamedIndividual ,
                                  :SeverityNumber ;
                         :enumOptionValue "22"^^xsd:int .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/SEVERITY_NUMBER_FATAL3
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#SEVERITY_NUMBER_FATAL3
 :SEVERITY_NUMBER_FATAL3 rdf:type owl:NamedIndividual ,
                                  :SeverityNumber ;
                         :enumOptionValue "23"^^xsd:int .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/SEVERITY_NUMBER_FATAL4
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#SEVERITY_NUMBER_FATAL4
 :SEVERITY_NUMBER_FATAL4 rdf:type owl:NamedIndividual ,
                                  :SeverityNumber ;
                         :enumOptionValue "24"^^xsd:int .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/SEVERITY_NUMBER_INFO
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#SEVERITY_NUMBER_INFO
 :SEVERITY_NUMBER_INFO rdf:type owl:NamedIndividual ,
                                :SeverityNumber ;
                       :enumOptionValue "9"^^xsd:int .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/SEVERITY_NUMBER_INFO2
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#SEVERITY_NUMBER_INFO2
 :SEVERITY_NUMBER_INFO2 rdf:type owl:NamedIndividual ,
                                 :SeverityNumber ;
                        :enumOptionValue "10"^^xsd:int .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/SEVERITY_NUMBER_INFO3
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#SEVERITY_NUMBER_INFO3
 :SEVERITY_NUMBER_INFO3 rdf:type owl:NamedIndividual ,
                                 :SeverityNumber ;
                        :enumOptionValue "11"^^xsd:int .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/SEVERITY_NUMBER_INFO4
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#SEVERITY_NUMBER_INFO4
 :SEVERITY_NUMBER_INFO4 rdf:type owl:NamedIndividual ,
                                 :SeverityNumber ;
                        :enumOptionValue "12"^^xsd:int .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/SEVERITY_NUMBER_TRACE
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#SEVERITY_NUMBER_TRACE
 :SEVERITY_NUMBER_TRACE rdf:type owl:NamedIndividual ,
                                 :SeverityNumber ;
                        :enumOptionValue "1"^^xsd:int .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/SEVERITY_NUMBER_TRACE2
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#SEVERITY_NUMBER_TRACE2
 :SEVERITY_NUMBER_TRACE2 rdf:type owl:NamedIndividual ,
                                  :SeverityNumber ;
                         :enumOptionValue "2"^^xsd:int .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/SEVERITY_NUMBER_TRACE3
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#SEVERITY_NUMBER_TRACE3
 :SEVERITY_NUMBER_TRACE3 rdf:type owl:NamedIndividual ,
                                  :SeverityNumber ;
                         :enumOptionValue "3"^^xsd:int .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/SEVERITY_NUMBER_TRACE4
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#SEVERITY_NUMBER_TRACE4
 :SEVERITY_NUMBER_TRACE4 rdf:type owl:NamedIndividual ,
                                  :SeverityNumber ;
                         :enumOptionValue "4"^^xsd:int .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/SEVERITY_NUMBER_UNSPECIFIED
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#SEVERITY_NUMBER_UNSPECIFIED
 :SEVERITY_NUMBER_UNSPECIFIED rdf:type owl:NamedIndividual ,
                                       :SeverityNumber ;
                              :enumOptionValue "0"^^xsd:int .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/SEVERITY_NUMBER_WARN
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#SEVERITY_NUMBER_WARN
 :SEVERITY_NUMBER_WARN rdf:type owl:NamedIndividual ,
                                :SeverityNumber ;
                       :enumOptionValue "13"^^xsd:int .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/SEVERITY_NUMBER_WARN2
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#SEVERITY_NUMBER_WARN2
 :SEVERITY_NUMBER_WARN2 rdf:type owl:NamedIndividual ,
                                 :SeverityNumber ;
                        :enumOptionValue "14"^^xsd:int .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/SEVERITY_NUMBER_WARN3
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#SEVERITY_NUMBER_WARN3
 :SEVERITY_NUMBER_WARN3 rdf:type owl:NamedIndividual ,
                                 :SeverityNumber ;
                        :enumOptionValue "15"^^xsd:int .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/SEVERITY_NUMBER_WARN4
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#SEVERITY_NUMBER_WARN4
 :SEVERITY_NUMBER_WARN4 rdf:type owl:NamedIndividual ,
                                 :SeverityNumber ;
                        :enumOptionValue "16"^^xsd:int .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/SPAN_FLAGS_CONTEXT_HAS_IS_REMOTE_MASK
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#SPAN_FLAGS_CONTEXT_HAS_IS_REMOTE_MASK
 :SPAN_FLAGS_CONTEXT_HAS_IS_REMOTE_MASK rdf:type owl:NamedIndividual ,
                                                 :SpanFlags ;
                                        :enumOptionValue "256"^^xsd:int .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/SPAN_FLAGS_CONTEXT_IS_REMOTE_MASK
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#SPAN_FLAGS_CONTEXT_IS_REMOTE_MASK
 :SPAN_FLAGS_CONTEXT_IS_REMOTE_MASK rdf:type owl:NamedIndividual ,
                                             :SpanFlags ;
                                    :enumOptionValue "512"^^xsd:int .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/SPAN_FLAGS_DO_NOT_USE
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#SPAN_FLAGS_DO_NOT_USE
 :SPAN_FLAGS_DO_NOT_USE rdf:type owl:NamedIndividual ,
                                 :SpanFlags ;
                        :enumOptionValue "0"^^xsd:int .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/SPAN_FLAGS_TRACE_FLAGS_MASK
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#SPAN_FLAGS_TRACE_FLAGS_MASK
 :SPAN_FLAGS_TRACE_FLAGS_MASK rdf:type owl:NamedIndividual ,
                                       :SpanFlags ;
                              :enumOptionValue "255"^^xsd:int .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/SPAN_KIND_CLIENT
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#SPAN_KIND_CLIENT
 :SPAN_KIND_CLIENT rdf:type owl:NamedIndividual ,
                            :SpanKind ;
                   :enumOptionValue "3"^^xsd:int ;
                   rdfs:comment "Indicates that the span describes a request to some remote service."@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/SPAN_KIND_CONSUMER
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#SPAN_KIND_CONSUMER
 :SPAN_KIND_CONSUMER rdf:type owl:NamedIndividual ,
                              :SpanKind ;
                     :enumOptionValue "5"^^xsd:int ;
@@ -1966,14 +1966,14 @@ Instead use bitwise \"and\" with the appropriate mask as shown above."""@en .
 Like the PRODUCER kind, there is often no direct critical path latency relationship between producer and consumer spans."""@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/SPAN_KIND_INTERNAL
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#SPAN_KIND_INTERNAL
 :SPAN_KIND_INTERNAL rdf:type owl:NamedIndividual ,
                              :SpanKind ;
                     :enumOptionValue "1"^^xsd:int ;
                     rdfs:comment "Indicates that the span represents an internal operation within an application, as opposed to an operation happening at the boundaries. Default value."@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/SPAN_KIND_PRODUCER
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#SPAN_KIND_PRODUCER
 :SPAN_KIND_PRODUCER rdf:type owl:NamedIndividual ,
                              :SpanKind ;
                     :enumOptionValue "4"^^xsd:int ;
@@ -1981,14 +1981,14 @@ Like the PRODUCER kind, there is often no direct critical path latency relations
 Unlike CLIENT and SERVER, there is often no direct critical path latency relationship between producer and consumer spans. A PRODUCER span ends when the message was accepted by the broker while the logical processing of the message might span a much longer time."""@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/SPAN_KIND_SERVER
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#SPAN_KIND_SERVER
 :SPAN_KIND_SERVER rdf:type owl:NamedIndividual ,
                            :SpanKind ;
                   :enumOptionValue "2"^^xsd:int ;
                   rdfs:comment "Indicates that the span covers server-side handling of an RPC or other remote network request."@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/SPAN_KIND_UNSPECIFIED
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#SPAN_KIND_UNSPECIFIED
 :SPAN_KIND_UNSPECIFIED rdf:type owl:NamedIndividual ,
                                 :SpanKind ;
                        :enumOptionValue "0"^^xsd:int ;
@@ -1996,21 +1996,21 @@ Unlike CLIENT and SERVER, there is often no direct critical path latency relatio
 Implementations MAY assume SpanKind to be INTERNAL when receiving UNSPECIFIED."""@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/STATUS_CODE_ERROR
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#STATUS_CODE_ERROR
 :STATUS_CODE_ERROR rdf:type owl:NamedIndividual ,
                             :StatusCode ;
                    :enumOptionValue "0"^^xsd:int ;
                    rdfs:comment "The Span contains an error."@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/STATUS_CODE_OK
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#STATUS_CODE_OK
 :STATUS_CODE_OK rdf:type owl:NamedIndividual ,
                          :StatusCode ;
                 :enumOptionValue "1"^^xsd:int ;
                 rdfs:comment "The Span has been validated by an Application developer or Operator to have completed successfully."@en .
 
 
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/STATUS_CODE_UNSET
+###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#STATUS_CODE_UNSET
 :STATUS_CODE_UNSET rdf:type owl:NamedIndividual ,
                             :StatusCode ;
                    :enumOptionValue "2"^^xsd:int ;
