@@ -320,7 +320,7 @@
                                          :HistogramDataPoint
                                        )
                          ] ;
-             rdfs:range xsd:unsignedLong .
+             rdfs:range xsd:long .
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/count
@@ -331,7 +331,7 @@
                                    :SummaryDataPoint
                                  )
                    ] ;
-       rdfs:range xsd:unsignedLong .
+       rdfs:range xsd:long .
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/description
@@ -364,20 +364,24 @@
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/droppedEventsCount
 :droppedEventsCount rdf:type owl:DatatypeProperty ;
                     rdfs:domain :Span ;
-                    rdfs:range xsd:unsignedInt .
+                    rdfs:range xsd:long .
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/droppedLinksCount
 :droppedLinksCount rdf:type owl:DatatypeProperty ;
                    rdfs:domain :Span ;
-                   rdfs:range xsd:unsignedInt .
+                   rdfs:range xsd:long .
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/endTimeUnixNano
 :endTimeUnixNano rdf:type owl:DatatypeProperty ;
                  rdfs:subPropertyOf owl:topDataProperty ;
                  rdfs:domain :Span ;
-                 rdfs:range xsd:unsignedLong .
+                 rdfs:range [ rdf:type rdfs:Datatype ;
+                              owl:unionOf ( xsd:integer
+                                            xsd:long
+                                          )
+                            ] .
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/enumOptionValue
@@ -401,7 +405,7 @@
                                    :Span
                                  )
                    ] ;
-       rdfs:range xsd:unsignedInt ;
+       rdfs:range xsd:long ;
        rdfs:comment """Flags, a bit field.
 
 Bits 0-7 (8 least significant bits) are the trace flags as defined in W3C Trace Context specification. To read the 8-bit W3C trace flag, use `flags & SPAN_FLAGS_TRACE_FLAGS_MASK`.
@@ -494,7 +498,7 @@ When creating new spans, bits 10-31 (most-significant 22-bits) MUST be zero.
 :observedTimeUnixNano rdf:type owl:DatatypeProperty ;
                       rdfs:subPropertyOf owl:topDataProperty ;
                       rdfs:domain :LogRecord ;
-                      rdfs:range xsd:unsignedLong ;
+                      rdfs:range xsd:long ;
                       rdfs:comment """Time when the event was observed by the collection system.
 For events that originate in OpenTelemetry (e.g. using OpenTelemetry Logging SDK) this timestamp is typically set at the generation time and is equal to Timestamp.
 For events originating externally and collected by OpenTelemetry (e.g. using Collector) this is the time when OpenTelemetry's code observed the event measured by the clock of the OpenTelemetry code. This field MUST be set once the event is observed by OpenTelemetry.
@@ -516,18 +520,6 @@ Value of 0 indicates unknown or missing timestamp.""" .
 :parentSpanId rdf:type owl:DatatypeProperty ;
               rdfs:domain :Span ;
               rdfs:range xsd:string .
-
-
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/primitiveValueValue
-:primitiveValueValue rdf:type owl:DatatypeProperty ;
-                     rdfs:range [ rdf:type rdfs:Datatype ;
-                                  owl:unionOf ( xsd:boolean
-                                                xsd:byte
-                                                xsd:double
-                                                xsd:int
-                                                xsd:string
-                                              )
-                                ] .
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/quantile
@@ -601,7 +593,11 @@ span if any of the following is true:
                                                :Span
                                              )
                                ] ;
-                   rdfs:range xsd:unsignedLong .
+                   rdfs:range [ rdf:type rdfs:Datatype ;
+                                owl:unionOf ( xsd:integer
+                                              xsd:long
+                                            )
+                              ] .
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/sum
@@ -625,7 +621,11 @@ span if any of the following is true:
                                           :LogRecord
                                         )
                           ] ;
-              rdfs:range xsd:unsignedLong ;
+              rdfs:range [ rdf:type rdfs:Datatype ;
+                           owl:unionOf ( xsd:integer
+                                         xsd:long
+                                       )
+                         ] ;
               rdfs:comment """timeUnixNano is the time when the event occurred.
 Value is UNIX Epoch time in nanoseconds since 00:00:00 UTC on 1 January 1970.
 Value of 0 indicates unknown or missing timestamp."""@en .
@@ -690,7 +690,7 @@ trace if any of the following is true:
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/zeroCount
 :zeroCount rdf:type owl:DatatypeProperty ;
            rdfs:domain :ExponentialHistogramDataPoint ;
-           rdfs:range xsd:int .
+           rdfs:range xsd:long .
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology/zeroThreshold
@@ -722,7 +722,7 @@ It describes how those values relate to the time interval over which they are ag
          rdfs:subClassOf [ rdf:type owl:Restriction ;
                            owl:onProperty :bucketCount ;
                            owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
-                           owl:onDataRange xsd:unsignedLong
+                           owl:onDataRange xsd:long
                          ] ,
                          [ rdf:type owl:Restriction ;
                            owl:onProperty :offset ;
@@ -742,17 +742,25 @@ It describes how those values relate to the time interval over which they are ag
                            [ rdf:type owl:Restriction ;
                              owl:onProperty :startTimeUnixNano ;
                              owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                             owl:onDataRange xsd:unsignedLong
+                             owl:onDataRange [ rdf:type rdfs:Datatype ;
+                                               owl:unionOf ( xsd:integer
+                                                             xsd:long
+                                                           )
+                                             ]
                            ] ,
                            [ rdf:type owl:Restriction ;
                              owl:onProperty :timeUnixNano ;
                              owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                             owl:onDataRange xsd:unsignedLong
+                             owl:onDataRange [ rdf:type rdfs:Datatype ;
+                                               owl:unionOf ( xsd:integer
+                                                             xsd:long
+                                                           )
+                                             ]
                            ] ,
                            [ rdf:type owl:Restriction ;
                              owl:onProperty :flags ;
                              owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                             owl:onDataRange xsd:unsignedInt
+                             owl:onDataRange xsd:long
                            ] .
 
 
@@ -801,7 +809,11 @@ It describes how those values relate to the time interval over which they are ag
                        [ rdf:type owl:Restriction ;
                          owl:onProperty :timeUnixNano ;
                          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                         owl:onDataRange xsd:unsignedInt
+                         owl:onDataRange [ rdf:type rdfs:Datatype ;
+                                           owl:unionOf ( xsd:integer
+                                                         xsd:long
+                                                       )
+                                         ]
                        ] ;
        rdfs:comment "Event is a time-stamped annotation of the span, consisting of user-supplied text description and key-value pairs."@en .
 
@@ -830,7 +842,11 @@ It describes how those values relate to the time interval over which they are ag
                           [ rdf:type owl:Restriction ;
                             owl:onProperty :timeUnixNano ;
                             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                            owl:onDataRange xsd:unsignedLong
+                            owl:onDataRange [ rdf:type rdfs:Datatype ;
+                                              owl:unionOf ( xsd:integer
+                                                            xsd:long
+                                                          )
+                                            ]
                           ] ,
                           [ rdf:type owl:Restriction ;
                             owl:onProperty :spanId ;
@@ -887,7 +903,7 @@ Exemplars also hold information about the environment when the measurement was r
                                                [ rdf:type owl:Restriction ;
                                                  owl:onProperty :count ;
                                                  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                                 owl:onDataRange xsd:unsignedLong
+                                                 owl:onDataRange xsd:long
                                                ] ,
                                                [ rdf:type owl:Restriction ;
                                                  owl:onProperty :max ;
@@ -912,7 +928,7 @@ Exemplars also hold information about the environment when the measurement was r
                                                [ rdf:type owl:Restriction ;
                                                  owl:onProperty :zeroCount ;
                                                  owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                                 owl:onDataRange xsd:unsignedLong
+                                                 owl:onDataRange xsd:long
                                                ] ,
                                                [ rdf:type owl:Restriction ;
                                                  owl:onProperty :zeroThreshold ;
@@ -969,7 +985,7 @@ A Gauge does not support different aggregation temporalities. Given the aggregat
                                     [ rdf:type owl:Restriction ;
                                       owl:onProperty :bucketCount ;
                                       owl:minQualifiedCardinality "0"^^xsd:nonNegativeInteger ;
-                                      owl:onDataRange xsd:unsignedLong
+                                      owl:onDataRange xsd:long
                                     ] ,
                                     [ rdf:type owl:Restriction ;
                                       owl:onProperty :explicitBound ;
@@ -979,7 +995,7 @@ A Gauge does not support different aggregation temporalities. Given the aggregat
                                     [ rdf:type owl:Restriction ;
                                       owl:onProperty :count ;
                                       owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                      owl:onDataRange xsd:unsignedLong
+                                      owl:onDataRange xsd:long
                                     ] ,
                                     [ rdf:type owl:Restriction ;
                                       owl:onProperty :max ;
@@ -1078,7 +1094,7 @@ If the histogram contains the distribution of values, then both \"explicit_bound
                       [ rdf:type owl:Restriction ;
                         owl:onProperty :flags ;
                         owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                        owl:onDataRange xsd:unsignedInt
+                        owl:onDataRange xsd:long
                       ] ;
       rdfs:comment """A pointer from the current span to another span in the same trace or in a different trace.
 For example, this can be used in batching operations, where a single batch handler processes multiple requests from different traces or when the handler receives a request from a different project."""@en .
@@ -1108,12 +1124,12 @@ For example, this can be used in batching operations, where a single batch handl
                            [ rdf:type owl:Restriction ;
                              owl:onProperty :flags ;
                              owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                             owl:onDataRange xsd:unsignedInt
+                             owl:onDataRange xsd:long
                            ] ,
                            [ rdf:type owl:Restriction ;
                              owl:onProperty :observedTimeUnixNano ;
                              owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                             owl:onDataRange xsd:unsignedLong
+                             owl:onDataRange xsd:long
                            ] ,
                            [ rdf:type owl:Restriction ;
                              owl:onProperty :severityText ;
@@ -1128,7 +1144,11 @@ For example, this can be used in batching operations, where a single batch handl
                            [ rdf:type owl:Restriction ;
                              owl:onProperty :timeUnixNano ;
                              owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                             owl:onDataRange xsd:unsignedLong
+                             owl:onDataRange [ rdf:type rdfs:Datatype ;
+                                               owl:unionOf ( xsd:integer
+                                                             xsd:long
+                                                           )
+                                             ]
                            ] ,
                            [ rdf:type owl:Restriction ;
                              owl:onProperty :traceId ;
@@ -1459,17 +1479,21 @@ When new fields are added into this message, the OTLP request MUST be updated as
                       [ rdf:type owl:Restriction ;
                         owl:onProperty :droppedEventsCount ;
                         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                        owl:onDataRange xsd:int
+                        owl:onDataRange xsd:long
                       ] ,
                       [ rdf:type owl:Restriction ;
                         owl:onProperty :droppedLinksCount ;
                         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                        owl:onDataRange xsd:int
+                        owl:onDataRange xsd:long
                       ] ,
                       [ rdf:type owl:Restriction ;
                         owl:onProperty :endTimeUnixNano ;
                         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                        owl:onDataRange xsd:unsignedLong
+                        owl:onDataRange [ rdf:type rdfs:Datatype ;
+                                          owl:unionOf ( xsd:integer
+                                                        xsd:long
+                                                      )
+                                        ]
                       ] ,
                       [ rdf:type owl:Restriction ;
                         owl:onProperty :name ;
@@ -1484,7 +1508,11 @@ When new fields are added into this message, the OTLP request MUST be updated as
                       [ rdf:type owl:Restriction ;
                         owl:onProperty :startTimeUnixNano ;
                         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                        owl:onDataRange xsd:unsignedLong
+                        owl:onDataRange [ rdf:type rdfs:Datatype ;
+                                          owl:unionOf ( xsd:integer
+                                                        xsd:long
+                                                      )
+                                        ]
                       ] ,
                       [ rdf:type owl:Restriction ;
                         owl:onProperty :traceId ;
@@ -1494,7 +1522,7 @@ When new fields are added into this message, the OTLP request MUST be updated as
                       [ rdf:type owl:Restriction ;
                         owl:onProperty :flags ;
                         owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                        owl:onDataRange xsd:unsignedInt
+                        owl:onDataRange xsd:long
                       ] ,
                       [ rdf:type owl:Restriction ;
                         owl:onProperty :parentSpanId ;
@@ -1617,7 +1645,7 @@ Bits 10-31 are reserved for future use.""" .
                                   [ rdf:type owl:Restriction ;
                                     owl:onProperty :count ;
                                     owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                    owl:onDataRange xsd:unsignedLong
+                                    owl:onDataRange xsd:long
                                   ] ,
                                   [ rdf:type owl:Restriction ;
                                     owl:onProperty :sum ;
