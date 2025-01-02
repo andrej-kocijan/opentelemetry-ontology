@@ -13,7 +13,8 @@
 #################################################################
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#aggregationTemporality
-:aggregationTemporality rdf:type owl:ObjectProperty ;
+:aggregationTemporality rdf:type owl:ObjectProperty ,
+                                 owl:FunctionalProperty ;
                         rdfs:domain [ rdf:type owl:Class ;
                                       owl:unionOf ( :ExponentialHistogram
                                                     :Histogram
@@ -21,11 +22,6 @@
                                                   )
                                     ] ;
                         rdfs:range :AggregationTemporality .
-
-
-###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#anyValueListElement
-:anyValueListElement rdf:type owl:ObjectProperty ;
-                     rdfs:subPropertyOf owl:topObjectProperty .
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#attribute
@@ -59,7 +55,8 @@
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#code
-:code rdf:type owl:ObjectProperty ;
+:code rdf:type owl:ObjectProperty ,
+               owl:FunctionalProperty ;
       rdfs:domain :Status ;
       rdfs:range :StatusCode .
 
@@ -75,6 +72,7 @@
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#data
 :data rdf:type owl:ObjectProperty ;
       rdfs:subPropertyOf owl:topObjectProperty ;
+      rdf:type owl:FunctionalProperty ;
       rdfs:domain :Metric ;
       rdfs:range :MetricData .
 
@@ -123,7 +121,8 @@
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#kind
-:kind rdf:type owl:ObjectProperty ;
+:kind rdf:type owl:ObjectProperty ,
+               owl:FunctionalProperty ;
       rdfs:domain :Span ;
       rdfs:range :SpanKind .
 
@@ -148,6 +147,7 @@
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#linkedSpan
 :linkedSpan rdf:type owl:ObjectProperty ;
             rdfs:subPropertyOf owl:topObjectProperty ;
+            rdf:type owl:FunctionalProperty ;
             rdfs:domain :Link ;
             rdfs:range :Span .
 
@@ -163,6 +163,7 @@
 :logOf rdf:type owl:ObjectProperty ;
        rdfs:subPropertyOf owl:topObjectProperty ;
        owl:inverseOf :spanLog ;
+       rdf:type owl:FunctionalProperty ;
        rdfs:domain :LogRecord ;
        rdfs:range :Span .
 
@@ -189,6 +190,7 @@
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#negative
 :negative rdf:type owl:ObjectProperty ;
           rdfs:subPropertyOf owl:topObjectProperty ;
+          rdf:type owl:FunctionalProperty ;
           rdfs:domain :ExponentialHistogramDataPoint ;
           rdfs:range :Buckets .
 
@@ -196,7 +198,8 @@
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#parentSpan
 :parentSpan rdf:type owl:ObjectProperty ;
             rdfs:subPropertyOf owl:topObjectProperty ;
-            rdf:type owl:IrreflexiveProperty ;
+            rdf:type owl:FunctionalProperty ,
+                     owl:IrreflexiveProperty ;
             rdfs:domain :Span ;
             rdfs:range :Span ;
             rdfs:comment "Defined by combination of traceId and parentSpanId"@en .
@@ -205,6 +208,7 @@
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#positive
 :positive rdf:type owl:ObjectProperty ;
           rdfs:subPropertyOf owl:topObjectProperty ;
+          rdf:type owl:FunctionalProperty ;
           rdfs:domain :ExponentialHistogramDataPoint ;
           rdfs:range :Buckets .
 
@@ -216,7 +220,8 @@
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#resource
-:resource rdf:type owl:ObjectProperty ;
+:resource rdf:type owl:ObjectProperty ,
+                   owl:FunctionalProperty ;
           rdfs:domain :ResourceData ;
           rdfs:range :Resource .
 
@@ -240,7 +245,8 @@
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#scope
-:scope rdf:type owl:ObjectProperty ;
+:scope rdf:type owl:ObjectProperty ,
+                owl:FunctionalProperty ;
        rdfs:domain :ScopeData ;
        rdfs:range :InstrumentationScope .
 
@@ -290,7 +296,8 @@
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#status
-:status rdf:type owl:ObjectProperty ;
+:status rdf:type owl:ObjectProperty ,
+                 owl:FunctionalProperty ;
         rdfs:domain :Span ;
         rdfs:range :Status .
 
@@ -324,7 +331,8 @@
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#count
-:count rdf:type owl:DatatypeProperty ;
+:count rdf:type owl:DatatypeProperty ,
+                owl:FunctionalProperty ;
        rdfs:domain [ rdf:type owl:Class ;
                      owl:unionOf ( :ExponentialHistogramDataPoint
                                    :HistogramDataPoint
@@ -344,6 +352,7 @@
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#droppedAttributesCount
 :droppedAttributesCount rdf:type owl:DatatypeProperty ;
                         rdfs:subPropertyOf owl:topDataProperty ;
+                        rdf:type owl:FunctionalProperty ;
                         rdfs:domain [ rdf:type owl:Class ;
                                       owl:unionOf ( :Event
                                                     :InstrumentationScope
@@ -362,13 +371,15 @@
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#droppedEventsCount
-:droppedEventsCount rdf:type owl:DatatypeProperty ;
+:droppedEventsCount rdf:type owl:DatatypeProperty ,
+                             owl:FunctionalProperty ;
                     rdfs:domain :Span ;
                     rdfs:range xsd:long .
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#droppedLinksCount
-:droppedLinksCount rdf:type owl:DatatypeProperty ;
+:droppedLinksCount rdf:type owl:DatatypeProperty ,
+                            owl:FunctionalProperty ;
                    rdfs:domain :Span ;
                    rdfs:range xsd:long .
 
@@ -376,6 +387,7 @@
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#endTimeUnixNano
 :endTimeUnixNano rdf:type owl:DatatypeProperty ;
                  rdfs:subPropertyOf owl:topDataProperty ;
+                 rdf:type owl:FunctionalProperty ;
                  rdfs:domain :Span ;
                  rdfs:range [ rdf:type rdfs:Datatype ;
                               owl:unionOf ( xsd:integer
@@ -398,6 +410,7 @@
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#flags
 :flags rdf:type owl:DatatypeProperty ;
        rdfs:subPropertyOf owl:topDataProperty ;
+       rdf:type owl:FunctionalProperty ;
        rdfs:domain [ rdf:type owl:Class ;
                      owl:unionOf ( :DataPoint
                                    :Link
@@ -425,7 +438,8 @@ When creating new spans, bits 10-31 (most-significant 22-bits) MUST be zero.
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#isMonotonic
-:isMonotonic rdf:type owl:DatatypeProperty ;
+:isMonotonic rdf:type owl:DatatypeProperty ,
+                      owl:FunctionalProperty ;
              rdfs:domain :Sum ;
              rdfs:range xsd:boolean .
 
@@ -433,6 +447,7 @@ When creating new spans, bits 10-31 (most-significant 22-bits) MUST be zero.
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#key
 :key rdf:type owl:DatatypeProperty ;
      rdfs:subPropertyOf owl:topDataProperty ;
+     rdf:type owl:FunctionalProperty ;
      rdfs:domain :KeyValue ;
      rdfs:range xsd:string .
 
@@ -469,6 +484,7 @@ When creating new spans, bits 10-31 (most-significant 22-bits) MUST be zero.
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#name
 :name rdf:type owl:DatatypeProperty ;
       rdfs:subPropertyOf owl:topDataProperty ;
+      rdf:type owl:FunctionalProperty ;
       rdfs:domain [ rdf:type owl:Class ;
                     owl:unionOf ( :Event
                                   :InstrumentationScope
@@ -481,7 +497,8 @@ When creating new spans, bits 10-31 (most-significant 22-bits) MUST be zero.
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#numberDataPointValue
-:numberDataPointValue rdf:type owl:DatatypeProperty ;
+:numberDataPointValue rdf:type owl:DatatypeProperty ,
+                               owl:FunctionalProperty ;
                       rdfs:domain [ rdf:type owl:Class ;
                                     owl:unionOf ( :Exemplar
                                                   :NumberDataPoint
@@ -497,6 +514,7 @@ When creating new spans, bits 10-31 (most-significant 22-bits) MUST be zero.
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#observedTimeUnixNano
 :observedTimeUnixNano rdf:type owl:DatatypeProperty ;
                       rdfs:subPropertyOf owl:topDataProperty ;
+                      rdf:type owl:FunctionalProperty ;
                       rdfs:domain :LogRecord ;
                       rdfs:range xsd:long ;
                       rdfs:comment """Time when the event was observed by the collection system.
@@ -511,13 +529,15 @@ Value of 0 indicates unknown or missing timestamp.""" .
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#offset
-:offset rdf:type owl:DatatypeProperty ;
+:offset rdf:type owl:DatatypeProperty ,
+                 owl:FunctionalProperty ;
         rdfs:domain :Buckets ;
         rdfs:range xsd:int .
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#parentSpanId
-:parentSpanId rdf:type owl:DatatypeProperty ;
+:parentSpanId rdf:type owl:DatatypeProperty ,
+                       owl:FunctionalProperty ;
               rdfs:domain :Span ;
               rdfs:range xsd:string .
 
@@ -525,12 +545,14 @@ Value of 0 indicates unknown or missing timestamp.""" .
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#quantile
 :quantile rdf:type owl:DatatypeProperty ;
           rdfs:subPropertyOf owl:topDataProperty ;
+          rdf:type owl:FunctionalProperty ;
           rdfs:domain :ValueAtQuantile ;
           rdfs:range xsd:double .
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#scale
-:scale rdf:type owl:DatatypeProperty ;
+:scale rdf:type owl:DatatypeProperty ,
+                owl:FunctionalProperty ;
        rdfs:domain :ExponentialHistogramDataPoint ;
        rdfs:range xsd:int .
 
@@ -563,6 +585,7 @@ Value of 0 indicates unknown or missing timestamp.""" .
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#spanId
 :spanId rdf:type owl:DatatypeProperty ;
         rdfs:subPropertyOf owl:topDataProperty ;
+        rdf:type owl:FunctionalProperty ;
         rdfs:domain [ rdf:type owl:Class ;
                       owl:unionOf ( :Exemplar
                                     :Link
@@ -588,6 +611,7 @@ span if any of the following is true:
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#startTimeUnixNano
 :startTimeUnixNano rdf:type owl:DatatypeProperty ;
                    rdfs:subPropertyOf owl:topDataProperty ;
+                   rdf:type owl:FunctionalProperty ;
                    rdfs:domain [ rdf:type owl:Class ;
                                  owl:unionOf ( :DataPoint
                                                :Span
@@ -614,6 +638,7 @@ span if any of the following is true:
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#timeUnixNano
 :timeUnixNano rdf:type owl:DatatypeProperty ;
               rdfs:subPropertyOf owl:topDataProperty ;
+              rdf:type owl:FunctionalProperty ;
               rdfs:domain [ rdf:type owl:Class ;
                             owl:unionOf ( :DataPoint
                                           :Event
@@ -634,6 +659,7 @@ Value of 0 indicates unknown or missing timestamp."""@en .
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#traceId
 :traceId rdf:type owl:DatatypeProperty ;
          rdfs:subPropertyOf owl:topDataProperty ;
+         rdf:type owl:FunctionalProperty ;
          rdfs:domain [ rdf:type owl:Class ;
                        owl:unionOf ( :Exemplar
                                      :Link
@@ -657,7 +683,8 @@ trace if any of the following is true:
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#traceState
-:traceState rdf:type owl:DatatypeProperty ;
+:traceState rdf:type owl:DatatypeProperty ,
+                     owl:FunctionalProperty ;
             rdfs:domain [ rdf:type owl:Class ;
                           owl:unionOf ( :Link
                                         :Span
@@ -669,6 +696,7 @@ trace if any of the following is true:
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#unit
 :unit rdf:type owl:DatatypeProperty ;
       rdfs:subPropertyOf owl:topDataProperty ;
+      rdf:type owl:FunctionalProperty ;
       rdfs:domain :Metric ;
       rdfs:range xsd:string .
 
@@ -676,6 +704,7 @@ trace if any of the following is true:
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#valueAtQuantileValue
 :valueAtQuantileValue rdf:type owl:DatatypeProperty ;
                       rdfs:subPropertyOf owl:topDataProperty ;
+                      rdf:type owl:FunctionalProperty ;
                       rdfs:domain :ValueAtQuantile ;
                       rdfs:range xsd:double .
 
@@ -683,12 +712,14 @@ trace if any of the following is true:
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#version
 :version rdf:type owl:DatatypeProperty ;
          rdfs:subPropertyOf owl:topDataProperty ;
+         rdf:type owl:FunctionalProperty ;
          rdfs:domain :InstrumentationScope ;
          rdfs:range xsd:string .
 
 
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#zeroCount
-:zeroCount rdf:type owl:DatatypeProperty ;
+:zeroCount rdf:type owl:DatatypeProperty ,
+                    owl:FunctionalProperty ;
            rdfs:domain :ExponentialHistogramDataPoint ;
            rdfs:range xsd:long .
 
@@ -696,6 +727,7 @@ trace if any of the following is true:
 ###  http://www.semanticweb.org/andrej/ontologies/2024/9/opentelemetry-ontology#zeroThreshold
 :zeroThreshold rdf:type owl:DatatypeProperty ;
                rdfs:subPropertyOf owl:topDataProperty ;
+               rdf:type owl:FunctionalProperty ;
                rdfs:domain :ExponentialHistogramDataPoint ;
                rdfs:range xsd:double .
 
